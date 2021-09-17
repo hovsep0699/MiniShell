@@ -46,12 +46,6 @@ char				*gnl_get_line(char *buffer);
 
 char				*gnl_get_buffer(char *buffer);
 
-bool				ft_findchr(const char *s, int c);
-
-size_t				ft_zero_byte_strlen(const char *s1);
-
-char				*ft_realloc_strjoin(char *s1, char *s2);
-
 char				*get_gnl_line(char *memory);
 
 char				*get_gnl_buffer(char *s);

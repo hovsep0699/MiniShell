@@ -7,6 +7,66 @@
 # include "ctypes.h"
 # include "cstdlib.h"
 
+typedef struct strIterator string_iterator_t;
+typedef struct string string_t;
+
+struct strIterator
+{
+   int index;
+   char *ptr;
+   void (*advance)(string_iterator_t *it, int size);
+};
+
+
+struct string
+{
+    char     *data;
+    size_t   size;
+    string_iterator_t *begin;
+    string_iterator_t *end;
+    void                (*resize)(string_t *str, int size);
+    void                (*erase)(string_t *str, string_iterator_t *it);
+    void                (*erase2)(string_t *str, int index);
+    void                (*erase_between)(string_t *str, string_iterator_t *start, string_iterator_t *end);
+    void                (*clear)(string_t *str, string_iterator_t *it);
+    void                (*join)(string_t *str1, string_t *str2);
+    void                (*join2)(string_t *str1, char *str2);
+    string_t            (*substr)(string_t *str, char *sub);
+    void                (*insert2)(string_t *str, string_iterator_t *it, char *str2);
+    void                (*insert)(string_t *str, string_iterator_t *it, string_t *str2);
+    string_iterator_t   *(*find)(string_t *str, char *needle);
+    int                 *(*find2)(string_t *str, char *needle);
+};
+
+string_iterator_t ft_striter_default_constructor();
+
+string_iterator_t ft_striter_copy_constructor(string_iterator_t *iter);
+
+string_t    ft_string_default_constructor(void);
+
+string_t    ft_string_copy_constructor(string_t *str);
+
+void        ft_string_resize(string_t *str, int size);
+
+void        ft_string_advance(string_iterator_t *it, int size);
+
+void        ft_string_erase(string_t *str, string_iterator_t *it);
+
+void        ft_string_erase2(string_t *str, int it);
+
+void        ft_string_erase_between(string_t *str, string_iterator_t *start, string_iterator_t *end);
+
+string_t    ft_string_constructor(char *str);
+
+void        ft_string_destructor(string_t *str);
+
+
+bool				ft_findchr(const char *s, int c);
+
+size_t				ft_zero_byte_strlen(const char *s1);
+
+char				*ft_realloc_strjoin(char *s1, char *s2);
+
 size_t				ft_vecstrlen(char **str);
 
 void				ft_putchar(char c);
