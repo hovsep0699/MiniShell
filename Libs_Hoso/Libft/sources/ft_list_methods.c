@@ -1,10 +1,10 @@
 #include "clist.h"
 
-void ft_list_push_back(list_t *self, element_t data)
+void ft_list_push_back(list_t *self, void *data, size_t size)
 {
 	node_t *tmp;
 	
-	tmp = ft_node_constructor(data);
+	tmp = ft_node_constructor(data, size);
 	self->end->insert_before(self->end, tmp);
 	if (self->size == 0)
 	{
@@ -14,25 +14,25 @@ void ft_list_push_back(list_t *self, element_t data)
 	++self->size;
 }
 
-bool ft_list_iscontain(list_t *lst, element_t data)
-{
-	node_t *it;
+// bool ft_list_iscontain(list_t *lst, void *data)
+// {
+// 	node_t *it;
 
-	it = lst->begin;
-	while (it != lst->end)
-	{
-		if (it->data.value == data.value)
-			return (true);
-		it = it->next;
-	}
-	return (false);
-}
+// 	it = lst->begin;
+// 	while (it != lst->end)
+// 	{
+// 		if (it->data.value == data.value)
+// 			return (true);
+// 		it = it->next;
+// 	}
+// 	return (false);
+// }
 
-void ft_list_push_front(list_t *self, element_t data)
+void ft_list_push_front(list_t *self, void *data, size_t size)
 {
 	node_t *tmp;
 	
-	tmp = ft_node_constructor(data);
+	tmp = ft_node_constructor(data, size);
 	if (self->size == 0)
 		self->end->insert_before(self->end, tmp);
 	else

@@ -20,7 +20,7 @@ struct	element
 
 struct node
 {
-	element_t	data;
+	void		*data;
 	node_t		*next;
 	node_t		*previous;
 	void		(*insert_before)(node_t *self, node_t *node);
@@ -36,8 +36,8 @@ struct		list
 	node_t		*begin;
 	node_t		*end;
 	int			size;
-	void		(*push_back)(list_t *lst, element_t	data);
-	void		(*push_front)(list_t *lst, element_t data);
+	void		(*push_back)(list_t *self, void *data, size_t size);
+	void		(*push_front)(list_t *self, void *data, size_t size);
 	void		(*pop_front)(list_t *lst);
 	void		(*pop_back)(list_t *lst);
 	node_t		*(*advance)(node_t *it, int dist);
@@ -58,13 +58,13 @@ void				ft_list_destructor(list_t *self);
 
 int					ft_list_size(list_t *self);
 
-void				ft_list_push_back(list_t *lst, element_t data);
+void				ft_list_push_back(list_t *lst, void *data, size_t size);
 
 void				ft_list_pop_front(list_t *lst);
 
 void				ft_list_pop_back(list_t *lst);
 
-void				ft_list_push_front(list_t *lst, element_t data);
+void				ft_list_push_front(list_t *lst, void *data, size_t size);
 
 void				node_insert_before(node_t *self, node_t *node);
 
@@ -78,15 +78,15 @@ node_t				*ft_node_default_constructor();
 
 node_t				*ft_node_copy_constructor(node_t *node);
 
-node_t				*ft_node_constructor(element_t data);
+node_t				*ft_node_constructor(void *data, size_t size);
 
 void				ft_node_destructor(node_t *self);
 
 list_t				ft_list_default_constructor();
 
-list_t				ft_list_copy_constructor(const list_t *list);
+list_t				ft_list_copy_constructor(const list_t *list, size_t size);
 
-list_t				ft_list_array_constructor(element_t *arr, int size);
+// list_t				ft_list_array_constructor(element_t *arr, int size);
 
 
 //list_t				ft_list_initalizer_string_constructor(char **arr, int size);

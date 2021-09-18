@@ -7,59 +7,81 @@
 # include "ctypes.h"
 # include "cstdlib.h"
 
-typedef struct strIterator string_iterator_t;
+#define DIFF_ALPHA_CASES 32
 typedef struct string string_t;
-
-struct strIterator
-{
-   int index;
-   char *ptr;
-   void (*advance)(string_iterator_t *it, int size);
-};
-
 
 struct string
 {
-    char     *data;
-    size_t   size;
-    string_iterator_t *begin;
-    string_iterator_t *end;
-    void                (*resize)(string_t *str, int size);
-    void                (*erase)(string_t *str, string_iterator_t *it);
-    void                (*erase2)(string_t *str, int index);
-    void                (*erase_between)(string_t *str, string_iterator_t *start, string_iterator_t *end);
-    void                (*clear)(string_t *str, string_iterator_t *it);
+
+    char                *data;
+    size_t              size;
+    void                (*resize)(string_t *str, size_t size);
+    void                (*erase)(string_t *str, size_t it);
+    void                (*erase2)(string_t *str, size_t it, size_t len);
+    void                (*erase_between)(string_t *str, size_t start, size_t end);
     void                (*join)(string_t *str1, string_t *str2);
     void                (*join2)(string_t *str1, char *str2);
-    string_t            (*substr)(string_t *str, char *sub);
-    void                (*insert2)(string_t *str, string_iterator_t *it, char *str2);
-    void                (*insert)(string_t *str, string_iterator_t *it, string_t *str2);
-    string_iterator_t   *(*find)(string_t *str, char *needle);
-    int                 *(*find2)(string_t *str, char *needle);
+    void                (*substr)(string_t *str, string_t *new, size_t start, size_t len);
+    void                (*insert2)(string_t *str, size_t index, char *str2);
+    void                (*insert)(string_t *str, size_t index, string_t *str2);
+    int                 (*find)(string_t *str, char c);
+    int                 (*find2)(string_t *str, char *needle);
+    int                 (*find3)(string_t *str, string_t *needle);
+    int                 (*rfind)(string_t *str, char c);
+    int                 (*rfind2)(string_t *str, char *needle);
+    int                 (*rfind3)(string_t *str, string_t *needle);
+    void                (*reverse)(string_t *str);
+    void                (*tolower)(string_t *str);
+    void                (*toupper)(string_t *str);
+    bool                (*compare)(string_t *str1, string_t *str2);
+    bool                (*compare2)(string_t *str1, char *str2);
 };
 
-string_iterator_t ft_striter_default_constructor();
+void                ft_string_tolower(string_t *str);
 
-string_iterator_t ft_striter_copy_constructor(string_iterator_t *iter);
+bool                ft_string_compare(string_t *str1, string_t *str2);
 
-string_t    ft_string_default_constructor(void);
+bool                ft_string_compare2(string_t *str1, char *str2);
 
-string_t    ft_string_copy_constructor(string_t *str);
+void                ft_string_toupper(string_t *str);
 
-void        ft_string_resize(string_t *str, int size);
+void                ft_string_insert(string_t *str, size_t index, string_t *str2);
 
-void        ft_string_advance(string_iterator_t *it, int size);
+void                ft_string_join(string_t *str, string_t *str2);
 
-void        ft_string_erase(string_t *str, string_iterator_t *it);
+void                ft_string_insert2(string_t *str, size_t index, char *str2);
 
-void        ft_string_erase2(string_t *str, int it);
+void                ft_string_join2(string_t *str, char *str2);
 
-void        ft_string_erase_between(string_t *str, string_iterator_t *start, string_iterator_t *end);
+int                 ft_string_find(string_t *str, char c);
 
-string_t    ft_string_constructor(char *str);
+int                 ft_string_find2(string_t *str, char *needle);
 
-void        ft_string_destructor(string_t *str);
+int                 ft_string_find3(string_t *str, string_t *needle);
 
+int                 ft_string_rfind(string_t *str, char c);
+
+int                 ft_string_rfind2(string_t *str, char *needle);
+
+int                 ft_string_rfind3(string_t *str, string_t *needle);
+
+void                ft_string_substr(string_t *str, string_t *new, size_t start, size_t len);
+
+string_t            ft_string_default_constructor(void);
+
+string_t            ft_string_copy_constructor(string_t *str);
+
+void                ft_string_resize(string_t *str, size_t size);
+
+void                ft_string_erase(string_t *str, size_t it);
+
+void                ft_string_erase2(string_t *str, size_t it, size_t len);
+
+void                ft_string_erase_between(string_t *str, size_t start, size_t end);
+
+string_t            ft_string_constructor(char *str);
+
+void                ft_string_destructor(string_t *str);
 
 bool				ft_findchr(const char *s, int c);
 

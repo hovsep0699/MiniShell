@@ -1,23 +1,23 @@
 #include "cstack.h"
 
-bool ft_stack_iscontain(Stack *st, element_t data)
-{
-	Stack s;
-	node_t *it;
+// bool ft_stack_iscontain(Stack *st, element_t data)
+// {
+// 	Stack s;
+// 	node_t *it;
 
-	s = ft_stack_copy_constructor(st);
-	while ((it = s.pop(&s)))
-	{
-		if (it->data.value == data.value)
-			return (true);
-	}
-	ft_stack_destructor(&s);
-	return (false);
-}
+// 	s = ft_stack_copy_constructor(st);
+// 	while ((it = s.pop(&s)))
+// 	{
+// 		if (it->data.value == data.value)
+// 			return (true);
+// 	}
+// 	ft_stack_destructor(&s);
+// 	return (false);
+// }
 
-void ft_stack_push(Stack *st, element_t data)
+void ft_stack_push(Stack *st, void *data, size_t size)
 {
-	st->data.push_front(&st->data, data);
+	st->data.push_front(&st->data, data, size);
 	st->size = st->data.size;
 }
 
@@ -53,8 +53,8 @@ Stack ft_stack_default_constructor()
 	st.push = ft_stack_push;
 	st.pop = ft_stack_pop;
 	st.top = ft_stack_top;
-	st.contains = ft_stack_iscontain;
-	st.sort = ft_quickSort;
+	// st.contains = ft_stack_iscontain;
+	// st.sort = ft_quickSort;
 	return st;
 }
 
@@ -68,27 +68,27 @@ Stack ft_stack_copy_constructor(const Stack *st)
 	copy.push = ft_stack_push;
 	copy.pop = ft_stack_pop;
 	copy.top = ft_stack_top;
-	copy.contains = ft_stack_iscontain;
-	copy.sort = ft_quickSort;
+	// copy.contains = ft_stack_iscontain;
+	// copy.sort = ft_quickSort;
 	it = st->data.end->previous;
 	while (it)
 	{
-		copy.push(&copy, it->data);
+		copy.push(&copy, it->data, sizeof(int));
 		it = st->data.advance(it, -1);
 	}
 	return copy;
 }
 
 
-Stack ft_stack_array_constructor(element_t *arr, int size)
-{
-	Stack st;
-	int index;
+// Stack ft_stack_array_constructor(element_t *arr, int size)
+// {
+// 	Stack st;
+// 	int index;
 
-	index = size;
-	st = ft_stack_default_constructor();
-	while (--index >= 0)
-		st.push(&st, arr[index]);
-	return st;
-}
+// 	index = size;
+// 	st = ft_stack_default_constructor();
+// 	while (--index >= 0)
+// 		st.push(&st, arr[index]);
+// 	return st;
+// }
 

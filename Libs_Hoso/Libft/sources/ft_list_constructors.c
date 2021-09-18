@@ -7,6 +7,7 @@ node_t	*ft_node_default_constructor()
 	node = ft_memalloc(sizeof(node_t));
 	node->next = NULL;
 	node->previous = NULL;
+	node->data = NULL;
 	node->insert_after = node_insert_after;
 	node->insert_before = node_insert_before;
 	node->swap = node_swap;
@@ -22,27 +23,19 @@ node_t *ft_node_copy_constructor(node_t *node)
 	self = ft_node_default_constructor();
 	self->next = node->next;
 	self->previous = node->previous;
-	self->insert_after = node_insert_after;
-	self->insert_before = node_insert_before;
-	self->swap = node_swap;
-	self->reverse = node_reverse;
-	self->disconnect = ft_node_disconnect;
 	return self;
 }
 
-node_t *ft_node_constructor(element_t data)
+node_t *ft_node_constructor(void *data, size_t size)
 {
 	node_t *node;
+	// void	*copy;
 
 	node = ft_memalloc(sizeof(node_t));
 	node->next = NULL;
 	node->previous = NULL;
-	node->data = data;
-	node->insert_after = node_insert_after;
-	node->insert_before = node_insert_before;
-	node->swap = node_swap;
-	node->reverse = node_reverse;
-	node->disconnect = ft_node_disconnect;
+	node->data = ft_memalloc(size);
+	node->data = ft_memmove(node->data, data, size);
 	return node;
 }
 
@@ -63,7 +56,7 @@ list_t	ft_list_default_constructor()
 	return list;
 }
 
-list_t	ft_list_copy_constructor(const list_t *list)
+list_t	ft_list_copy_constructor(const list_t *list, size_t size)
 {
 	list_t self;
 	node_t *it;
@@ -72,7 +65,7 @@ list_t	ft_list_copy_constructor(const list_t *list)
 	it = list->begin;
 	while (it != list->end)
 	{
-		self.push_back(&self, it->data);
+		self.push_back(&self, it->data, size);
 		it = list->advance(it, 1);
 	}
 	return self;

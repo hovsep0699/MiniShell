@@ -47,7 +47,8 @@ void	node_swap(node_t *self, node_t *node)
 		self->next = node->next;
 		node->next = self;
 	}
-	else if (self->previous == node) {
+	else if (self->previous == node)
+	{
 		if (node->previous)
 			node = self;
 		self->previous = node->previous;

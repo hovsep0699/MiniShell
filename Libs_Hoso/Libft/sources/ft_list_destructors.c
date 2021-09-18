@@ -2,6 +2,7 @@
 
 void	ft_node_destructor(node_t *self)
 {
+	// ft_memdel((void **)&self->data);
 	ft_memdel((void **)&self);
 }
 
