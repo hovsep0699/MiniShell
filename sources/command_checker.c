@@ -28,13 +28,60 @@ int ft_alloc_split_minishell(char const *s, char c, char exp, char exp2)
 	}
 	return (total);
 }
+
+int ft_count_quote(char const *s, char quoet, char dquoet)
+{
+	size_t	i;
+	size_t	total;
+	int exp_state;
+	int exp_state2;
+
+	i = 0;
+	total = 0;
+	exp_state = 1;
+	exp_state2 = 1;
+	while (s[i])
+	{
+		if((s[i] == quoet && exp_state2 == 1) && exp_state == 1)
+		{
+			i++;
+			exp_state = 0;
+			continue;
+		}
+		 else if ((s[i] == quoet && exp_state2 == 1) && exp_state == 0)
+		 {
+			i++;
+			exp_state = 1;
+			continue;
+		}
+			
+		if((s[i] == dquoet && exp_state == 1) && exp_state2 == 1)
+		{
+			i++;
+			exp_state2 = 0;
+			continue;
+		}
+		else if((s[i] == dquoet && exp_state == 1) && exp_state2 == 0)
+		{
+			i++;
+			exp_state2 = 1;
+			continue;
+		}
+		total++;
+		i++;
+	}
+	return (total);
+}
+
+
 int exec_in_function(char **arguments,t_last_command *command_shablon, int count,char **envp_my)
 {
 	int i;
+	int dollar_index;
 	
 	
 	i = command_shablon->index_command + 1;
-	
+	dollar_index = 0;
 	
 	while (i < count)
 	{
@@ -51,10 +98,11 @@ int exec_in_function(char **arguments,t_last_command *command_shablon, int count
 			i += 2;
 			continue;
 		}
-		if(arguments[i][0] == '$' && ft_strlen(arguments[i]) > 1)
+		if(ft_zero_byte_strlen(arguments[i]) > 1 && (dollar_index = ft_strcmp_char(arguments[i],'$',ft_zero_byte_strlen(arguments[i])))!=-1)
 		{
 			command_shablon->dollar_exist = 1;
-			command_shablon->data = ft_equal_strjoin(command_shablon->data, find_data(arguments[i], command_shablon->variable_dic), arguments[i], command_shablon);
+			command_shablon->data = ft_equal_strjoin(command_shablon->data, find_data((*(arguments + i) + dollar_index), command_shablon->variable_dic), (*(arguments + i) + dollar_index), command_shablon,arguments[i]);
+
 		}
 		else
 			command_shablon->data = ft_dis_strjoin(command_shablon->data,arguments[i], 2);
@@ -83,7 +131,7 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 	i = 0;
 	while (comand_shablon->index_command<count)
 	{
-		len = ft_strlen(list_argument[i]);
+		len = ft_zero_byte_strlen(list_argument[i]);
 		lower_case = ft_tolower_minishell(list_argument[i], len);
 		if(ft_strncmp(lower_case,"echo",4) == 0)
 		{

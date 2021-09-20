@@ -55,10 +55,9 @@ struct	s_dictionary
 typedef struct	s_last_command
 {
 	int			start_program;
-	int			min_quote_count;
-	int			max_quote_count;
 	int			echo_option;
 	int 		quote_staet_new;
+	size_t		exit_status;
 	int 		rut;
 	int			type_command;
 	int			util_commant;
@@ -106,10 +105,12 @@ int 			ft_export(struct	s_last_command * dictioanry,char **envp, char **data,int
 void 			ft_print_error(int exeption,char *str_exeption,char element_exeption,char *command_name);
 int 			find_data_int(char *key,dictionary_t *command);
 void 			change_item(char *new_item,int key_index,dictionary_t *dict);
-char			*ft_equal_strjoin(char *s1, char *s2,char *s3,t_last_command *command_shablon);
+char			*ft_equal_strjoin(char *s1, char *s2,char *s3,t_last_command *command_shablon,char *pars_str);
 int 			find_equal_part(char *str);
 int 			ft_unset(struct	s_last_command * dictioanry,char **envp, char **data,int count);
 void 			ft_dictionary_del_key(dictionary_t *del_stack);
 int 			ft_write_file(struct	s_last_command * dictioanry,char **envp, char **data,int count);
 int 			only_create_file(char *file_name,struct	s_last_command *dictioanry);
+int 			ft_count_quote(char const *s, char quoet, char dquoet);
+void			ft_char_pointer_erase(char *str, size_t it);
 #endif

@@ -6,7 +6,7 @@ int ft_strcmp_char(char *str,char c,int count)
 
 	index = 0;
 	if(str == NULL)
-		return(0);
+		return(-1);
 	while (str[index] && index != count)
 	{
 		if(str[index] == c)
@@ -45,12 +45,35 @@ int free_space(char *clean_space)
 	return(1);
 }
 
+void    ft_char_pointer_erase(char *str, size_t it)
+{
+    char *copy;
+    size_t index;
+    size_t copy_index;
+
+    copy = (char *)malloc(sizeof(char) * ft_zero_byte_strlen(str));
+    index = 0;
+    copy_index = 0;
+    while (str[index])
+    {
+        if (index == it)
+        {
+            ++index;
+            continue;
+        }
+        copy[copy_index] = str[index];
+        ++index;
+        ++copy_index;
+    }
+    copy[++copy_index] = '\0';
+    ft_strdel(&str);
+    str = copy;
+}
+
 int ft_default_set(t_last_command *command)
 {
 	command->echo_option = 0;
 	command->data = NULL;
-	command->min_quote_count = 0;
-	command->max_quote_count = 0;
 	command->quote_staet_new = 0;
 	command->type_command = 0;
 	command->index_command = 0;

@@ -106,9 +106,9 @@ int find_equal_part(char *str)
 	int final_len;
 	
 	key_len = 0;
-	while (str[key_len] && str[key_len] != '=')
+	while (str[key_len] && ft_isalnum(str[key_len]))
 		key_len++;
-	if(str[key_len] == '=')
+	if(ft_isalnum(str[key_len]))
 		return((key_len));
 	return(-1);
 }
@@ -116,22 +116,16 @@ char *find_data(char *key, dictionary_t *command)
 {
 	int key_len;
 	int dict_len;
-	int final_len;
-	int type_function;
 
 	key_len = 0;
-	type_function = 1;
-	while (key[key_len] && key[key_len] != '=')
-		key_len++;
-		key_len--;
-
 	key++;
+	while (ft_isalnum(*(key + key_len)))
+		key_len++;
 	while (command != NULL)
 	{
-		dict_len = ft_strlen(command->key);
-
-		if(key_len == dict_len && ft_strncmp(key, command->key, key_len) == 0 )
-		{			
+		dict_len = ft_zero_byte_strlen(command->key);
+		if(key_len == dict_len && ft_strncmp(key, command->key, dict_len) == 0 )
+		{
 				if(command->item[0] == '\0')
 					return(NULL);
 				else return(command->item);
@@ -162,9 +156,6 @@ int find_data_int(char *key, dictionary_t *command)
 		
 		if(j == dict_len && ft_strncmp(key, command->key, j) == 0)
 		{
-			//ft_putchar_fd('\n',1);
-		//ft_putnbr_fd(i,1);
-		//ft_putchar_fd('\n',1);
 			return(i);
 		}
 		command = command->next;

@@ -31,13 +31,15 @@ int 			ft_export(struct	s_last_command * dictioanry,char **envp, char **data,int
     int i;
     int start_index;
     int end_index;
+
     if(dictioanry->data == NULL && dictioanry->env_exist == 1)
         return(UNPRINT_ERROR);
-    if(ft_strlen(dictioanry->data) == 0)
+    if(ft_zero_byte_strlen(dictioanry->data) == 0)
     {
         ft_put_env_export(envp,dictioanry->variable_dic);
         return(SUCCESS);
     }
+    	
     start_index = ft_alloc_split_minishell(dictioanry->data,' ','\'','\"') + 1;
     str = ft_split_Vache(dictioanry->data,' ','\'','\"');
     end_index = 0;

@@ -55,8 +55,6 @@ int ft_len_array(char *splite_array)
 		}
 		i++;			
 	}
-	//ft_putnbr_fd(i +c,1);
-	//ft_putchar_fd('\n',1);
 	return(count + i);
 }
 char *enter_split_sapce(char *not_splite)
@@ -97,8 +95,6 @@ char *enter_split_sapce(char *not_splite)
 		else
 		 	splite_array[j++] = not_splite[i++];		
 	}
-	//ft_putstr_fd(splite_array,1);
 	ft_strdel(&not_splite);
-	// free(not_splite);
 	return(splite_array);
 }

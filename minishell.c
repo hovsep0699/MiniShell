@@ -7,7 +7,6 @@ int exec_inout(char *line, DIR *open_dir_now, char **envp, t_last_command *last_
 	int i;
 	int count;
 	
-	//ft_putstr_fd(line,1);
 	i = 0;
 	line = enter_split_sapce(line);
 	command = ft_split_Vache(line, ' ', CHAR_QUATES, CHAR_DQUATES);
@@ -108,13 +107,11 @@ pipe_problem = 0;
 	{
 			ft_print_welcome(path);
 			get_next_line(0, &tmp);
-			//ft_putstr("\nasd\n");
 			if(quote_check(tmp, CHAR_QUATES, CHAR_DQUATES))
 			{
 				ft_strdel(&tmp);
 				continue;
 			}
-			//ft_putchar_fd('d',1);
 		exec_inout(tmp, dir_now, envp, last_command);
 		ft_strdel(&line);
 	}
