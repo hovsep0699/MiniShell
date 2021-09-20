@@ -28,10 +28,24 @@ int ft_alloc_split_minishell(char const *s, char c, char exp, char exp2)
 	}
 	return (total);
 }
-
-int ft_count_quote(char const *s, char quoet, char dquoet)
+int ft_isalnum_str(char *str,int *i)
 {
-	size_t	i;
+	int index;
+
+	index = 0;
+	while (str[index])
+	{
+		if(!ft_isalnum(str[index]))
+			break;
+		index++;
+	}
+	*i += index - 1;
+	return(index);
+	
+}
+int ft_count_quote(char  *s, char quoet, char dquoet)
+{
+	int	i;
 	size_t	total;
 	int exp_state;
 	int exp_state2;
@@ -44,35 +58,33 @@ int ft_count_quote(char const *s, char quoet, char dquoet)
 	{
 		if((s[i] == quoet && exp_state2 == 1) && exp_state == 1)
 		{
-			i++;
+			total++;
 			exp_state = 0;
-			continue;
 		}
 		 else if ((s[i] == quoet && exp_state2 == 1) && exp_state == 0)
 		 {
-			i++;
+			total++;
 			exp_state = 1;
-			continue;
 		}
 			
-		if((s[i] == dquoet && exp_state == 1) && exp_state2 == 1)
+		else if((s[i] == dquoet && exp_state == 1) && exp_state2 == 1)
 		{
-			i++;
+			total++;
 			exp_state2 = 0;
-			continue;
 		}
 		else if((s[i] == dquoet && exp_state == 1) && exp_state2 == 0)
 		{
-			i++;
+			total++;
 			exp_state2 = 1;
-			continue;
 		}
-		total++;
+		else if(s[i] == '$' && s[i + 1] == '?' && exp_state2 != 0)
+			total += 2;
+		else if(s[i] == '$' && exp_state2 != 0)
+			total += ft_isalnum_str(s + i + 1,&i) + 1;
 		i++;
 	}
 	return (total);
 }
-
 
 int exec_in_function(char **arguments,t_last_command *command_shablon, int count,char **envp_my)
 {
@@ -101,11 +113,14 @@ int exec_in_function(char **arguments,t_last_command *command_shablon, int count
 		if(ft_zero_byte_strlen(arguments[i]) > 1 && (dollar_index = ft_strcmp_char(arguments[i],'$',ft_zero_byte_strlen(arguments[i])))!=-1)
 		{
 			command_shablon->dollar_exist = 1;
-			command_shablon->data = ft_equal_strjoin(command_shablon->data, find_data((*(arguments + i) + dollar_index), command_shablon->variable_dic), (*(arguments + i) + dollar_index), command_shablon,arguments[i]);
+			command_shablon->data = ft_equal_strjoin(command_shablon->data,command_shablon,arguments[i]);
 
 		}
 		else
+		{
 			command_shablon->data = ft_dis_strjoin(command_shablon->data,arguments[i], 2);
+		}
+			
 		i++;
 	}
 

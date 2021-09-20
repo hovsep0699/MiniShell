@@ -28,7 +28,7 @@ int only_create_file(char *file_name,struct	s_last_command *dictioanry)
     int fd;
     int len;
 
-    len = ft_strlen(file_name);
+    len = ft_zero_byte_strlen(file_name);
     fd = open(file_name,O_CREAT,0777);
     close(fd);
     dictioanry->name_file = (char *)malloc(sizeof(char) * (ft_strlen(file_name) + 1));

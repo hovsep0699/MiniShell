@@ -93,7 +93,7 @@ size_t		ft_joins(char const *s2, size_t i,int count, char *subjoin)
 	return (i);
 }
 
-char		*ft_equal_strjoin(char *s1, char *s2,char *s3,t_last_command *command_shablon,char *pars_str)
+char		*ft_equal_strjoin(char *s1,t_last_command *command_shablon,char *pars_str)
 {
 	char	*subjoin;
 	int i;
@@ -102,12 +102,22 @@ char		*ft_equal_strjoin(char *s1, char *s2,char *s3,t_last_command *command_shab
 	int dquate_exist;
 	int end_index;
 	char *tmp_str;
+	int count;
 
 	i = 0;
+	count = 0;
+	subjoin = NULL;
 	quate_exist = 1;
 	dquate_exist = 1;
-	subjoin = (char *)malloc(sizeof(char) * (end_index = ft_zero_byte_strlen(s1) + 1));
-	ft_strcpy(subjoin,s1);
+	end_index = ft_zero_byte_strlen(s1);
+	count = ft_count_quote(pars_str,CHAR_QUATES,CHAR_DQUATES);
+	
+	subjoin = (char *)ft_calloc(sizeof(char) , (end_index + (ft_zero_byte_strlen(pars_str) - count) + 1));
+	if(end_index > 0)
+	{
+		subjoin = ft_strcpy(subjoin,s1);
+		end_index++;
+	}
 	while (pars_str[i])
 	{
 		if((pars_str[i] == CHAR_QUATES && dquate_exist == 1) && quate_exist == 1)
@@ -136,22 +146,22 @@ char		*ft_equal_strjoin(char *s1, char *s2,char *s3,t_last_command *command_shab
 			len_key = ft_zero_byte_strlen(tmp_str);
 			subjoin = ft_realloc_strjoin(subjoin, tmp_str);
 			end_index += len_key;
-			ft_strdel(tmp_str);
+			ft_strdel(&tmp_str);
 			i++;
 		}
 		else if(pars_str[i] == '$' && quate_exist != 0)
 		{
-			tmp_str = find_data((pars_str + i + 1),command_shablon->variable_dic);
-			len_key = ft_zero_byte_strlen(tmp_str);
-			subjoin = ft_realloc_strjoin(subjoin, tmp_str);
-			end_index += len_key;
-			i += len_key + 1;
+			subjoin = ft_realloc_strjoin(subjoin, find_data((pars_str + i),command_shablon->variable_dic));
+			end_index += ft_zero_byte_strlen(subjoin) - end_index;
+			ft_isalnum_str(pars_str + i + 1,&i);
+			i+=2;
 		}
-		//else {
-
-		//}
+		else 
+			subjoin[end_index++] = pars_str[i++];
 	}
-	
+	//ft_putstr(subjoin);
+	ft_strdel(&s1);
+	return(subjoin);
 }
 char		*ft_dis_strjoin(char *s1, char *s2,int mod)
 {
@@ -174,7 +184,7 @@ char		*ft_dis_strjoin(char *s1, char *s2,int mod)
 		subjoin[i] = ' ';
 		i++;
 	}
-	if(len_s2>0)
+	if(len_s2 > 0)
 	i = ft_joins(s2, i,len_s2, subjoin);
 	free(s1);
 	return (subjoin);
