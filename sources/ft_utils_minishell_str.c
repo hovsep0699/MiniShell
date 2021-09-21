@@ -16,20 +16,39 @@ int ft_strcmp_char(char *str,char c,int count)
 	return(-1);
 }
 
-char *ft_tolower_minishell(char *upper_str,int len)
+char *ft_tolower_minishell(char *upper_str,int *len)
 {
 	char *lower_case;
 	int i;
+	int quoet_exist;
+	int dquoet_exist;
+	int j;
 
-	lower_case = (char *)ft_calloc(sizeof(char),len);
+	*len =ft_zero_byte_strlen(upper_str) - ft_count_quote(upper_str);
+	//ft_putnbr(*len);
+	lower_case = (char *)ft_calloc(sizeof(char),*len);
 	i = 0;
+	j = 0;
+	quoet_exist = 1;
+	dquoet_exist = 1;
 	while (upper_str[i])
 	{
+		if(ft_count_quote_character(upper_str[i],&quoet_exist,&dquoet_exist))
+		{
+			i++;
+			continue;
+		}
+		else if(upper_str[i] == '\\' && (quoet_exist != 0 && dquoet_exist != 0))
+		{
+			i++;
+			continue;
+		}
 		if (upper_str[i] >= 'A' && upper_str[i] <= 'Z')
-			lower_case[i] = upper_str[i] + 32;
+			lower_case[j] = upper_str[i] + 32;
 		else
-			lower_case[i] = upper_str[i];
+			lower_case[j] = upper_str[i];
 		i++;
+		j++;
 	}
 	return (lower_case);
 }

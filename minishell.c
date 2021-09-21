@@ -10,7 +10,7 @@ int exec_inout(char *line, DIR *open_dir_now, char **envp, t_last_command *last_
 	i = 0;
 	line = enter_split_sapce(line);
 	command = ft_split_Vache(line, ' ', CHAR_QUATES, CHAR_DQUATES);
-	count = ft_alloc_split_minishell(line, ' ', CHAR_QUATES, CHAR_DQUATES) + 1;
+	count = ft_vecstrlen(command);
 	ft_default_set(last_command);
 	if(((system_command(command, last_command, envp, count))) >= 1)
 		ft_putstr("Ok");

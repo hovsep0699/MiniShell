@@ -110,37 +110,17 @@ char		*ft_equal_strjoin(char *s1,t_last_command *command_shablon,char *pars_str)
 	quate_exist = 1;
 	dquate_exist = 1;
 	end_index = ft_zero_byte_strlen(s1);
-	count = ft_count_quote(pars_str,CHAR_QUATES,CHAR_DQUATES);
-	
-	subjoin = (char *)ft_calloc(sizeof(char) , (end_index + (ft_zero_byte_strlen(pars_str) - count) + 1));
+	count = ft_count_quote(pars_str);
+	subjoin = (char *)ft_calloc(sizeof(char) , (end_index + (ft_zero_byte_strlen(pars_str) - count) + 2));
 	if(end_index > 0)
-	{
 		subjoin = ft_strcpy(subjoin,s1);
-		end_index++;
-	}
 	while (pars_str[i])
 	{
-		if((pars_str[i] == CHAR_QUATES && dquate_exist == 1) && quate_exist == 1)
-		{
-			quate_exist = 0;
+		if(ft_count_quote_character(pars_str[i],&quate_exist,&dquate_exist))
 			i++;
-		}
-		 else if ((pars_str[i] == CHAR_QUATES && dquate_exist == 1) && quate_exist == 0)
-		 {
-			quate_exist = 1;
+		else if(pars_str[i] == '\\' && (dquate_exist != 0 && quate_exist != 0))
 			i++;
-		 }
-		else if((pars_str[i] == CHAR_DQUATES && quate_exist == 1) && dquate_exist == 1)
-		{
-			i++;
-			dquate_exist = 0;
-		}
-		else if((pars_str[i] == CHAR_DQUATES && quate_exist == 1) && dquate_exist == 0)
-		{
-			i++;
-			dquate_exist = 1;
-		}
-		else if(pars_str[i] == '$' && pars_str[i + 1] == '?' && quate_exist != 0)
+		else if(pars_str[i] == '$' && pars_str[i + 1] == '?' && quate_exist != 0 && (i!=0 && pars_str[i - 1] != '\\'))
 		{
 			tmp_str = ft_itoa(command_shablon->exit_status);
 			len_key = ft_zero_byte_strlen(tmp_str);
@@ -149,7 +129,7 @@ char		*ft_equal_strjoin(char *s1,t_last_command *command_shablon,char *pars_str)
 			ft_strdel(&tmp_str);
 			i++;
 		}
-		else if(pars_str[i] == '$' && quate_exist != 0)
+		else if(pars_str[i] == '$' && quate_exist != 0 && (i!=0 && pars_str[i - 1] != '\\'))
 		{
 			subjoin = ft_realloc_strjoin(subjoin, find_data((pars_str + i),command_shablon->variable_dic));
 			end_index += ft_zero_byte_strlen(subjoin) - end_index;
@@ -159,7 +139,7 @@ char		*ft_equal_strjoin(char *s1,t_last_command *command_shablon,char *pars_str)
 		else 
 			subjoin[end_index++] = pars_str[i++];
 	}
-	//ft_putstr(subjoin);
+	subjoin[end_index] = ' ';
 	ft_strdel(&s1);
 	return(subjoin);
 }
@@ -169,10 +149,14 @@ char		*ft_dis_strjoin(char *s1, char *s2,int mod)
 	size_t	i;
 	int len_s1;
 	int len_s2;
+	int quoet_exist;
+	int dquoet_exist;
 
+	quoet_exist = 1;
+	dquoet_exist = 1;
+	len_s2 = ft_count_quote_character(s2,&quoet_exist,dquoet_exist);
 	len_s1 = ft_zero_byte_strlen(s1);
-	len_s2 = ft_zero_byte_strlen(s2);
-				
+	len_s2 = ft_zero_byte_strlen(s2) - len_s2;
 	i = 0;
 	subjoin = (char *)ft_calloc(sizeof(char),len_s1 + len_s2 + mod);
 	if (!subjoin)

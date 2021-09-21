@@ -39,8 +39,7 @@ int 			ft_export(struct	s_last_command * dictioanry,char **envp, char **data,int
         ft_put_env_export(envp,dictioanry->variable_dic);
         return(SUCCESS);
     }
-    	
-    start_index = ft_alloc_split_minishell(dictioanry->data,' ','\'','\"') + 1;
+    start_index = ft_alloc_split_minishell(dictioanry->data,' ','\'','\"');
     str = ft_split_Vache(dictioanry->data,' ','\'','\"');
     end_index = 0;
     while (end_index < start_index)
@@ -74,22 +73,25 @@ int ft_unset(struct	s_last_command * dictioanry, char **envp, char **data, int c
     dictionary_t *provide;
 
     i = 0;
-    len = ft_strlen(dictioanry->data);
+    len = ft_zero_byte_strlen(dictioanry->data);
     int dict_key_len = 0;
     endindex = 0;
     contindex = 0;
-    tmp = dictioanry->variable_dic;
+    provide = NULL;
+    tmp = dictioanry->variable_dic; 
     while (dictioanry->data[contindex])
-    {	
+    {
        endindex = (endindex = ft_strcmp_char(dictioanry->data + contindex,' ',len)) > 0 ? endindex : len;
         while (tmp != NULL)
         {
-            dict_key_len = ft_strlen(tmp->key);
+            dict_key_len = ft_zero_byte_strlen(tmp->key);
            if(ft_strncmp(dictioanry->data + contindex,tmp->key,endindex) == 0 && endindex - contindex == dict_key_len)
             {
                 if(dictioanry->variable_dic == tmp)
                     dictioanry->variable_dic = dictioanry->variable_dic->next;
+                if(provide != NULL)
                 provide->next = tmp->next;
+                else provide = tmp->next;
                 ft_dictionary_del_key(tmp);
                 break;
             }

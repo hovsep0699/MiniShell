@@ -37,7 +37,8 @@
 #define OPEN_ANGEL_BRACKETS 2
 #define CLOSE_ANGEL_BRACKETS 3
 #define OPEN_CLOSE 4
-#define DOUBLE_BRACKETS 5
+#define DGREATHER 5
+#define GREATHER 8
 #define NOT_NEW_LINE 6
 #define PIPE 7
 #define CHAR_QUATES 39
@@ -100,7 +101,7 @@ dictionary_t *ft_dictionary_create(char *items);
 int				ft_dictionarysize(dictionary_t *stack);
 int 			ft_alloc_split_minishell(char const *s, char c, char exp, char exp2);
 char 			*find_data(char *key,dictionary_t *command);
-char 			*ft_tolower_minishell(char *upper_str,int len);
+char 			*ft_tolower_minishell(char *upper_str,int *len);
 int 			ft_export(struct	s_last_command * dictioanry,char **envp, char **data,int count);
 void 			ft_print_error(int exeption,char *str_exeption,char element_exeption,char *command_name);
 int 			find_data_int(char *key,dictionary_t *command);
@@ -111,7 +112,8 @@ int 			ft_unset(struct	s_last_command * dictioanry,char **envp, char **data,int 
 void 			ft_dictionary_del_key(dictionary_t *del_stack);
 int 			ft_write_file(struct	s_last_command * dictioanry,char **envp, char **data,int count);
 int 			only_create_file(char *file_name,struct	s_last_command *dictioanry);
-int 			ft_count_quote(char *s, char quoet, char dquoet);
+int 			ft_count_quote(char *s);
 void			ft_char_pointer_erase(char *str, size_t it);
 int 			ft_isalnum_str(char *str,int *i);
+int 			ft_count_quote_character(char character,int *quoet_exist,int *dquoet_exist);
 #endif

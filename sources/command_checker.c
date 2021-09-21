@@ -43,43 +43,51 @@ int ft_isalnum_str(char *str,int *i)
 	return(index);
 	
 }
-int ft_count_quote(char  *s, char quoet, char dquoet)
+int ft_count_quote_character(char character,int *quoet_exist,int *dquoet_exist)
+{
+		if((character == CHAR_QUATES && *dquoet_exist == 1) && *quoet_exist == 1)
+		{
+			*quoet_exist = 0;
+			return(true);
+		}
+		 else if ((character == CHAR_QUATES && *dquoet_exist == 1) && *quoet_exist == 0)
+		 {
+			*quoet_exist = 1;
+			return(true);
+		}
+			
+		else if((character == CHAR_DQUATES && *quoet_exist == 1) && *dquoet_exist == 1)
+		{
+			*dquoet_exist = 0;
+			return(true);
+		}
+		else if((character == CHAR_DQUATES && *quoet_exist == 1) && *dquoet_exist == 0)
+		{
+			*dquoet_exist = 1;
+			return(true);
+		}
+		return(false);
+}
+int ft_count_quote(char  *s)
 {
 	int	i;
 	size_t	total;
-	int exp_state;
-	int exp_state2;
+	int quoet_exist;
+	int dquoet_exist;
 
 	i = 0;
 	total = 0;
-	exp_state = 1;
-	exp_state2 = 1;
+	quoet_exist = 1;
+	dquoet_exist = 1;
 	while (s[i])
 	{
-		if((s[i] == quoet && exp_state2 == 1) && exp_state == 1)
-		{
+		if(ft_count_quote_character(s[i],&quoet_exist,&dquoet_exist))
 			total++;
-			exp_state = 0;
-		}
-		 else if ((s[i] == quoet && exp_state2 == 1) && exp_state == 0)
-		 {
-			total++;
-			exp_state = 1;
-		}
-			
-		else if((s[i] == dquoet && exp_state == 1) && exp_state2 == 1)
-		{
-			total++;
-			exp_state2 = 0;
-		}
-		else if((s[i] == dquoet && exp_state == 1) && exp_state2 == 0)
-		{
-			total++;
-			exp_state2 = 1;
-		}
-		else if(s[i] == '$' && s[i + 1] == '?' && exp_state2 != 0)
+		else if(s[i] == '\\' && (quoet_exist != 0 || dquoet_exist != 0))
+			total += 1;
+		else if(s[i] == '$' && s[i + 1] == '?' && quoet_exist != 0)
 			total += 2;
-		else if(s[i] == '$' && exp_state2 != 0)
+		else if(s[i] == '$' && quoet_exist != 0)
 			total += ft_isalnum_str(s + i + 1,&i) + 1;
 		i++;
 	}
@@ -94,7 +102,6 @@ int exec_in_function(char **arguments,t_last_command *command_shablon, int count
 	
 	i = command_shablon->index_command + 1;
 	dollar_index = 0;
-	
 	while (i < count)
 	{
 		if(arguments[i][0] == ';')
@@ -110,17 +117,9 @@ int exec_in_function(char **arguments,t_last_command *command_shablon, int count
 			i += 2;
 			continue;
 		}
-		if(ft_zero_byte_strlen(arguments[i]) > 1 && (dollar_index = ft_strcmp_char(arguments[i],'$',ft_zero_byte_strlen(arguments[i])))!=-1)
-		{
-			command_shablon->dollar_exist = 1;
-			command_shablon->data = ft_equal_strjoin(command_shablon->data,command_shablon,arguments[i]);
-
-		}
-		else
-		{
-			command_shablon->data = ft_dis_strjoin(command_shablon->data,arguments[i], 2);
-		}
-			
+		
+		command_shablon->data = ft_equal_strjoin(command_shablon->data,command_shablon,arguments[i]);
+	
 		i++;
 	}
 
@@ -146,8 +145,7 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 	i = 0;
 	while (comand_shablon->index_command<count)
 	{
-		len = ft_zero_byte_strlen(list_argument[i]);
-		lower_case = ft_tolower_minishell(list_argument[i], len);
+		lower_case = ft_tolower_minishell(list_argument[i], &len);
 		if(ft_strncmp(lower_case,"echo",4) == 0)
 		{
 			exeption = PARSER_ERROR;
@@ -193,6 +191,7 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 			if(len == 5)
 				exec_in_function(list_argument,comand_shablon,count,env_my);
 		}
+		ft_strdel(&lower_case);
 	}
 	return(1);
 }
