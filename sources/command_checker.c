@@ -98,12 +98,16 @@ int exec_in_function(char **arguments,t_last_command *command_shablon, int count
 {
 	int i;
 	int dollar_index;
+	int end_of_line;
 	
 	
 	i = command_shablon->index_command + 1;
 	dollar_index = 0;
+	end_of_line = 0;
 	while (i < count)
 	{
+		if(end_of_line >= i)
+		end_of_line = ft_vecstr_search2(arguments,";",i);
 		if(arguments[i][0] == ';')
 		{
 			command_shablon->function_pointer[command_shablon->type_command - 1][command_shablon->util_commant](command_shablon,envp_my, arguments,count);
@@ -113,16 +117,15 @@ int exec_in_function(char **arguments,t_last_command *command_shablon, int count
 		if(arguments[i][0] == '>')
 		{	
 			only_create_file(arguments[i + 1], command_shablon);
-			command_shablon->util_commant = 1;
+			command_shablon->util_commant = GREATHER;
 			i += 2;
 			continue;
 		}
+		//if(arguments[i][0] == '|')
 		
-		command_shablon->data = ft_equal_strjoin(command_shablon->data,command_shablon,arguments[i]);
-	
+		command_shablon->data = ft_equal_strjoin(command_shablon->data,command_shablon,arguments[i],end_of_line == i);
 		i++;
 	}
-
 	if(count == i)
 	{
 		command_shablon->function_pointer[command_shablon->type_command - 1][command_shablon->util_commant](command_shablon, envp_my, arguments, count);
@@ -139,8 +142,6 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 	char *lower_case;
 	int i;
 	int exeption;
-	dictionary_t *tmp;
-	dictionary_t *rut_dict = NULL;
 	
 	i = 0;
 	while (comand_shablon->index_command<count)
@@ -154,6 +155,7 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 				comand_shablon->type_command = ECHO;
 				exeption =  exec_in_function(list_argument,comand_shablon,count,env_my);
 			}
+			else
 			ft_print_error(exeption,list_argument[i],'\n',NULL);
 		}
 		else if(ft_strncmp(lower_case,"pwd",3) == 0)
@@ -163,12 +165,14 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 				return (3);
 			else return (-1);
 		}
-		else if(ft_strncmp(lower_case,"cd",2) == 0)
+		else if(ft_strncmp(lower_case,"env",3) == 0)
 		{
-			comand_shablon->type_command = 3;
-			if(len == 2)
-				return (4);
-			else return (-1);
+			if(len == 3)
+			{
+				comand_shablon->type_command = ENV;
+				exeption =  exec_in_function(list_argument,comand_shablon,count,env_my);
+			}
+			else ft_print_error(PARSER_ERROR,list_argument[i],'\n',NULL);
 		}
 		else if(ft_strncmp(lower_case,"exit",4) == 0)
 		{

@@ -180,9 +180,9 @@ char				*ft_strtrim(char const *s1, char const *set);
 char				*ft_strnew(size_t size);
 
 
+int                 ft_vecstr_search1(char **vecstr, char *search);
 
-
-
+int                 ft_vecstr_search2(char **vecstr, char *search, int start_index);
 
 
 

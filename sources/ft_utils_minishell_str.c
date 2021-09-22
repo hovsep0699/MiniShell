@@ -107,5 +107,7 @@ int ft_default_set(t_last_command *command)
 	command->function_pointer[1][1] = ft_write_file;
 	command->function_pointer[2][0] = ft_unset;
 	command->function_pointer[2][1] = ft_write_file;
+	command->function_pointer[3][0] = ft_put_env_export;
+	command->function_pointer[3][1] = ft_write_file;
 	return(1);
 }

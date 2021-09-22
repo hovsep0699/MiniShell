@@ -33,14 +33,12 @@
 #define ENV 4
 #define EXITE 5
 //droshakner
-#define SEMICOLON 1
+#define GREATHER 1
 #define OPEN_ANGEL_BRACKETS 2
-#define CLOSE_ANGEL_BRACKETS 3
+#define PIPE 3
 #define OPEN_CLOSE 4
 #define DGREATHER 5
-#define GREATHER 8
 #define NOT_NEW_LINE 6
-#define PIPE 7
 #define CHAR_QUATES 39
 #define CHAR_DQUATES 34
 
@@ -106,7 +104,7 @@ int 			ft_export(struct	s_last_command * dictioanry,char **envp, char **data,int
 void 			ft_print_error(int exeption,char *str_exeption,char element_exeption,char *command_name);
 int 			find_data_int(char *key,dictionary_t *command);
 void 			change_item(char *new_item,int key_index,dictionary_t *dict);
-char			*ft_equal_strjoin(char *s1,t_last_command *command_shablon,char *pars_str);
+char			*ft_equal_strjoin(char *s1,t_last_command *command_shablon,char *pars_str,int end_of_line);
 int 			find_equal_part(char *str);
 int 			ft_unset(struct	s_last_command * dictioanry,char **envp, char **data,int count);
 void 			ft_dictionary_del_key(dictionary_t *del_stack);
@@ -116,4 +114,7 @@ int 			ft_count_quote(char *s);
 void			ft_char_pointer_erase(char *str, size_t it);
 int 			ft_isalnum_str(char *str,int *i);
 int 			ft_count_quote_character(char character,int *quoet_exist,int *dquoet_exist);
+int 			ft_Dwrite_file(struct	s_last_command * dictioanry,char **envp, char **data,int count);
+int 			ft_put_env_export(struct	s_last_command * dictionary,char **envp,char **data,int count);
+
 #endif

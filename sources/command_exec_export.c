@@ -1,25 +1,27 @@
 #include "minishell.h"
-int ft_put_env_export(char **envp, dictionary_t *dictionary)
+int ft_put_env_export(struct	s_last_command * dictionary, char **envp, char **data,int count)
 {
     int i;
+    dictionary_t *tmp;
 
     i = 0;
+    tmp = dictionary->variable_dic;
     while (envp[i] && envp[i+1] != '\0')
-    {
+    {//printf("\nvache\n");
         ft_putstr_fd(envp[i],1);
         ft_putchar_fd('\n',1);
         i++;
     }
-    while (dictionary != NULL)
+    while (tmp != NULL)
     {
-        ft_putstr_fd(dictionary->key,1);
+        ft_putstr_fd(tmp->key,1);
         ft_putstr_fd("=",1);
-        if(dictionary->item != NULL && dictionary->item[0] != '\0')
-            ft_putstr_fd(dictionary->item,1);
+        if(tmp->item != NULL && tmp->item[0] != '\0')
+            ft_putstr_fd(tmp->item,1);
         else
             ft_putstr_fd("\'\'",1);
         ft_putchar_fd('\n',1);
-        dictionary = dictionary->next;
+        tmp = tmp->next;
     }
     return(1);
     
@@ -36,16 +38,17 @@ int 			ft_export(struct	s_last_command * dictioanry,char **envp, char **data,int
         return(UNPRINT_ERROR);
     if(ft_zero_byte_strlen(dictioanry->data) == 0)
     {
-        ft_put_env_export(envp,dictioanry->variable_dic);
+        ft_put_env_export(dictioanry,envp,data,count);
         return(SUCCESS);
     }
-    start_index = ft_alloc_split_minishell(dictioanry->data,' ','\'','\"');
     str = ft_split_Vache(dictioanry->data,' ','\'','\"');
+    start_index = ft_vecstrlen(str);
     end_index = 0;
+   // printf("\nend_index = %i && start_index = %i\n",end_index,start_index);
     while (end_index < start_index)
     {
         if((i = find_data_int(str[end_index],dictioanry->variable_dic)) == -1)
-	    {
+	    { 
 		    if((tmp = ft_dictionary_create(str[end_index])) == NULL)
             {
                 tmp = NULL;
@@ -59,6 +62,7 @@ int 			ft_export(struct	s_last_command * dictioanry,char **envp, char **data,int
         tmp = NULL;
         end_index++;
     }
+   
     ft_vecstrdel(&str);
     return(SUCCESS);
 }

@@ -93,7 +93,7 @@ size_t		ft_joins(char const *s2, size_t i,int count, char *subjoin)
 	return (i);
 }
 
-char		*ft_equal_strjoin(char *s1,t_last_command *command_shablon,char *pars_str)
+char		*ft_equal_strjoin(char *s1,t_last_command *command_shablon,char *pars_str,int end_of_line)
 {
 	char	*subjoin;
 	int i;
@@ -111,7 +111,7 @@ char		*ft_equal_strjoin(char *s1,t_last_command *command_shablon,char *pars_str)
 	dquate_exist = 1;
 	end_index = ft_zero_byte_strlen(s1);
 	count = ft_count_quote(pars_str);
-	subjoin = (char *)ft_calloc(sizeof(char) , (end_index + (ft_zero_byte_strlen(pars_str) - count) + 2));
+	subjoin = (char *)ft_calloc(sizeof(char) , (end_index + (ft_zero_byte_strlen(pars_str) - count) + 1 + end_of_line));
 	if(end_index > 0)
 		subjoin = ft_strcpy(subjoin,s1);
 	while (pars_str[i])
@@ -119,8 +119,12 @@ char		*ft_equal_strjoin(char *s1,t_last_command *command_shablon,char *pars_str)
 		if(ft_count_quote_character(pars_str[i],&quate_exist,&dquate_exist))
 			i++;
 		else if(pars_str[i] == '\\' && (dquate_exist != 0 && quate_exist != 0))
+		{
 			i++;
-		else if(pars_str[i] == '$' && pars_str[i + 1] == '?' && quate_exist != 0 && (i!=0 && pars_str[i - 1] != '\\'))
+			subjoin[end_index++] = pars_str[i];
+			i++;
+		}
+		else if(pars_str[i] == '$' && pars_str[i + 1] == '?' && quate_exist != 0)
 		{
 			tmp_str = ft_itoa(command_shablon->exit_status);
 			len_key = ft_zero_byte_strlen(tmp_str);
@@ -129,7 +133,7 @@ char		*ft_equal_strjoin(char *s1,t_last_command *command_shablon,char *pars_str)
 			ft_strdel(&tmp_str);
 			i++;
 		}
-		else if(pars_str[i] == '$' && quate_exist != 0 && (i!=0 && pars_str[i - 1] != '\\'))
+		else if(pars_str[i] == '$' && quate_exist != 0)
 		{
 			subjoin = ft_realloc_strjoin(subjoin, find_data((pars_str + i),command_shablon->variable_dic));
 			end_index += ft_zero_byte_strlen(subjoin) - end_index;
@@ -139,6 +143,7 @@ char		*ft_equal_strjoin(char *s1,t_last_command *command_shablon,char *pars_str)
 		else 
 			subjoin[end_index++] = pars_str[i++];
 	}
+	if(end_of_line)
 	subjoin[end_index] = ' ';
 	ft_strdel(&s1);
 	return(subjoin);
