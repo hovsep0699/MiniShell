@@ -107,10 +107,10 @@ int exec_in_function(char **arguments,t_last_command *command_shablon, int count
 	while (i < count)
 	{
 		if(end_of_line >= i)
-		end_of_line = ft_vecstr_search2(arguments, ";", i);
+			end_of_line = ft_vecstr_search2(arguments, ";", i);
 		if(arguments[i][0] == ';')
 		{
-			command_shablon->function_pointer[command_shablon->type_command - 1][command_shablon->util_commant](command_shablon,envp_my, arguments,count);
+			command_shablon->function_pointer[command_shablon->type_command - 1][command_shablon->util_commant](command_shablon, envp_my, arguments,count);
 			command_shablon->index_command = i + 2;
 			return (SUCCESS);
 		}
@@ -122,7 +122,8 @@ int exec_in_function(char **arguments,t_last_command *command_shablon, int count
 			continue;
 		}
 		//if(arguments[i][0] == '|')
-		command_shablon->data = ft_equal_strjoin(command_shablon->data,command_shablon,arguments[i],end_of_line == i);
+		command_shablon->data = ft_equal_strjoin(command_shablon->data, command_shablon, arguments[i], end_of_line == i);
+		// printf("%s\n", command_shablon->data);
 		i++;
 	}
 	if(count == i)
@@ -143,7 +144,7 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 	int exeption;
 	
 	i = 0;
-	while (comand_shablon->index_command<count)
+	while (comand_shablon->index_command < count)
 	{
 		lower_case = ft_tolower_minishell(list_argument[i], &len);
 		if(ft_strncmp(lower_case, "echo", 4) == 0)

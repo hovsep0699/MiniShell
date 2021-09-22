@@ -10,9 +10,9 @@
 #include <errno.h>
 #include <dirent.h>
 #include <stdio.h>
-#include <readline/readline.h>
 #include "Libft_Vache.h"
 #include "cstring.h"
+#include <readline/readline.h>
 #include <readline/history.h>
 //erorner
 #define START 0
@@ -42,6 +42,18 @@
 #define NOT_NEW_LINE 6
 #define CHAR_QUATES 39
 #define CHAR_DQUATES 34
+
+#define TEXT_RED "\033[0;31m"
+#define TEXT_BLACK "\033[0;30m"
+#define TEXT_GREEN "\033[0;32m"
+#define TEXT_YELLOW "\033[0;33m"
+#define TEXT_BLUE "\033[0;34m"
+#define TEXT_PURPLE "\033[0;35m"
+#define TEXT_CYAN "\033[0;34m"
+#define TEXT_WHITE "\033[0;37m"
+#define gotoxy(x,y) printf("\033[%d;%dH", (y), (x))
+#define clear() printf("\033[H\033[J")
+
 
 typedef struct s_dictionary dictionary_t;
 

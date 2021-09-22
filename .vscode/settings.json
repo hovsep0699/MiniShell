@@ -24,6 +24,8 @@
     "cmath.h": "c",
     "ctypes.h": "c",
     "stdbool.h": "c",
-    "cstring.h": "c"
+    "cstring.h": "c",
+    "history.h": "c",
+    "readline.h": "c"
   }
 }

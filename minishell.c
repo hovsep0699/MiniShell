@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+
 int exec_inout(char *line, DIR *open_dir_now, char **envp, t_last_command *last_command)
 {
 	char **command;
@@ -64,10 +65,10 @@ int quote_check(char *s,char exp,char exp2)
 		i++;
 	}
 	if(!(exp_state && exp_state2))
-		ft_putstr("quote ERROR");
-	else if(ft_strlen(s) > 1 && s[i-2] == '|')
-		ft_putstr("PiPe Error");
-	return((exp_state && exp_state2) && (ft_strlen(s) > 1 && s[i-2] == '|'));
+		ft_putendl("quote ERROR");
+	else if(ft_strlen(s) > 1 && s[i - 2] == '|')
+		ft_putendl("Pipe Error");
+	return((exp_state && exp_state2) && (ft_strlen(s) > 1 && s[i - 2] == '|'));
 }
 char		*ft_dis_strjoin2(char *s1, char *s2,int mod)
 {
@@ -103,19 +104,19 @@ i = 0;
 last_command = (t_last_command *)malloc(sizeof(t_last_command));
 last_command->variable_dic = NULL;
 pipe_problem = 0;
-    last_command->fd[0] = dup(0);
-    last_command->fd[1] = dup(1);
+    last_command->fd[0] = dup(STDIN_FILE);
+    last_command->fd[1] = dup(STDOUT_FILE);
 	while (true)
 	{
 			ft_fd_open(last_command);
 			ft_print_welcome(path);
-			get_next_line(0, &tmp);
+			tmp = readline("");
+			add_history(tmp);
 			if(quote_check(tmp, CHAR_QUATES, CHAR_DQUATES))
 			{
 				ft_strdel(&tmp);
 				continue;
 			}
-
 		exec_inout(tmp, dir_now, envp, last_command);
 		ft_strdel(&line);
 	}

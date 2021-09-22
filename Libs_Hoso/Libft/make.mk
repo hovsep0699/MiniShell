@@ -40,6 +40,7 @@ MKDIR			=	mkdir -p
 
 CFLAGS			=	-Wall -Wextra -Werror -I$(INCLUDES)
 
+
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 					@if [ ! -d $(OBJS_DIR) ]; then $(MKDIR) $(OBJS_DIR); fi
 					$(CC) $(CFLAGS) -c $< -o $@
