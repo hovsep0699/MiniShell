@@ -103,6 +103,8 @@ i = 0;
 last_command = (t_last_command *)malloc(sizeof(t_last_command));
 last_command->variable_dic = NULL;
 pipe_problem = 0;
+    last_command->fd[0] = dup(0);
+    last_command->fd[1] = dup(1);
 	while (true)
 	{
 			ft_fd_open(last_command);
