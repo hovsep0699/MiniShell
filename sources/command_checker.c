@@ -107,7 +107,7 @@ int exec_in_function(char **arguments,t_last_command *command_shablon, int count
 	while (i < count)
 	{
 		if(end_of_line >= i)
-		end_of_line = ft_vecstr_search2(arguments,";",i);
+		end_of_line = ft_vecstr_search2(arguments, ";", i);
 		if(arguments[i][0] == ';')
 		{
 			command_shablon->function_pointer[command_shablon->type_command - 1][command_shablon->util_commant](command_shablon,envp_my, arguments,count);
@@ -146,53 +146,53 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 	while (comand_shablon->index_command<count)
 	{
 		lower_case = ft_tolower_minishell(list_argument[i], &len);
-		if(ft_strncmp(lower_case,"echo",4) == 0)
+		if(ft_strncmp(lower_case, "echo", 4) == 0)
 		{
 			exeption = PARSER_ERROR;
 			if(len == 4)
 			{
 				comand_shablon->type_command = ECHO;
-				exeption =  exec_in_function(list_argument,comand_shablon,count,env_my);
+				exeption =  exec_in_function(list_argument, comand_shablon, count, env_my);
 			}
 			else
-			ft_print_error(exeption,list_argument[i],'\n',NULL);
+			ft_print_error(exeption, list_argument[i],'\n', NULL);
 		}
-		else if(ft_strncmp(lower_case,"pwd",3) == 0)
+		else if(ft_strncmp(lower_case, "pwd", 3) == 0)
 		{
 			comand_shablon->type_command = 2;
 			if(len == 3)
 				return (3);
 			else return (-1);
 		}
-		else if(ft_strncmp(lower_case,"env",3) == 0)
+		else if(ft_strncmp(lower_case, "env", 3) == 0)
 		{
 			if(len == 3)
 			{
 				comand_shablon->type_command = ENV;
-				exeption =  exec_in_function(list_argument,comand_shablon,count,env_my);
+				exeption =  exec_in_function(list_argument, comand_shablon, count, env_my);
 			}
-			else ft_print_error(PARSER_ERROR,list_argument[i],'\n',NULL);
+			else ft_print_error(PARSER_ERROR, list_argument[i], '\n', NULL);
 		}
-		else if(ft_strncmp(lower_case,"exit",4) == 0)
+		else if(ft_strncmp(lower_case, "exit", 4) == 0)
 		{
 			comand_shablon->type_command = 4;
 			if(len == 4)
 				return (5);
 			else return (-1);
 		}
-		else if(ft_strncmp(lower_case,"export",6) == 0)
+		else if(ft_strncmp(lower_case, "export", 6) == 0)
 		{
 			comand_shablon->type_command = EXPORT;
 			if(len == 6)
 				exec_in_function(list_argument,comand_shablon,count,env_my);
 				
 		}
-		else if(ft_strncmp(lower_case,"unset",6) == 0)
+		else if(ft_strncmp(lower_case, "unset", 6) == 0)
 		{
 			
 			comand_shablon->type_command = UNSET;
 			if(len == 5)
-				exec_in_function(list_argument,comand_shablon,count,env_my);
+				exec_in_function(list_argument, comand_shablon, count, env_my);
 		}
 		ft_strdel(&lower_case);
 	}

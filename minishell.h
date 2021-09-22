@@ -31,7 +31,8 @@
 #define EXPORT 2
 #define UNSET 3
 #define ENV 4
-#define EXITE 5
+#define UNDEFINED 5
+#define EXITE 6
 //droshakner
 #define GREATHER 1
 #define OPEN_ANGEL_BRACKETS 2
