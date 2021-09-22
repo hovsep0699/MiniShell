@@ -105,6 +105,7 @@ last_command->variable_dic = NULL;
 pipe_problem = 0;
 	while (true)
 	{
+			ft_fd_open(last_command);
 			ft_print_welcome(path);
 			get_next_line(0, &tmp);
 			if(quote_check(tmp, CHAR_QUATES, CHAR_DQUATES))
@@ -112,6 +113,7 @@ pipe_problem = 0;
 				ft_strdel(&tmp);
 				continue;
 			}
+
 		exec_inout(tmp, dir_now, envp, last_command);
 		ft_strdel(&line);
 	}

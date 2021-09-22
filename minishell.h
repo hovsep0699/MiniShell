@@ -68,6 +68,8 @@ typedef struct	s_last_command
 	char		*data;
 	char		*output_data;
 	char		*name_file;
+	int			fd[2];
+	int			change_fd[2];
 	dictionary_t *variable_dic;
 	int (*function_pointer[5][7])(struct	s_last_command *,char **, char **,int);
 
@@ -116,5 +118,6 @@ int 			ft_isalnum_str(char *str,int *i);
 int 			ft_count_quote_character(char character,int *quoet_exist,int *dquoet_exist);
 int 			ft_Dwrite_file(struct	s_last_command * dictioanry,char **envp, char **data,int count);
 int 			ft_put_env_export(struct	s_last_command * dictionary,char **envp,char **data,int count);
+int				ft_fd_open(t_last_command *command);
 
 #endif

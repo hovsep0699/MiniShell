@@ -122,7 +122,6 @@ int exec_in_function(char **arguments,t_last_command *command_shablon, int count
 			continue;
 		}
 		//if(arguments[i][0] == '|')
-		
 		command_shablon->data = ft_equal_strjoin(command_shablon->data,command_shablon,arguments[i],end_of_line == i);
 		i++;
 	}
