@@ -3,18 +3,23 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: hohayrap <hohayrap@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/24 19:37:06 by vgaspary          #+#    #+#              #
-#    Updated: 2021/01/31 19:37:30 by vgaspary         ###   ########.fr        #
+#    Updated: 2021/09/23 17:29:15 by hohayrap         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS			=	$(wildcard *.c)
+
 OBJS			=	$(SRCS:.c=.o)
+
 CC				=	gcc
+
 RM				=	rm -f
-CFLAGS			=	-Wall -Wextra -Werror -I. -I../Libs_Hoso/Libft/includes
+
+CFLAGS			=	-Wall -Wextra -Werror -I. -I../Libft/includes
+
 NAME			=	libft_vache.a
 
 %.o: %.c

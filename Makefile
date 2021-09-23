@@ -1,32 +1,10 @@
-NAME = minishell
-CC = gcc
-INC = -I. -ILibs_Hoso/Libft/includes -IUtils
-UTIL = ./Utils
-SRCS = $(wildcard sources/*.c) minishell.c
-OBJS = $(SRCS:.c=.o)
+include compile/libs.mk
+include compile/debug.mk
+include compile/main.mk
 
-LINKERS = -LLibs_Hoso/Libft/bin -lft -LUtils -lft_vache -lreadline
+.DEFAULT_GOAL := clear_on_fail
 
-%.o : %.c
-			$(CC) $(CFLAGS) $(INC) -pthread -o $@ -c $<
+clear_on_fail:
+	$(MAKE) all || $(MAKE) fclean
 
-all:		$(NAME)
-
-$(NAME): 	$(OBJS)
-			$(MAKE) -C Libs_Hoso/Libft
-			$(MAKE) -C ./Utils
-			$(CC) $(FLAGS) $(INC) ./Utils/*.o  $(OBJS) -o $(NAME) $(LINKERS)
-
-clean:
-			$(MAKE) -C Libs_Hoso/Libft clean
-			rm -rf $(OBJS)
-			$(MAKE) clean -C ./Utils
-
-fclean:		clean
-			$(MAKE) -C Libs_Hoso/Libft fclean
-			rm -f $(NAME)
-			$(MAKE) fclean -C ./Utils
-	
-re:			fclean all
-
-.PHONY:		all clean fclean re
+.PHONY: clear_on_fail

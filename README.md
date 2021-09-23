@@ -1,1 +1,4 @@
 # MiniShell
+
+# usage
+    ./bin/minishell

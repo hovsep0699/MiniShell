@@ -5,17 +5,23 @@ int exec_inout(char *line, DIR *open_dir_now, char **envp, t_last_command *last_
 {
 	char **command;
 	pid_t pid_child;
+	char *tmp_line;
 	int i;
 	int count;
 	
 	i = 0;
-	line = enter_split_sapce(line);
-	command = ft_split_Vache(line, ' ', CHAR_QUATES, CHAR_DQUATES);
+	int ret;
+	tmp_line = enter_split_sapce(line);
+	command = ft_split_Vache(tmp_line, ' ', CHAR_QUATES, CHAR_DQUATES);
 	count = ft_vecstrlen(command);
 	ft_default_set(last_command);
-	if(((system_command(command, last_command, envp, count))) >= 1)
-		ft_putstr("Ok");
-	ft_memdel((void **)&last_command->data);
+	if((ret = (system_command(command, last_command, envp, count))) >= 1)
+		ft_putstr("Ok\n");
+	else
+		last_command->exit_status = ret;
+	ft_strdel(&last_command->data);
+	ft_strdel(&tmp_line);
+	// ft_memdel((void **)&last_command->data);
 	ft_vecstrdel(&command);
 	return(1);
 }
@@ -91,33 +97,52 @@ char		*ft_dis_strjoin2(char *s1, char *s2,int mod)
 
 int main (int argv,char **args,char **envp)
 {
-char *line;
-DIR *dir_now;
-char *path;
-char *tmp;
-path = replace_str(envp[3]);
-dir_now = opendir(path);
-int pipe_problem;
-t_last_command * last_command;
-int i;
-i = 0;
-last_command = (t_last_command *)malloc(sizeof(t_last_command));
-last_command->variable_dic = NULL;
-pipe_problem = 0;
+	char *line;
+	DIR *dir_now;
+	char *path;
+	char *tmp;
+	// char *root;
+	path = replace_str(envp[3]);
+	// root = NULL;
+	string_t str;
+
+	str = ft_string_constructor(TEXT_GREEN);
+	// root = ft_strdup(path);
+	// root = ft_strdup(TEXT_GREEN);
+	str.join2(&str, path);
+	str.join2(&str, "$> ");
+	str.join2(&str, TEXT_WHITE);
+	// root = ft_realloc_strjoin(root, path);
+	// root = ft_realloc_strjoin(root, "$> ");
+	// root = ft_realloc_strjoin(root, TEXT_WHITE);
+	dir_now = opendir(path);
+	int pipe_problem;
+	t_last_command * last_command;
+	int i;
+	i = 0;
+	last_command = (t_last_command *)malloc(sizeof(t_last_command));
+	last_command->variable_dic = NULL;
+	pipe_problem = 0;
     last_command->fd[0] = dup(STDIN_FILE);
     last_command->fd[1] = dup(STDOUT_FILE);
 	while (true)
 	{
-			ft_fd_open(last_command);
-			ft_print_welcome(path);
-			tmp = readline("");
-			add_history(tmp);
-			if(quote_check(tmp, CHAR_QUATES, CHAR_DQUATES))
-			{
-				ft_strdel(&tmp);
-				continue;
-			}
-		exec_inout(tmp, dir_now, envp, last_command);
+		ft_fd_open(last_command);
+		// ft_print_welcome(str.data);
+		// ft_putstr(TEXT_GREEN);
+		line = readline(str.data);
+		// ft_getline(STDIN_FILE, &line);
+		add_history(line);
+		if(quote_check(line, CHAR_QUATES, CHAR_DQUATES))
+		{
+			ft_strdel(&line);
+			continue;
+		}
+		exec_inout(line, dir_now, envp, last_command);
+		// ft_strdel(&tmp);
 		ft_strdel(&line);
 	}
+	ft_string_destructor(&str);
+	// ft_strdel(&root);
+	return 0;
 }

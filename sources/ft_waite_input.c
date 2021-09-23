@@ -131,7 +131,7 @@ char		*ft_equal_strjoin(char *s1, t_last_command *command_shablon, char *pars_st
 			subjoin = ft_realloc_strjoin(subjoin, tmp_str);
 			end_index += len_key;
 			ft_strdel(&tmp_str);
-			++i;
+			i += 2;
 		}
 		else if(pars_str[i] == '$' && quate_exist != 0)
 		{
@@ -143,7 +143,7 @@ char		*ft_equal_strjoin(char *s1, t_last_command *command_shablon, char *pars_st
 		else 
 			subjoin[end_index++] = pars_str[i++];
 	}
-	if(end_of_line)
+	if(!end_of_line)
 		subjoin[end_index] = ' ';
 	ft_strdel(&s1);
 	return(subjoin);

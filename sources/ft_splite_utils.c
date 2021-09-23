@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char * ft_add_space(char *source,int count, int mod,int index)
+char * ft_add_space(char *source, int count, int mod, int index)
 {
 	char *tmp;
 	int i;
@@ -19,11 +19,11 @@ char * ft_add_space(char *source,int count, int mod,int index)
 		if(count == 1 && j == index + 1)
 			source[j] = ' ';
 		if (count == 2)
-			source[j+1] = ' ';
+			source[j + 1] = ' ';
 		if(count == 3)
 		{
 			source[j] = ' ';
-			source[j+2] = ' ';
+			source[j + 2] = ' ';
 			j += 1;
 		}
 		source[j] = tmp_character;
@@ -45,11 +45,11 @@ int ft_len_array(char *splite_array)
 	{
 		if((splite_array[i] == '|' || splite_array[i] == '>' || splite_array[i] == '<' || splite_array[i] == ';') && i != 0)
 		{
-			count += splite_array[i-1] != ' ' ? 1 : 0;
-			count += splite_array[i+2] != ' ' ? 1 : 0;
-			if((ft_strncmp(splite_array+i,"<>",2) == 0) || (ft_strncmp(splite_array+i,">>",2) == 0))
+			count += splite_array[i - 1] != ' ' ? 1 : 0;
+			count += splite_array[i + 2] != ' ' ? 1 : 0;
+			if((ft_strncmp(splite_array + i, "<>", 2) == 0) || (ft_strncmp(splite_array + i, ">>", 2) == 0))
 			{
-				i ++;
+				i++;
 			}
 			state = 0;
 		}
@@ -69,7 +69,7 @@ char *enter_split_sapce(char *not_splite)
 	state = 0;
 	j = 0;
 	len = ft_len_array(not_splite);
-	splite_array = ft_calloc(sizeof(char),len + 1);
+	splite_array = ft_calloc(len + 1, sizeof(char));
 	//ft_strlcpy(splite_array,not_splite,ft_strlen(not_splite) + 1);
 
 	while (not_splite[i])	
@@ -77,9 +77,9 @@ char *enter_split_sapce(char *not_splite)
 		
 		if((not_splite[i] == '|' || not_splite[i] == '>' || not_splite[i] == '<' || not_splite[i] == ';') && i != 0)
 		{	
-			if(not_splite[i-1] != ' ')
+			if(not_splite[i - 1] != ' ')
 					splite_array[j++] = ' ';
-			if((ft_strncmp(not_splite+i,"<>",2) == 0) || (ft_strncmp(not_splite+i,">>",2) == 0))
+			if((ft_strncmp(not_splite + i, "<>", 2) == 0) || (ft_strncmp(not_splite + i, ">>", 2) == 0))
 			{
 				
 				splite_array[j++] = not_splite[i++];
@@ -88,13 +88,14 @@ char *enter_split_sapce(char *not_splite)
 			}
 			else 
 				splite_array[j++] = not_splite[i];
-			if(not_splite[i+1] != ' ')
+			if(not_splite[i + 1] != ' ')
 					splite_array[j++] = ' ';
 			i++;
 		}
 		else
 		 	splite_array[j++] = not_splite[i++];		
 	}
-	ft_strdel(&not_splite);
+	splite_array[j] = '\0';
+	// ft_strdel(&not_splite);
 	return(splite_array);
 }
