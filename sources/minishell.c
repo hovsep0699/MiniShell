@@ -21,7 +21,6 @@ int exec_inout(char *line, DIR *open_dir_now, char **envp, t_last_command *last_
 		last_command->exit_status = ret;
 	ft_strdel(&last_command->data);
 	ft_strdel(&tmp_line);
-	// ft_memdel((void **)&last_command->data);
 	ft_vecstrdel(&command);
 	return(1);
 }
@@ -101,20 +100,14 @@ int main (int argv,char **args,char **envp)
 	DIR *dir_now;
 	char *path;
 	char *tmp;
-	// char *root;
 	path = replace_str(envp[3]);
-	// root = NULL;
+
 	string_t str;
 
 	str = ft_string_constructor(TEXT_GREEN);
-	// root = ft_strdup(path);
-	// root = ft_strdup(TEXT_GREEN);
 	str.join2(&str, path);
 	str.join2(&str, "$> ");
 	str.join2(&str, TEXT_WHITE);
-	// root = ft_realloc_strjoin(root, path);
-	// root = ft_realloc_strjoin(root, "$> ");
-	// root = ft_realloc_strjoin(root, TEXT_WHITE);
 	dir_now = opendir(path);
 	int pipe_problem;
 	t_last_command * last_command;
@@ -128,10 +121,7 @@ int main (int argv,char **args,char **envp)
 	while (true)
 	{
 		ft_fd_open(last_command);
-		// ft_print_welcome(str.data);
-		// ft_putstr(TEXT_GREEN);
 		line = readline(str.data);
-		// ft_getline(STDIN_FILE, &line);
 		add_history(line);
 		if(quote_check(line, CHAR_QUATES, CHAR_DQUATES))
 		{
@@ -139,7 +129,6 @@ int main (int argv,char **args,char **envp)
 			continue;
 		}
 		exec_inout(line, dir_now, envp, last_command);
-		// ft_strdel(&tmp);
 		ft_strdel(&line);
 	}
 	ft_string_destructor(&str);
