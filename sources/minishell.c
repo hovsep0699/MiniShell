@@ -20,6 +20,7 @@ int exec_inout(char *line, DIR *open_dir_now, char **envp, t_last_command *last_
 	else
 		last_command->exit_status = ret;
 	ft_strdel(&last_command->data);
+	//printf("\nha ha\n");
 	ft_strdel(&tmp_line);
 	ft_vecstrdel(&command);
 	return(1);

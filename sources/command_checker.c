@@ -111,7 +111,8 @@ int exec_in_function(char **arguments,t_last_command *command_shablon, int count
 		if(arguments[i][0] == ';')
 		{
 			command_shablon->function_pointer[command_shablon->type_command - 1][command_shablon->util_commant](command_shablon, envp_my, arguments,count);
-			command_shablon->index_command = i + 2;
+			command_shablon->index_command = i+1;
+			ft_strdel(&command_shablon->data);
 			return (SUCCESS);
 		}
 		if(arguments[i][0] == '>')
