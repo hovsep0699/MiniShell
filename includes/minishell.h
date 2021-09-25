@@ -14,9 +14,10 @@
 #include "cstring.h"
 #include <readline/readline.h>
 #include <readline/history.h>
+
 //erorner
 #define START 0
-#define EXIT -7
+// #define EXIT -7
 #define PARSER_ERROR -1
 #define WRONG_INPUT -2
 #define COMAND_NOT_FOUND -3
@@ -27,16 +28,16 @@
 #define FIRSTDIGIT -8
 #define SUCCESS 1
 //tiper
-#define ECHO 1
-#define EXPORT 2
-#define UNSET 3
-#define ENV 4
-#define UNDEFINED 5
-#define EXITE 6
+// #define ECHO 1
+// #define EXPORT 2
+// #define UNSET 3
+// #define ENV 4
+// #define UNDEFINED 5
+// #define EXIT 6
 //droshakner
 #define GREATHER 1
 #define OPEN_ANGEL_BRACKETS 2
-#define PIPE 3
+// #define PIPE 3
 #define OPEN_CLOSE 4
 #define DGREATHER 5
 #define NOT_NEW_LINE 6
@@ -51,12 +52,61 @@
 #define TEXT_PURPLE "\033[0;35m"
 #define TEXT_CYAN "\033[0;34m"
 #define TEXT_WHITE "\033[0;37m"
-#define gotoxy(x,y) printf("\033[%d;%dH", (y), (x))
-#define clear() printf("\033[H\033[J")
+// #define gotoxy(x,y) printf("\033[%d;%dH", (y), (x))
+// #define clear() printf("\033[H\033[J")
+
+
+#define SIGHUP  1   /* Hangup the process */ 
+#define SIGINT  2   /* Interrupt the process */ 
+#define SIGQUIT 3   /* Quit the process */ 
+#define SIGILL  4   /* Illegal instruction. */ 
+#define SIGTRAP 5   /* Trace trap. */ 
+#define SIGABRT 6 	/* Abort. */
+
+#define MAX_BUILTIN_FUNCS 6
+
+#define MAX_SIDE_FUNCS 6
 
 
 typedef struct s_dictionary dictionary_t;
+typedef	enum e_builtin_commands t_builtin_commands;
+typedef	enum e_side_commands t_side_commands;
+typedef struct s_last_command t_last_command;
+typedef struct s_command_function t_command_function;
+typedef struct s_command_side_function t_command_side_function;
+typedef	int (*cmd_func_t)(t_last_command *, char **, char **, int);
 
+enum e_builtin_commands
+{
+	ECHO,
+	EXPORT,
+	UNSET,
+	EXIT,
+	ENV,
+	UNDEFINED
+};
+
+enum e_side_commands
+{
+	WRITE,
+	READ,
+	DWRITE,
+	DREAD,
+	PIPE,
+	NONE
+};
+
+struct s_command_function
+{
+	t_builtin_commands name;
+	cmd_func_t function;
+};
+
+struct s_command_side_function
+{
+	t_side_commands name;
+	cmd_func_t function;
+};
 
 struct	s_dictionary
 {
@@ -64,31 +114,41 @@ struct	s_dictionary
 	char *item;
 	struct	s_dictionary *next;
 };
-typedef struct	s_last_command
+struct	s_last_command
 {
-	int			start_program;
-	int			echo_option;
-	int 		quote_staet_new;
-	size_t		exit_status;
-	int 		rut;
-	int			type_command;
-	int			util_commant;
-	int			index_command;
-	int			last_command;
-	int			nerar_exeption;
-	int			dollar_exist;
-	int			env_exist;
-	char		*data;
-	char		*output_data;
-	char		*name_file;
-	int			fd[2];
-	int			change_fd[2];
-	dictionary_t *variable_dic;
-	int (*function_pointer[5][7])(struct	s_last_command *,char **, char **,int);
+	int						start_program;
+	int						echo_option;
+	int 					quote_staet_new;
+	size_t					exit_status;
+	int 					rut;
+	t_builtin_commands		type_command;
+	t_side_commands			util_commant;
+	int						index_command;
+	int						last_command;
+	int						nerar_exeption;
+	int						dollar_exist;
+	int						env_exist;
+	char					*data;
+	char					*output_data;
+	char					*name_file;
+	int						fd[2];
+	int						change_fd[2];
+	dictionary_t			*variable_dic;
+	t_command_function		functions[MAX_BUILTIN_FUNCS];
+	t_command_side_function	side_functions[MAX_SIDE_FUNCS];
+	// int (*function_pointer[5][7])(struct	s_last_command *,char **, char **,int);
 
-}				t_last_command;
+};
 
 
+
+
+t_command_side_function		ft_side_funcs_default_constructor(void);
+t_command_side_function		ft_side_funcs_constructor(t_side_commands name, cmd_func_t cmd);
+t_command_function	ft_command_funcs_default_constructor(void);
+t_command_function	ft_command_funcs_constructor(t_builtin_commands name, cmd_func_t cmd);
+
+t_last_command	ft_last_command_constructor(void);
 int				get_next_line(int fd, char **line);
 char			*ft_dis_strjoin(char *s1, char  *s2,int mod);
 size_t		ft_joins(char const *s2, size_t i,int count, char *subjoin);
@@ -132,5 +192,6 @@ int 			ft_count_quote_character(char character,int *quoet_exist,int *dquoet_exis
 int 			ft_Dwrite_file(struct	s_last_command * dictioanry,char **envp, char **data,int count);
 int 			ft_put_env_export(struct	s_last_command * dictionary,char **envp,char **data,int count);
 int				ft_fd_open(t_last_command *command);
-
+void			ft_last_command_destructor(t_last_command *lcmd);
+void			ft_process_signal(int signal);
 #endif

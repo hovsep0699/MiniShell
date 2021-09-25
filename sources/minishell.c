@@ -111,17 +111,15 @@ int main (int argv,char **args,char **envp)
 	str.join2(&str, TEXT_WHITE);
 	dir_now = opendir(path);
 	int pipe_problem;
-	t_last_command * last_command;
+	// t_last_command * last_command;
 	int i;
 	i = 0;
-	last_command = (t_last_command *)malloc(sizeof(t_last_command));
-	last_command->variable_dic = NULL;
-	pipe_problem = 0;
-    last_command->fd[0] = dup(STDIN_FILE);
-    last_command->fd[1] = dup(STDOUT_FILE);
+	t_last_command lcmd;
+
+	lcmd = ft_last_command_constructor();
 	while (true)
 	{
-		ft_fd_open(last_command);
+		ft_fd_open(&lcmd);
 		line = readline(str.data);
 		add_history(line);
 		if(quote_check(line, CHAR_QUATES, CHAR_DQUATES))
@@ -129,10 +127,13 @@ int main (int argv,char **args,char **envp)
 			ft_strdel(&line);
 			continue;
 		}
-		exec_inout(line, dir_now, envp, last_command);
+		exec_inout(line, dir_now, envp, &lcmd);
 		ft_strdel(&line);
 	}
+	
 	ft_string_destructor(&str);
+	ft_last_command_destructor(&lcmd);
+
 	// ft_strdel(&root);
 	return 0;
 }

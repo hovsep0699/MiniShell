@@ -7,3 +7,5 @@ int ft_print_echo(struct	s_last_command *command_shablon, char **envp_my, char *
 			write(1,"\n",1);
 		return(1);
 }
+
+// int	ft_exit
