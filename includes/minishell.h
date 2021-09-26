@@ -22,7 +22,7 @@
 #define WRONG_INPUT -2
 #define COMAND_NOT_FOUND -3
 #define BAD_ASSIGNMENT -4
-#define COMMAND_NOT_FOUND -5
+#define COMMAND_NOT_FOUND 255
 #define UNPRINT_ERROR -10
 #define InvalidParameterName -6
 #define FIRSTDIGIT -8
@@ -137,21 +137,30 @@ struct	s_last_command
 	t_command_function		functions[MAX_BUILTIN_FUNCS];
 	t_command_side_function	side_functions[MAX_SIDE_FUNCS];
 	// int (*function_pointer[5][7])(struct	s_last_command *,char **, char **,int);
-
 };
 
+
+/*    to do    */
+
+// struct s_function_args
+// {
+// 	t_last_command lcmd;
+// 	char **envp;
+// 	char **data;
+// 	int		count
+// };
 
 
 
 t_command_side_function		ft_side_funcs_default_constructor(void);
 t_command_side_function		ft_side_funcs_constructor(t_side_commands name, cmd_func_t cmd);
-t_command_function	ft_command_funcs_default_constructor(void);
-t_command_function	ft_command_funcs_constructor(t_builtin_commands name, cmd_func_t cmd);
+t_command_function			ft_command_funcs_default_constructor(void);
+t_command_function			ft_command_funcs_constructor(t_builtin_commands name, cmd_func_t cmd);
 
 t_last_command	ft_last_command_constructor(void);
 int				get_next_line(int fd, char **line);
 char			*ft_dis_strjoin(char *s1, char  *s2,int mod);
-size_t		ft_joins(char const *s2, size_t i,int count, char *subjoin);
+size_t			ft_joins(char const *s2, size_t i,int count, char *subjoin);
 int				ft_dis_strchr(const char *s, int c);
 char			*ft_clean(char *bf, int length);
 char			*ft_single_join();
@@ -170,7 +179,7 @@ int 			ft_print_echo(t_last_command *command_shablon, char **envp_my,char **data
 void 			ft_dictionary_del(dictionary_t *del_stack);
 void			ft_dictionaryadd_back(dictionary_t **lst, dictionary_t *new);
 dictionary_t	*ft_dictionarylast(dictionary_t *lst);
-dictionary_t *ft_dictionary_create(char *items);
+dictionary_t	*ft_dictionary_create(char *items);
 int				ft_dictionarysize(dictionary_t *stack);
 int 			ft_alloc_split_minishell(char const *s, char c, char exp, char exp2);
 char 			*find_data(char *key,dictionary_t *command);
@@ -191,7 +200,11 @@ int 			ft_isalnum_str(char *str,int *i);
 int 			ft_count_quote_character(char character,int *quoet_exist,int *dquoet_exist);
 int 			ft_Dwrite_file(struct	s_last_command * dictioanry,char **envp, char **data,int count);
 int 			ft_put_env_export(struct	s_last_command * dictionary,char **envp,char **data,int count);
+int				ft_exit(t_last_command *command_shablon, char **envp_my, char **data, int count);
 int				ft_fd_open(t_last_command *command);
 void			ft_last_command_destructor(t_last_command *lcmd);
 void			ft_process_signal(int signal);
+cmd_func_t		ft_search_side_func(t_last_command *lcmd);
+cmd_func_t		ft_search_builtin_func(t_last_command *lcmd);
+t_last_command	ft_last_command_constructor();
 #endif

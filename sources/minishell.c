@@ -1,6 +1,7 @@
 #include "minishell.h"
 
 
+
 int exec_inout(char *line, DIR *open_dir_now, char **envp, t_last_command *last_command)
 {
 	char **command;
@@ -15,6 +16,7 @@ int exec_inout(char *line, DIR *open_dir_now, char **envp, t_last_command *last_
 	command = ft_split_Vache(tmp_line, ' ', CHAR_QUATES, CHAR_DQUATES);
 	count = ft_vecstrlen(command);
 	ft_default_set(last_command);
+	// ft_putstr(command[0]);
 	if((ret = (system_command(command, last_command, envp, count))) >= 1)
 		ft_putstr("Ok\n");
 	else
@@ -130,7 +132,6 @@ int main (int argv,char **args,char **envp)
 		exec_inout(line, dir_now, envp, &lcmd);
 		ft_strdel(&line);
 	}
-	
 	ft_string_destructor(&str);
 	ft_last_command_destructor(&lcmd);
 

@@ -66,7 +66,7 @@ t_last_command ft_last_command_constructor()
     lcmd.functions[0] = (t_command_function){ECHO, ft_print_echo};
     lcmd.functions[1] = (t_command_function){EXPORT, ft_export};
     lcmd.functions[2] = (t_command_function){UNSET, ft_unset};
-    lcmd.functions[3] = (t_command_function){EXIT, NULL};
+    lcmd.functions[3] = (t_command_function){EXIT, ft_exit};
     lcmd.functions[4] = (t_command_function){ENV, ft_put_env_export};
     lcmd.functions[5] = (t_command_function){UNDEFINED, NULL};
     lcmd.side_functions[0] = (t_command_side_function){WRITE, ft_write_file};

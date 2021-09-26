@@ -184,9 +184,9 @@ int                 ft_vecstr_search1(char **vecstr, char *search);
 
 int                 ft_vecstr_search2(char **vecstr, char *search, int start_index);
 
+void                ft_vecstrprint(char **vecstr);
 
-
-
+bool                ft_isnum_str(char *str);
 
 
 

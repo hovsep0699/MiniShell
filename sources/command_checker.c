@@ -106,11 +106,14 @@ int exec_in_function(char **arguments, t_last_command *command_shablon, int coun
 	end_of_line = 0;
 	while (i < count)
 	{
+	
+
 		if(end_of_line >= i)
 			end_of_line = ft_vecstr_search2(arguments, ";", i);
 		if(arguments[i][0] == ';')
 		{
-			command_shablon->functions[command_shablon->type_command - 1][command_shablon->util_commant](command_shablon, envp_my, arguments,count);
+			//command_shablon->functions[command_shablon->type_command - 1][command_shablon->util_commant](command_shablon, envp_my, arguments,count);
+			ft_search_side_func(command_shablon)(command_shablon, envp_my, arguments, count);
 			command_shablon->index_command = i + 1;
 			ft_strdel(&command_shablon->data);
 			return (SUCCESS);
@@ -118,7 +121,7 @@ int exec_in_function(char **arguments, t_last_command *command_shablon, int coun
 		if(arguments[i][0] == '>')
 		{	
 			only_create_file(arguments[i + 1], command_shablon);
-			command_shablon->util_commant = GREATHER;
+			command_shablon->util_commant = WRITE;
 			i += 2;
 			continue;
 		}
@@ -129,7 +132,7 @@ int exec_in_function(char **arguments, t_last_command *command_shablon, int coun
 	}
 	if(count == i)
 	{
-		command_shablon->function_pointer[command_shablon->type_command - 1][command_shablon->util_commant](command_shablon, envp_my, arguments, count);
+		ft_search_side_func(command_shablon)(command_shablon, envp_my, arguments, count);
 		command_shablon->index_command = i;
 		return(SUCCESS);
 	}
@@ -172,7 +175,10 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 				ft_print_error(PARSER_ERROR, list_argument[i], '\n', NULL);
 		}
 		else if(ft_strcmp(lower_case, "exit") == 0)
+		{
 			comand_shablon->type_command = EXIT;
+			exec_in_function(list_argument, comand_shablon, count, env_my);	
+		}
 		else if(ft_strcmp(lower_case, "export") == 0)
 		{
 			comand_shablon->type_command = EXPORT;
