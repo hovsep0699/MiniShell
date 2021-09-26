@@ -16,38 +16,50 @@ int	ft_exit(t_last_command *command_shablon, char **envp_my, char **data, int co
 
 	index = 0;
 	is_error = false;
-	while (command_shablon->data[index] && ft_isspace(command_shablon->data[index])) ++index;
-	if (!command_shablon->data[index])
-		is_error = true;
+	if (!command_shablon->data)
+		exit_status = 0;
 	else
 	{
-		while (command_shablon->data[index] && ft_isdigit(command_shablon->data[index])) ++index;
-		--index;
-		if (!command_shablon->data[index] || (!ft_isdigit(command_shablon->data[index]) && !ft_isspace(command_shablon->data[index])))
-		{
-			printf("ok %c\n", command_shablon->data[index]);
+		while (command_shablon->data[index] && ft_isspace(command_shablon->data[index])) ++index;
+		if (!command_shablon->data[index])
 			is_error = true;
-		}
 		else
-			while (command_shablon->data[++index] && ft_isspace(command_shablon->data[index])) ;
+		{
+			while (command_shablon->data[index] && ft_isdigit(command_shablon->data[index])) ++index;
+			--index;
+			if (!command_shablon->data[index] || (!ft_isdigit(command_shablon->data[index]) && !ft_isspace(command_shablon->data[index])))
+			{
+				printf("ok %c\n", command_shablon->data[index]);
+				is_error = true;
+			}
+			else
+				while (command_shablon->data[++index] && ft_isspace(command_shablon->data[index])) ;
 
-	}
-	// --index;
-	if (command_shablon->data[index] && !is_error)
-		is_error = true;
-	if (is_error)
-	{
-		printf("%s %s: %s: %s\n", "exit", "bash",command_shablon->data, "numeric argument required");
-		exit_status = COMMAND_NOT_FOUND;
-	}
-	else
-	{
-		if (!command_shablon->data)
-			exit_status = 0;
+		}
+		if (command_shablon->data[index] && !is_error)
+			is_error = true;
+		if (is_error)
+		{
+			printf("%s %s: %s: %s\n", "exit", "bash",command_shablon->data, "numeric argument required");
+			exit_status = COMMAND_NOT_FOUND;
+		}
 		else
 			exit_status = ft_atoi(command_shablon->data);
 	}
 	ft_last_command_destructor(command_shablon);
 	ft_vecstrdel(&data);
 	exit(exit_status);
+}
+
+int	ft_cd(t_last_command *command_shablon, char **envp_my, char **data, int count)
+{
+	int err;
+
+	err = chdir(command_shablon->data);
+	if (err == -1)
+	{
+		printf("%s\n", strerror(errno));
+		return errno;
+	}
+	return 0;
 }

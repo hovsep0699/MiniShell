@@ -1,0 +1,10 @@
+dsadsdfdsgfd
+fds
+gdh
+dsadsdfdsgfdfds
+
+char **av;
+
+av[0] = "cmd"
+av[1] = NULL
+execve("cmd", av, env)

@@ -55,12 +55,16 @@ t_last_command ft_last_command_constructor()
     lcmd.type_command = UNDEFINED;
     lcmd.util_commant = NONE;
     lcmd.variable_dic = NULL;
+    lcmd.data = NULL;
+    lcmd.output_data = NULL;
+    lcmd.name_file = NULL;
     lcmd.change_fd[0] = 0;
     lcmd.change_fd[1] = 0;
     lcmd.echo_option = 0;
     lcmd.exit_status = 0;
     lcmd.dollar_exist = 0;
     lcmd.env_exist = 0;
+    // lcmd.envp = NULL;
     lcmd.fd[0] = dup(STDIN_FILE);
     lcmd.fd[1] = dup(STDIN_FILE);
     lcmd.functions[0] = (t_command_function){ECHO, ft_print_echo};
@@ -68,7 +72,8 @@ t_last_command ft_last_command_constructor()
     lcmd.functions[2] = (t_command_function){UNSET, ft_unset};
     lcmd.functions[3] = (t_command_function){EXIT, ft_exit};
     lcmd.functions[4] = (t_command_function){ENV, ft_put_env_export};
-    lcmd.functions[5] = (t_command_function){UNDEFINED, NULL};
+    lcmd.functions[5] = (t_command_function){CD, ft_cd};
+    lcmd.functions[6] = (t_command_function){UNDEFINED, NULL};
     lcmd.side_functions[0] = (t_command_side_function){WRITE, ft_write_file};
     lcmd.side_functions[1] = (t_command_side_function){READ, NULL};
     lcmd.side_functions[2] = (t_command_side_function){DWRITE, NULL};
@@ -90,5 +95,6 @@ void    ft_last_command_destructor(t_last_command *lcmd)
     ft_strdel(&lcmd->data);
     ft_strdel(&lcmd->output_data);
     ft_strdel(&lcmd->name_file);
+    ft_vecstrdel(&lcmd->envp);
     ft_memdel((void **)&lcmd->variable_dic);
 }

@@ -63,7 +63,7 @@
 #define SIGTRAP 5   /* Trace trap. */ 
 #define SIGABRT 6 	/* Abort. */
 
-#define MAX_BUILTIN_FUNCS 6
+#define MAX_BUILTIN_FUNCS 7
 
 #define MAX_SIDE_FUNCS 6
 
@@ -75,6 +75,7 @@ typedef struct s_last_command t_last_command;
 typedef struct s_command_function t_command_function;
 typedef struct s_command_side_function t_command_side_function;
 typedef	int (*cmd_func_t)(t_last_command *, char **, char **, int);
+// typedef	int (**cmd_funcs_t[])(t_last_command *, char **, char **, int);
 
 enum e_builtin_commands
 {
@@ -83,6 +84,7 @@ enum e_builtin_commands
 	UNSET,
 	EXIT,
 	ENV,
+	CD,
 	UNDEFINED
 };
 
@@ -134,6 +136,7 @@ struct	s_last_command
 	int						fd[2];
 	int						change_fd[2];
 	dictionary_t			*variable_dic;
+	char					**envp;
 	t_command_function		functions[MAX_BUILTIN_FUNCS];
 	t_command_side_function	side_functions[MAX_SIDE_FUNCS];
 	// int (*function_pointer[5][7])(struct	s_last_command *,char **, char **,int);
@@ -149,7 +152,7 @@ struct	s_last_command
 // 	char **data;
 // 	int		count
 // };
-
+// cmd_funcs_t cmds = {ft_export, ft_write_file};
 
 
 t_command_side_function		ft_side_funcs_default_constructor(void);
@@ -207,4 +210,5 @@ void			ft_process_signal(int signal);
 cmd_func_t		ft_search_side_func(t_last_command *lcmd);
 cmd_func_t		ft_search_builtin_func(t_last_command *lcmd);
 t_last_command	ft_last_command_constructor();
+int				ft_cd(t_last_command *command_shablon, char **envp_my, char **data, int count);
 #endif

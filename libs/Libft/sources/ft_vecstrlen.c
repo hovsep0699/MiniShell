@@ -1,11 +1,12 @@
 #include "cstring.h"
 
-size_t ft_vecstrlen(char **str)
+size_t ft_vecstrlen(char **vecstr)
 {
 	size_t count;
 
-	count = -1;
-	while (str[++count]) ;
+	count = 0;
+	while (vecstr[count])
+		++count;
 	return count;
 }
 

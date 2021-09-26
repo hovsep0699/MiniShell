@@ -58,7 +58,7 @@ int free_space(char *clean_space)
 	
 	if(clean_space != NULL && ft_strlen(clean_space) != 0)
 	{
-		free(clean_space);
+		ft_strdel(&clean_space);
 		clean_space = NULL;
 	}
 	return(1);
@@ -92,7 +92,7 @@ void    ft_char_pointer_erase(char *str, size_t it)
 int ft_default_set(t_last_command *command)
 {
 	command->echo_option = 0;
-	command->data = NULL;
+	ft_strdel(&command->data);
 	command->quote_staet_new = 0;
 	command->type_command = 0;
 	command->index_command = 0;

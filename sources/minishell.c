@@ -2,16 +2,15 @@
 
 
 
-int exec_inout(char *line, DIR *open_dir_now, char **envp, t_last_command *last_command)
+int exec_inout(char *line, char **envp, t_last_command *last_command)
 {
 	char **command;
 	pid_t pid_child;
 	char *tmp_line;
 	int i;
 	int count;
-	
-	i = 0;
 	int ret;
+
 	tmp_line = enter_split_sapce(line);
 	command = ft_split_Vache(tmp_line, ' ', CHAR_QUATES, CHAR_DQUATES);
 	count = ft_vecstrlen(command);
@@ -21,7 +20,7 @@ int exec_inout(char *line, DIR *open_dir_now, char **envp, t_last_command *last_
 		ft_putstr("Ok\n");
 	else
 		last_command->exit_status = ret;
-	ft_strdel(&last_command->data);
+	// ft_strdel(&last_command->data);
 	//printf("\nha ha\n");
 	ft_strdel(&tmp_line);
 	ft_vecstrdel(&command);
@@ -47,7 +46,7 @@ char *replace_str(char *home_path)
 	}
 	return(path);
 }
-int quote_check(char *s,char exp,char exp2)
+int quote_check(char *s, char exp, char exp2)
 {
 	int static exp_state;
 	int static exp_state2;
@@ -100,25 +99,40 @@ char		*ft_dis_strjoin2(char *s1, char *s2,int mod)
 int main (int argv,char **args,char **envp)
 {
 	char *line;
-	DIR *dir_now;
 	char *path;
 	char *tmp;
-	path = replace_str(envp[3]);
-
+	char **env;
+	string_t pwd;
+	string_t oldpwd;
+	int pwd_index;
+	int oldpwd_index;
+	int home_index;
 	string_t str;
-
-	str = ft_string_constructor(TEXT_GREEN);
-	str.join2(&str, path);
-	str.join2(&str, "$> ");
-	str.join2(&str, TEXT_WHITE);
-	dir_now = opendir(path);
-	int pipe_problem;
-	// t_last_command * last_command;
-	int i;
-	i = 0;
 	t_last_command lcmd;
+	int len;
 
 	lcmd = ft_last_command_constructor();
+	lcmd.envp = ft_vecstrcpy(envp);
+	pwd_index = ft_vecstr_search1(envp, "PWD");
+	oldpwd_index = ft_vecstr_search1(envp, "OLDPWD");
+	home_index	= ft_vecstr_search1(envp, "HOME");
+	pwd = ft_string_constructor("PWD=");
+	oldpwd = ft_string_constructor("OLDPWD=");
+	printf("%d %d %d %lu\n", pwd_index, oldpwd_index, home_index, ft_zero_byte_strlen("HOME="));
+	pwd.join2(&pwd, envp[home_index] + ft_zero_byte_strlen("HOME="));
+	oldpwd.join2(&oldpwd, envp[home_index] + ft_zero_byte_strlen("HOME="));
+	ft_strdel(&lcmd.envp[pwd_index]);
+	ft_strdel(&lcmd.envp[oldpwd_index]);
+	lcmd.envp[pwd_index] = ft_strdup(pwd.data);
+	lcmd.envp[oldpwd_index] = ft_strdup(oldpwd.data);
+	path = replace_str(envp[home_index]);
+	str = ft_string_default_constructor();
+	str.join2(&str, path);
+	str.join2(&str, "$> ");
+	// str.join2(&str, TEXT_WHITE);
+	// dir_now = opendir(path);
+	// t_last_command * last_command;
+
 	while (true)
 	{
 		ft_fd_open(&lcmd);
@@ -129,12 +143,14 @@ int main (int argv,char **args,char **envp)
 			ft_strdel(&line);
 			continue;
 		}
-		exec_inout(line, dir_now, envp, &lcmd);
+		exec_inout(line, lcmd.envp, &lcmd);
 		ft_strdel(&line);
 	}
 	ft_string_destructor(&str);
+	ft_string_destructor(&pwd);
+	ft_string_destructor(&oldpwd);
 	ft_last_command_destructor(&lcmd);
-
+	// ft_vecstrdel(&env);
 	// ft_strdel(&root);
 	return 0;
 }

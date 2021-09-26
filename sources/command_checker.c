@@ -94,7 +94,7 @@ int ft_count_quote(char  *s)
 	return (total);
 }
 
-int exec_in_function(char **arguments, t_last_command *command_shablon, int count,char **envp_my)
+int exec_in_function(char **arguments, t_last_command *command_shablon, int count, char **envp_my)
 {
 	int i;
 	int dollar_index;
@@ -187,6 +187,11 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 		else if(ft_strcmp(lower_case, "unset") == 0)
 		{
 			comand_shablon->type_command = UNSET;
+			exec_in_function(list_argument, comand_shablon, count, env_my);
+		}
+		else if(ft_strcmp(lower_case, "cd") == 0)
+		{
+			comand_shablon->type_command = CD;
 			exec_in_function(list_argument, comand_shablon, count, env_my);
 		}
 		else
