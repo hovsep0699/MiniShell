@@ -79,6 +79,7 @@ dictionary_t *ft_dictionary_create(char *items)
 	ptr->key[index] = '\0';
 	if(len_items != index)
 		ft_joins_dict(items, index + 1, ft_strlen(items), ptr->item);
+	
 //	ptr->item[index_item] = '\0';
 	return (ptr);
 }

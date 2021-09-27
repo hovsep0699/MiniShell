@@ -28,6 +28,9 @@
 #define InvalidParameterName -6
 #define FIRSTDIGIT -8
 #define SUCCESS 1
+
+
+#define PATH_SHOW_NUMBER 3
 //tiper
 // #define ECHO 1
 // #define EXPORT 2
@@ -138,10 +141,6 @@ struct	s_last_command
 	int						fd[2];
 	int						change_fd[2];
 	dictionary_t			*variable_dic;
-	char					**envp;
-	int						home_index;
-	int						pwd_index;
-	int						oldpwd_index;
 	t_command_function		functions[MAX_BUILTIN_FUNCS];
 	t_command_side_function	side_functions[MAX_SIDE_FUNCS];
 	// int (*function_pointer[5][7])(struct	s_last_command *,char **, char **,int);

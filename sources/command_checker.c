@@ -172,7 +172,7 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 			else
 				ft_print_error(PARSER_ERROR, list_argument[i], '\n', NULL);
 		}
-		else if(ft_strcmp(lower_case, "exit") == 0)
+		else if(ft_strcmp(list_argument[i], "exit") == 0)
 		{
 			comand_shablon->type_command = EXIT;
 			exec_in_function(list_argument, comand_shablon, count, env_my);	

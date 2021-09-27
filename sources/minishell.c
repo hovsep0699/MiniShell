@@ -94,44 +94,65 @@ char		*ft_dis_strjoin2(char *s1, char *s2,int mod)
 	return (subjoin);
 }
 
+
+
 int main (int argv,char **args,char **envp)
 {
 	char *line;
 	char *path;
 	char *tmp;
 	char **env;
-	string_t pwd;
-	string_t oldpwd;
-	int pwd_index;
-	int oldpwd_index;
-	int home_index;
 	string_t str;
+	string_t root_path;
+	char *curr_path;
+	char *pwd;
+	char *first;
+	char *second;
+	int count;
+	
 	t_last_command lcmd;
 	int len;
+	int i;
+
+	count = 0;
+	first = NULL;
+	second = NULL;
+
+	envp[0] = "hello";
+	printf("%s\n", envp[0]);
 
 	lcmd = ft_last_command_constructor();
-	// lcmd.envp = ft_vecstrcpy(envp);
-	// lcmd.pwd_index = ft_vecstr_search1(envp, "PWD");
-	// lcmd.oldpwd_index = ft_vecstr_search1(envp, "OLDPWD");
-	// lcmd.home_index	= ft_vecstr_search1(envp, "HOME");
-	// pwd = ft_string_constructor("PWD=");
-	// oldpwd = ft_string_constructor("OLDPWD=");
-	// printf("%d %d %d %lu\n", lcmd.pwd_index, lcmd.oldpwd_index, lcmd.home_index, ft_zero_byte_strlen("HOME="));
-	// pwd.join2(&pwd, envp[lcmd.home_index] + ft_zero_byte_strlen("HOME="));
-	// oldpwd.join2(&oldpwd, envp[lcmd.home_index] + ft_zero_byte_strlen("HOME="));
-	// ft_strdel(&lcmd.envp[lcmd.pwd_index]);
-	// ft_strdel(&lcmd.envp[lcmd.oldpwd_index]);
-	// lcmd.envp[lcmd.pwd_index] = ft_strdup(pwd.data);
-	// lcmd.envp[lcmd.oldpwd_index] = ft_strdup(oldpwd.data);
-	// printf("sranic chi\n");
-	path = replace_str(getenv("PWD"));
-	// printf("sranica\n");
+	pwd = getenv("PWD");
+	curr_path = pwd;
+	while (true)
+	{
+		curr_path = ft_strrchr(curr_path, '/');
+		if (!curr_path || count > PATH_SHOW_NUMBER + 1)
+			break ;
+		++count;
+	}
+	if (count > PATH_SHOW_NUMBER)
+	{
+		root_path = ft_string_constructor("..");
+		curr_path = pwd;
+		i = count - PATH_SHOW_NUMBER;
+		while (i)
+		{
+			curr_path = ft_strchr(curr_path + 1, '/');
+			--i;
+		}
+		root_path.join2(&root_path, curr_path);
+	}
+	else
+		root_path = ft_string_constructor(pwd);
+	// first = ft_strrchr(pwd, '/');
+	// if (first)
+	// 	second = ft_strrchr(first, '/');
+	// if(second)
+	path = replace_str(root_path.data);
 	str = ft_string_default_constructor();
 	str.join2(&str, path);
 	str.join2(&str, "$> ");
-	// str.join2(&str, TEXT_WHITE);
-	// dir_now = opendir(path);
-	// t_last_command * last_command;
 
 	while (true)
 	{
@@ -147,8 +168,7 @@ int main (int argv,char **args,char **envp)
 		ft_strdel(&line);
 	}
 	ft_string_destructor(&str);
-	ft_string_destructor(&pwd);
-	ft_string_destructor(&oldpwd);
+	ft_string_destructor(&root_path);
 	ft_last_command_destructor(&lcmd);
 	// ft_vecstrdel(&env);
 	// ft_strdel(&root);

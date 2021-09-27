@@ -64,10 +64,6 @@ t_last_command ft_last_command_constructor()
     lcmd.exit_status = 0;
     lcmd.dollar_exist = 0;
     lcmd.env_exist = 0;
-    lcmd.home_index = -1;
-    lcmd.pwd_index = -1;
-    lcmd.oldpwd_index = -1;
-    // lcmd.envp = NULL;
     lcmd.fd[0] = dup(STDIN_FILE);
     lcmd.fd[1] = dup(STDIN_FILE);
     lcmd.functions[0] = (t_command_function){ECHO, ft_print_echo};
@@ -84,12 +80,6 @@ t_last_command ft_last_command_constructor()
     lcmd.side_functions[3] = (t_command_side_function){DREAD, NULL};
     lcmd.side_functions[4] = (t_command_side_function){PIPE, NULL};
     lcmd.side_functions[5] = (t_command_side_function){NONE, NULL};
-
-    // lcmd = (t_last_command){0,0,0,0,0,0,0,0,0,0,0,0,NULL, NULL, NULL, \
-    // {dup(STDIN_FILE), dup(STDOUT_FILE) }, {0, 0}, NULL, \
-
-    // };
-
     return lcmd;
 }
 
