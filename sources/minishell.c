@@ -26,23 +26,21 @@ int exec_inout(char *line, char **envp, t_last_command *last_command)
 	ft_vecstrdel(&command);
 	return(1);
 }
-char *replace_str(char *home_path)
+char *replace_str(char *curr_path)
 {
-	int i;
 	char *path;
 	int j;
+	int i;
 
 	i = 0;
 	j = 0;
-	while(home_path[i] != '/')
-	i++;
-	if((path = (char *)malloc(sizeof(char) * ft_strlen(home_path)- 1)) == NULL)
+	if((path = (char *)ft_calloc(ft_strlen(curr_path) + 1, sizeof(char))) == NULL)
 		return(NULL);
-	while (home_path[i])
+	while (curr_path[i])
 	{
-		path[j] = home_path[i];
-		i++;
-		j++;
+		path[j] = curr_path[i];
+		++i;
+		++j;
 	}
 	return(path);
 }
@@ -112,20 +110,22 @@ int main (int argv,char **args,char **envp)
 	int len;
 
 	lcmd = ft_last_command_constructor();
-	lcmd.envp = ft_vecstrcpy(envp);
-	pwd_index = ft_vecstr_search1(envp, "PWD");
-	oldpwd_index = ft_vecstr_search1(envp, "OLDPWD");
-	home_index	= ft_vecstr_search1(envp, "HOME");
-	pwd = ft_string_constructor("PWD=");
-	oldpwd = ft_string_constructor("OLDPWD=");
-	printf("%d %d %d %lu\n", pwd_index, oldpwd_index, home_index, ft_zero_byte_strlen("HOME="));
-	pwd.join2(&pwd, envp[home_index] + ft_zero_byte_strlen("HOME="));
-	oldpwd.join2(&oldpwd, envp[home_index] + ft_zero_byte_strlen("HOME="));
-	ft_strdel(&lcmd.envp[pwd_index]);
-	ft_strdel(&lcmd.envp[oldpwd_index]);
-	lcmd.envp[pwd_index] = ft_strdup(pwd.data);
-	lcmd.envp[oldpwd_index] = ft_strdup(oldpwd.data);
-	path = replace_str(envp[home_index]);
+	// lcmd.envp = ft_vecstrcpy(envp);
+	// lcmd.pwd_index = ft_vecstr_search1(envp, "PWD");
+	// lcmd.oldpwd_index = ft_vecstr_search1(envp, "OLDPWD");
+	// lcmd.home_index	= ft_vecstr_search1(envp, "HOME");
+	// pwd = ft_string_constructor("PWD=");
+	// oldpwd = ft_string_constructor("OLDPWD=");
+	// printf("%d %d %d %lu\n", lcmd.pwd_index, lcmd.oldpwd_index, lcmd.home_index, ft_zero_byte_strlen("HOME="));
+	// pwd.join2(&pwd, envp[lcmd.home_index] + ft_zero_byte_strlen("HOME="));
+	// oldpwd.join2(&oldpwd, envp[lcmd.home_index] + ft_zero_byte_strlen("HOME="));
+	// ft_strdel(&lcmd.envp[lcmd.pwd_index]);
+	// ft_strdel(&lcmd.envp[lcmd.oldpwd_index]);
+	// lcmd.envp[lcmd.pwd_index] = ft_strdup(pwd.data);
+	// lcmd.envp[lcmd.oldpwd_index] = ft_strdup(oldpwd.data);
+	// printf("sranic chi\n");
+	path = replace_str(getenv("PWD"));
+	// printf("sranica\n");
 	str = ft_string_default_constructor();
 	str.join2(&str, path);
 	str.join2(&str, "$> ");
@@ -143,7 +143,7 @@ int main (int argv,char **args,char **envp)
 			ft_strdel(&line);
 			continue;
 		}
-		exec_inout(line, lcmd.envp, &lcmd);
+		exec_inout(line, envp, &lcmd);
 		ft_strdel(&line);
 	}
 	ft_string_destructor(&str);

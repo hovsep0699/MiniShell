@@ -14,6 +14,7 @@
 #include "cstring.h"
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <limits.h>
 
 //erorner
 #define START 0
@@ -22,7 +23,7 @@
 #define WRONG_INPUT -2
 #define COMAND_NOT_FOUND -3
 #define BAD_ASSIGNMENT -4
-#define COMMAND_NOT_FOUND 255
+#define COMMAND_NOT_FOUND 127
 #define UNPRINT_ERROR -10
 #define InvalidParameterName -6
 #define FIRSTDIGIT -8
@@ -63,7 +64,7 @@
 #define SIGTRAP 5   /* Trace trap. */ 
 #define SIGABRT 6 	/* Abort. */
 
-#define MAX_BUILTIN_FUNCS 7
+#define MAX_BUILTIN_FUNCS 8
 
 #define MAX_SIDE_FUNCS 6
 
@@ -85,6 +86,7 @@ enum e_builtin_commands
 	EXIT,
 	ENV,
 	CD,
+	PWD,
 	UNDEFINED
 };
 
@@ -137,6 +139,9 @@ struct	s_last_command
 	int						change_fd[2];
 	dictionary_t			*variable_dic;
 	char					**envp;
+	int						home_index;
+	int						pwd_index;
+	int						oldpwd_index;
 	t_command_function		functions[MAX_BUILTIN_FUNCS];
 	t_command_side_function	side_functions[MAX_SIDE_FUNCS];
 	// int (*function_pointer[5][7])(struct	s_last_command *,char **, char **,int);
@@ -211,4 +216,5 @@ cmd_func_t		ft_search_side_func(t_last_command *lcmd);
 cmd_func_t		ft_search_builtin_func(t_last_command *lcmd);
 t_last_command	ft_last_command_constructor();
 int				ft_cd(t_last_command *command_shablon, char **envp_my, char **data, int count);
+int				ft_pwd(t_last_command *command_shablon, char **envp_my, char **data, int count);
 #endif

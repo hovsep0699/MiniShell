@@ -159,10 +159,8 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 		}
 		else if(ft_strcmp(lower_case, "pwd") == 0)
 		{
-			comand_shablon->type_command = 2;
-			if(len == 3)
-				return (3);
-			else return (-1);
+			comand_shablon->type_command = PWD;
+			exeption =  exec_in_function(list_argument, comand_shablon, count, env_my);
 		}
 		else if(ft_strcmp(lower_case, "env") == 0)
 		{

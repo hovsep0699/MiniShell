@@ -14,6 +14,18 @@ DEBUG_SRCS		=	$(wildcard debug/*.c)
 
 DEBUG_OBJS		=	$(patsubst debug/%.c, debug/%.o, $(DEBUG_SRCS))
 
+UNAME			=	$(shell uname -s)
+
+ifeq ($(UNAME), Linux)
+	DEBUG_PREQ = debug
+	CHECK_MEMORY = $(MDEBUGGER) $(MDBG_FLAGS) $(DEBUG_NAME)
+endif
+ifeq ($(UNAME), Darwin)
+	DEBUG_PREQ =
+	CHECK_MEMORY = bash ./debug/check_memory.sh
+endif
+
+
 $(DEBUG_DIR)/%.o: $(DEBUG_DIR)/%.c
 					$(CC) $(CFLAGS) $(DEBUG_FLAGS) -c $< -o $@
 
@@ -26,8 +38,8 @@ debug:				debug_clean $(DEBUG_OBJS)
 					@if [ ! -d $(BIN_DIR) ]; then $(MKDIR) $(BIN_DIR); fi
 					$(CC) $(CFLAGS) $(DEBUG_FLAGS) -o $(DEBUG_NAME) $(DEBUG_OBJS) $(LINKERS)
 
-memory:				debug
-					$(MDEBUGGER) $(MDBG_FLAGS) $(DEBUG_NAME)
+memory:				$(DEBUG_PREQ)
+					@$(CHECK_MEMORY)
 
 gdb:				debug
 					$(DEBUGGER) $(DEBUG_NAME)
