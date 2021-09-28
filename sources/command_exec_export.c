@@ -24,6 +24,7 @@ int ft_put_env_export(t_last_command * dictionary, char **envp, char **data,int 
     }
     return(1);
 }
+
 int 			ft_export(t_last_command * dictioanry,char **envp, char **data,int count)
 {
 	dictionary_t *tmp;
@@ -34,6 +35,7 @@ int 			ft_export(t_last_command * dictioanry,char **envp, char **data,int count)
 
     if(dictioanry->data == NULL && dictioanry->env_exist == 1)
         return(UNPRINT_ERROR);
+    
     if(ft_zero_byte_strlen(dictioanry->data) == 0)
     {
         ft_put_env_export(dictioanry,envp,data,count);
@@ -42,9 +44,9 @@ int 			ft_export(t_last_command * dictioanry,char **envp, char **data,int count)
     str = ft_split_Vache(dictioanry->data,' ','\'','\"');
     start_index = ft_vecstrlen(str);
     end_index = 0;
-   // printf("\nend_index = %i && start_index = %i\n",end_index,start_index);
     while (end_index < start_index)
     {
+
         if((i = find_data_int(str[end_index], dictioanry->variable_dic)) == -1)
 	    { 
 		    if((tmp = ft_dictionary_create(str[end_index])) == NULL)

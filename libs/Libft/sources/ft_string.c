@@ -163,9 +163,8 @@ void    ft_string_insert(string_t *str, size_t index, string_t *str2)
     size_t size;
 
     size = ft_zero_byte_strlen(str->data) + ft_zero_byte_strlen(str2->data);
-    new = (char *)malloc(size + 1);
+    new = (char *)ft_calloc(size + 1, sizeof(char));
     ft_strncpy(new, str->data, index + 1);
-    new[index] = '\0';
     ft_strcat(new, str2->data);
     ft_strcat(new, str->data + index);
     ft_strdel(&str->data);
@@ -179,9 +178,8 @@ void    ft_string_insert2(string_t *str, size_t index, char *str2)
     size_t size;
 
     size = ft_zero_byte_strlen(str->data) + ft_zero_byte_strlen(str2);
-    new = (char *)malloc(size * sizeof(char) + 1);
+    new = (char *)ft_calloc(size + 1, sizeof(char));
     ft_strncpy(new, str->data, index + 1);
-    new[index] = '\0';
     ft_strcat(new, str2);
     ft_strcat(new, str->data + index);
     ft_strdel(&str->data);
