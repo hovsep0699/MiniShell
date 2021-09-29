@@ -158,6 +158,7 @@ struct	s_last_command
 // };
 // cmd_funcs_t cmds = {ft_export, ft_write_file};
 
+void ft_setenv(char **envp, char *key, char *value);
 
 t_command_side_function		ft_side_funcs_default_constructor(void);
 t_command_side_function		ft_side_funcs_constructor(t_side_commands name, cmd_func_t cmd);

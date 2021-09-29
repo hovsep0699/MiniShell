@@ -89,6 +89,8 @@ int ft_count_quote(char  *s)
 			total += 2;
 		else if(s[i] == '$' && quoet_exist != 0)
 			total += ft_isalnum_str(s + i + 1,&i) + 1;
+		else if(s[i] == '~' && quoet_exist != 0 && dquoet_exist != 0 && i == 0 && (s[i + 1] == '\0' || s[i + 1] == '/'))
+			total++;
 		i++;
 	}
 	return (total);
@@ -112,7 +114,6 @@ int exec_in_function(char **arguments, t_last_command *command_shablon, int coun
 			end_of_line = ft_vecstr_search2(arguments, ";", i);
 		if(arguments[i][0] == ';')
 		{
-			//command_shablon->functions[command_shablon->type_command - 1][command_shablon->util_commant](command_shablon, envp_my, arguments,count);
 			ft_search_side_func(command_shablon)(command_shablon, envp_my, arguments, count);
 			command_shablon->index_command = i + 1;
 			ft_strdel(&command_shablon->data);
@@ -125,9 +126,7 @@ int exec_in_function(char **arguments, t_last_command *command_shablon, int coun
 			i += 2;
 			continue;
 		}
-		//if(arguments[i][0] == '|')
 		command_shablon->data = ft_equal_strjoin(command_shablon->data, command_shablon, arguments[i], (end_of_line == i || count - 1 == i));
-		// printf("%s\n", command_shablon->data);
 		i++;
 	}
 	if(count == i)

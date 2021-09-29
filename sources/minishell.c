@@ -104,20 +104,13 @@ void ft_setenv(char **envp, char *key, char *value)
 	env_key.resize(&env_key, env_key.size + 1);
 	env_key.data[env_key.size - 1] = '=';
 	key_index = ft_vecstr_search2(envp, env_key.data, 0);
-
-	
 	str = ft_string_constructor(envp[key_index]);
 	str.erase_between(&str, env_key.size + 1, str.size);
 	str.join2(&str, value);
-	// printf("%s\n", str.data);
-	// ft_strdel(&envp[key_index]);
-	// envp[key_index] = ft_strdup(str.data);
-	ft_strcpy(envp[key_index], str.data);
-	// free(envp[key_index]);
-	// envp[key_index] = "";
+	envp[key_index] = ft_strdup(str.data);
+	// ft_strcpy(envp[key_index], str.data);
 	ft_string_destructor(&str);
 	ft_string_destructor(&env_key);
-	// ft_strdel(&envp[key_index]);
 }
 
 int main (int argv,char **args,char **envp)
@@ -127,8 +120,10 @@ int main (int argv,char **args,char **envp)
 	char *tmp;
 	char **env;
 	// envp = ft_vecstrcpy(envp);
-	ft_setenv(envp, "PATH", "ofgggggasdhbfdshbfhdsfbvjdsvfjdsfvjdsvfjgsdvfdjsvfjhdvfdjsgvfdsfjhvfshdvfdsjvfjsdfvjsdvfjsdfvfvjsdfdsfsdfdfgfdgdfgfgfgfdgdfggfddfvfjdsvfjdsvfjdsvfjdsfvjdsfvjsdfvfjsdvfjdvfjsdfvjsdvfjdf");
-	printf("%s\n", getenv("PATH"));
+	
+	
+	
+	// printf("%s\n", getenv("PATH"));
 	
 	// envp[] = "hello";
 	// int ind = ft_vecstr_search2(envp, "PATH", 0);
@@ -151,9 +146,11 @@ int main (int argv,char **args,char **envp)
 	second = NULL;
 	lcmd = ft_last_command_constructor();
 	pwd = getenv("PWD");
+	printf("\nssss %s\n\n", pwd);
 	curr_path = pwd;
 	while (true)
 	{
+
 		curr_path = ft_strrchr(curr_path, '/');
 		if (!curr_path || count > PATH_SHOW_NUMBER + 1)
 			break ;
