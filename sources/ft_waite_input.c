@@ -136,7 +136,7 @@ char		*ft_equal_strjoin(char *s1, t_last_command *command_shablon, char *pars_st
 		}
 		else if(pars_str[i] == '$' && quate_exist != 0)
 		{
-			subjoin = ft_realloc_strjoin(subjoin, find_data((pars_str + i),command_shablon->variable_dic));
+			subjoin = ft_realloc_strjoin(subjoin, find_data((pars_str + i + 1),command_shablon->variable_dic));
 			end_index += ft_zero_byte_strlen(subjoin) - end_index;
 			ft_isalnum_str(pars_str + i + 1, &i);
 			i += 2;
@@ -144,13 +144,11 @@ char		*ft_equal_strjoin(char *s1, t_last_command *command_shablon, char *pars_st
 		else if(pars_str[i] == '~' && dquate_exist != 0 && quate_exist != 0 && i == 0 && (pars_str[i + 1] == '\0' || pars_str[i + 1] == '/'))
 		{
 			subjoin = ft_realloc_strjoin(subjoin, getenv("HOME"));
-			i++;
 			end_index = ft_zero_byte_strlen(subjoin);
-			//ft_putnbr(i);
+			i++;
 		}
 		else 
 			subjoin[end_index++] = pars_str[i++];
-			//ft_putnbr(i);
 	}
 	if(!end_of_line)
 		subjoin[end_index] = ' ';

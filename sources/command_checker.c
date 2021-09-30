@@ -109,7 +109,6 @@ int exec_in_function(char **arguments, t_last_command *command_shablon, int coun
 	while (i < count)
 	{
 	
-
 		if(end_of_line >= i)
 			end_of_line = ft_vecstr_search2(arguments, ";", i);
 		if(arguments[i][0] == ';')
