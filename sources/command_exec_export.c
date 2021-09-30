@@ -5,7 +5,7 @@ int ft_put_env_export(t_last_command * dictionary, char **envp, char **data,int 
     dictionary_t *tmp;
     i = 0;
     tmp = dictionary->variable_dic;
-    while (envp[i] && envp[i + 1] != '\0')
+    while (envp[i] && envp[i + 1])
     {
         ft_putstr_fd(envp[i], 1);
         ft_putchar_fd('\n', 1);

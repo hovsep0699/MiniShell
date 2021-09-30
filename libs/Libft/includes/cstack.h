@@ -10,7 +10,7 @@ struct stack
 	list_t data;
 	int		size;
 	node_t *(*top)(Stack st);
-	void	(*push)(Stack *st, void *data, size_t size);
+	void	(*push)(Stack *st, void *data, int size);
 	node_t	*(*pop)(Stack *st);
 	// bool	(*contains)(Stack *st, void *data);
 	// void	(*sort)(element_t *arr, int low, int high);
@@ -20,7 +20,7 @@ Stack	ft_stack_default_constructor();
 
 // Stack	ft_stack_array_constructor(element_t *arr, int size);
 
-void	ft_stack_push(Stack *st, void *data, size_t size);
+void	ft_stack_push(Stack *st, void *data, int size);
 
 node_t	*ft_stack_pop(Stack *st);
 

@@ -2,6 +2,8 @@
 
 int ft_print_echo(t_last_command *command_shablon, char **envp, char **data,int count)
 {
+	// ft_setenv(envp, "PWD", "value");
+	// printf("%s\n", getenv("PWD"));
 	write(1, command_shablon->data, ft_zero_byte_strlen(command_shablon->data));
 	if(command_shablon->echo_option != 1)
 			write(1,"\n",1);

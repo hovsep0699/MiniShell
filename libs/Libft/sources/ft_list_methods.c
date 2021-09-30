@@ -1,20 +1,17 @@
 #include "clist.h"
 
-void ft_list_push_back(list_t *self, void *data, size_t size)
+void ft_list_push_back(list_t *self, void *data, int size)
 {
 	node_t *tmp;
 	
 	tmp = ft_node_constructor(data, size);
 	self->end->insert_before(self->end, tmp);
 	if (self->size == 0)
-	{
-		ft_node_destructor(self->begin);
 		self->begin = tmp;
-	}
 	++self->size;
 }
 
-// bool ft_list_iscontain(list_t *lst, void *data)
+// bool ft_list_iscontain(list_t *lst, int data, int size)
 // {
 // 	node_t *it;
 
@@ -28,7 +25,7 @@ void ft_list_push_back(list_t *self, void *data, size_t size)
 // 	return (false);
 // }
 
-void ft_list_push_front(list_t *self, void *data, size_t size)
+void ft_list_push_front(list_t *self, void *data, int size)
 {
 	node_t *tmp;
 	
@@ -47,7 +44,7 @@ void ft_list_pop_front(list_t *self)
 
 	if (self->size == 1)
 	{
-		ft_memdel((void **)&self->begin);
+		ft_node_destructor(self->begin);
 		self->begin = self->end;
 		self->end->previous = NULL;
 	}
@@ -55,7 +52,7 @@ void ft_list_pop_front(list_t *self)
 	{
 		tmp = self->begin->next;
 		self->begin->disconnect(self->begin);
-		ft_memdel((void **)&self->begin);
+		ft_node_destructor(self->begin);
 		self->begin = tmp;
 	}
 	--self->size;
@@ -70,10 +67,20 @@ void	ft_list_pop_back(list_t *self)
 	{
 		it = self->end->previous;
 		self->end->previous->disconnect(self->end->previous);
-		ft_memdel((void **)&it);
+		ft_node_destructor(it);
 		--self->size;
 	}
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

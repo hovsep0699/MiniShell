@@ -107,11 +107,24 @@ void ft_setenv(char **envp, char *key, char *value)
 	str = ft_string_constructor(envp[key_index]);
 	str.erase_between(&str, env_key.size + 1, str.size);
 	str.join2(&str, value);
-	envp[key_index] = ft_strdup(str.data);
-	// ft_strcpy(envp[key_index], str.data);
+	// ft_strdel(&envp[key_index]);
+	// envp[key_index] = ft_strdup(str.data);
+	ft_strcpy(envp[key_index], str.data);
 	ft_string_destructor(&str);
 	ft_string_destructor(&env_key);
 }
+
+// void clear_env(char **envp)
+// {
+// 	int i = -1;
+// 	while (envp[++i])
+// 	{
+// 		envp[i] = ft_strdup(NULL);
+// 	}
+// }
+
+
+
 
 int main (int argv,char **args,char **envp)
 {
@@ -119,16 +132,6 @@ int main (int argv,char **args,char **envp)
 	char *path;
 	char *tmp;
 	char **env;
-	// envp = ft_vecstrcpy(envp);
-	
-	
-	
-	// printf("%s\n", getenv("PATH"));
-	
-	// envp[] = "hello";
-	// int ind = ft_vecstr_search2(envp, "PATH", 0);
-	// envp[ind] = "PATH=hello";
-	// printf("%s\n", getenv("PATH"));
 	string_t str;
 	string_t root_path;
 	char *curr_path;
@@ -140,7 +143,10 @@ int main (int argv,char **args,char **envp)
 	t_last_command lcmd;
 	int len;
 	int i;
-
+	// env = ft_vecstrcpy(envp);
+	// envp = NULL;
+	// clear_env(envp);
+	// envp = ft_vecstrcpy(env);
 	count = 0;
 	first = NULL;
 	second = NULL;

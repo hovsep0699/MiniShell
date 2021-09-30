@@ -90,5 +90,6 @@ void    ft_last_command_destructor(t_last_command *lcmd)
     ft_strdel(&lcmd->output_data);
     ft_strdel(&lcmd->name_file);
     // ft_vecstrdel(&lcmd->envp);
-    ft_memdel((void **)&lcmd->variable_dic);
+    ft_dictionary_del(lcmd->variable_dic);
+    // ft_memdel((void **)&lcmd->variable_dic);
 }

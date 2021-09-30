@@ -26,6 +26,7 @@
     "stdbool.h": "c",
     "cstring.h": "c",
     "history.h": "c",
-    "readline.h": "c"
+    "readline.h": "c",
+    "cstack.h": "c"
   }
 }

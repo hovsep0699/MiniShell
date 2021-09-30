@@ -15,7 +15,7 @@
 // 	return (false);
 // }
 
-void ft_stack_push(Stack *st, void *data, size_t size)
+void ft_stack_push(Stack *st, void *data, int size)
 {
 	st->data.push_front(&st->data, data, size);
 	st->size = st->data.size;
