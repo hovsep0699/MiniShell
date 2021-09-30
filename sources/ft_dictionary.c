@@ -1,5 +1,45 @@
 #include "minishell.h"
 
+
+void	ft_dictionary_destructor(dictionary_t *dict)
+{
+	dictionary_t *tmp;
+	
+	while (dict != NULL)
+	{
+		tmp = dict;
+		dict = dict->next;
+		ft_dictionary_del_key(tmp);
+		
+	}
+	
+}
+
+dictionary_t *ft_env_copy(char **env)
+{
+	int envp_count;
+	int i;
+	dictionary_t *tmp;
+	dictionary_t *dict;
+
+	dict = NULL;
+	envp_count = ft_vecstrlen(env);
+	i = 0;
+	while (i < envp_count)
+	{
+		if((tmp = ft_dictionary_create(env[i])) == NULL)
+   		{
+       		tmp = NULL;
+			break;
+		}
+		i++;
+		ft_dictionaryadd_back(&(dict), tmp);
+		
+
+	}
+	return(dict);
+}
+
 int	ft_dictionarysize(dictionary_t *stack)
 {
 	dictionary_t	*ptr;
@@ -119,7 +159,6 @@ char *find_data(char *key, dictionary_t *command)
 	int dict_len;
 
 	key_len = 0;
-	key++;
 	while (ft_isalnum(*(key + key_len)))
 		key_len++;
 	while (command != NULL)
@@ -149,6 +188,7 @@ int find_data_int(char *key, dictionary_t *command)
 	key_len = ft_strlen(key);
 	if(j == key_len)
 		return(-1);
+	
 	while (command != NULL)
 	{	
 	
@@ -184,8 +224,9 @@ void change_item(char *new_item, int key_index, dictionary_t *dict)
 		key_index--;
 	}
 	ft_strdel(&dict->item);
-	dict->item = (char *)ft_calloc(len_new_item - (j - 1),sizeof(char));
-	ft_strlcpy(dict->item, new_item + j, len_new_item);
+	dict->item = ft_strdup(new_item);
+	//(char *)ft_calloc(len_new_item - (j - 1),sizeof(char));
+//	ft_strlcpy(dict->item, new_item + j, len_new_item);
 }
 
 void	ft_dictionaryadd_back(dictionary_t **lst, dictionary_t *new)
@@ -204,19 +245,19 @@ void	ft_dictionaryadd_back(dictionary_t **lst, dictionary_t *new)
 	ptr->next = new;
 }
 
-void ft_dictionary_del(dictionary_t *del_stack)
+/*void ft_dictionary_del(dictionary_t *del_stack)
 {
 	int size = ft_dictionarysize(del_stack);
 	if(size == 1)
 		ft_memdel((void **)&del_stack);
-}
+}*/
 
 void ft_dictionary_del_key(dictionary_t *del_stack)
 {
-	if(del_stack->key != NULL)
-		ft_memdel((void **)&del_stack->key);
-	if(del_stack->item != NULL)
-		ft_memdel((void **)&del_stack->item);
+	// if(del_stack->key != NULL)
+	ft_memdel((void **)&del_stack->key);
+	// if(del_stack->item != NULL)
+	ft_memdel((void **)&del_stack->item);
 	del_stack->next = NULL;
 	ft_memdel((void **)&del_stack);
 }

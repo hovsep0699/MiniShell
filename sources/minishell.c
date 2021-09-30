@@ -146,7 +146,7 @@ int main (int argv,char **args,char **envp)
 	second = NULL;
 	lcmd = ft_last_command_constructor();
 	pwd = getenv("PWD");
-	printf("\nssss %s\n\n", pwd);
+	lcmd.variable_dic = ft_env_copy(envp);
 	curr_path = pwd;
 	while (true)
 	{

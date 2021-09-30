@@ -5,12 +5,12 @@ int ft_put_env_export(t_last_command * dictionary, char **envp, char **data,int 
     dictionary_t *tmp;
     i = 0;
     tmp = dictionary->variable_dic;
-    while (envp[i] && envp[i + 1] != '\0')
+   /* while (envp[i] && envp[i + 1] != '\0')
     {
         ft_putstr_fd(envp[i], 1);
         ft_putchar_fd('\n', 1);
         i++;
-    }
+    }*/
     while (tmp != NULL)
     {
         ft_putstr_fd(tmp->key, 1);
@@ -94,8 +94,9 @@ int ft_unset(t_last_command * dictioanry, char **envp, char **data, int count)
                 if(dictioanry->variable_dic == tmp)
                     dictioanry->variable_dic = dictioanry->variable_dic->next;
                 if(provide != NULL)
-                provide->next = tmp->next;
-                else provide = tmp->next;
+                    provide->next = tmp->next;
+                else
+                    provide = tmp->next;
                 ft_dictionary_del_key(tmp);
                 break;
             }

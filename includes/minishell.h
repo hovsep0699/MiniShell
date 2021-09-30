@@ -217,4 +217,6 @@ cmd_func_t		ft_search_builtin_func(t_last_command *lcmd);
 t_last_command	ft_last_command_constructor();
 int				ft_cd(t_last_command *command_shablon, char **envp_my, char **data, int count);
 int				ft_pwd(t_last_command *command_shablon, char **envp_my, char **data, int count);
+dictionary_t 	*ft_env_copy(char **env);
+void			ft_dictionary_destructor(dictionary_t *dict);
 #endif

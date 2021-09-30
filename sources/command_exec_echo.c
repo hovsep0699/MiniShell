@@ -50,32 +50,30 @@ int	ft_exit(t_last_command *command_shablon, char **envp_my, char **data, int co
 	ft_vecstrdel(&data);
 	exit(exit_status);
 }
-// extern char **envv;
+
 int	ft_cd(t_last_command *command_shablon, char **envp, char **data, int count)
 {
 	int err;
 	int end;
-	char *new_path;
+	char new_path[PATH_MAX];
 
 	if (!command_shablon->data)
 		return 0;
-	// new_path = ft_calloc(PATH_MAX, sizeof(char));
-	// if (getcwd(new_path, sizeof(new_path)) == NULL)
-    //   perror("getcwd() error");
-    // else
-    //   printf("current working directory is: %s\n", new_path);
 	err = chdir(command_shablon->data);
 	if (err == -1)
 	{
 		printf("%s\n", strerror(errno));
 		return errno;
 	}
+	getcwd(new_path,PASS_MAX);
+	change_item(find_data("PWD",command_shablon->variable_dic),find_data_int("OLDPWD=",command_shablon->variable_dic),command_shablon->variable_dic);
+	change_item(new_path,find_data_int("PWD=",command_shablon->variable_dic),command_shablon->variable_dic);
 	return 0;
 }
 
 int	ft_pwd(t_last_command *command_shablon, char **envp_my, char **data, int count)
 {
 
-	printf("%s\n", getenv("PWD"));
+	printf("%s\n", find_data("PWD",command_shablon->variable_dic));
 	return 0;
 }
