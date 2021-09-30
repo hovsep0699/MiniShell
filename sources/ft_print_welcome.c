@@ -29,20 +29,20 @@ void ft_print_welcome(char *path)
 			ft_putstr(str_exeption);
 		 break;
 	case	PARSER_ERROR:
-			ft_putstr_fd("sh: parse error near `",1);
-			ft_putchar_fd(element_exeption,1);
-			ft_putchar_fd('\n',1);
+			ft_putstr_fd("sh: parse error near `", 1);
+			ft_putchar_fd(element_exeption, 1);
+			ft_putchar_fd('\n', 1);
 		break;
 	case WRONG_INPUT:
-			ft_putstr_fd("Wrong Input\n",1);
+			ft_putstr_fd("Wrong Input\n", 1);
 	 break;
 	 case BAD_ASSIGNMENT:
-			ft_putstr_fd("sh: bad assignment\n",1);
+			ft_putstr_fd("sh: bad assignment\n", 1);
 	 break;
 	 case COMMAND_NOT_FOUND:
-			ft_putstr_fd("sh: ",1);
-			ft_putstr_fd(str_exeption,1);
-			ft_putstr_fd(" not found\n",1);
+			ft_putstr_fd("sh: ", 1);
+			ft_putstr_fd(str_exeption, 1);
+			ft_putstr_fd(" not found\n", 1);
 	 break;
 	 case InvalidParameterName:
 	 	ft_putstr_fd(command_name,1);

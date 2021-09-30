@@ -1,51 +1,50 @@
 #include "minishell.h"
 
 
-int exec_inout(char *line, DIR *open_dir_now, char **envp, t_last_command *last_command)
+
+int exec_inout(char *line, char **envp, t_last_command *last_command)
 {
 	char **command;
 	pid_t pid_child;
 	char *tmp_line;
 	int i;
 	int count;
-	
-	i = 0;
 	int ret;
+
 	tmp_line = enter_split_sapce(line);
 	command = ft_split_Vache(tmp_line, ' ', CHAR_QUATES, CHAR_DQUATES);
 	count = ft_vecstrlen(command);
 	ft_default_set(last_command);
+	// ft_putstr(command[0]);
 	if((ret = (system_command(command, last_command, envp, count))) >= 1)
 		ft_putstr("Ok\n");
 	else
 		last_command->exit_status = ret;
-	ft_strdel(&last_command->data);
+	// ft_strdel(&last_command->data);
 	//printf("\nha ha\n");
 	ft_strdel(&tmp_line);
 	ft_vecstrdel(&command);
 	return(1);
 }
-char *replace_str(char *home_path)
+char *replace_str(char *curr_path)
 {
-	int i;
 	char *path;
 	int j;
+	int i;
 
 	i = 0;
 	j = 0;
-	while(home_path[i] != '/')
-	i++;
-	if((path = (char *)malloc(sizeof(char) * ft_strlen(home_path)- 1)) == NULL)
+	if((path = (char *)ft_calloc(ft_strlen(curr_path) + 1, sizeof(char))) == NULL)
 		return(NULL);
-	while (home_path[i])
+	while (curr_path[i])
 	{
-		path[j] = home_path[i];
-		i++;
-		j++;
+		path[j] = curr_path[i];
+		++i;
+		++j;
 	}
 	return(path);
 }
-int quote_check(char *s,char exp,char exp2)
+int quote_check(char *s, char exp, char exp2)
 {
 	int static exp_state;
 	int static exp_state2;
@@ -95,33 +94,94 @@ char		*ft_dis_strjoin2(char *s1, char *s2,int mod)
 	return (subjoin);
 }
 
+void ft_setenv(char **envp, char *key, char *value)
+{
+	string_t str;
+	string_t env_key;
+	int key_index;
+
+	env_key = ft_string_constructor(key);
+	env_key.resize(&env_key, env_key.size + 1);
+	env_key.data[env_key.size - 1] = '=';
+	key_index = ft_vecstr_search2(envp, env_key.data, 0);
+	str = ft_string_constructor(envp[key_index]);
+	str.erase_between(&str, env_key.size + 1, str.size);
+	str.join2(&str, value);
+	envp[key_index] = ft_strdup(str.data);
+	// ft_strcpy(envp[key_index], str.data);
+	ft_string_destructor(&str);
+	ft_string_destructor(&env_key);
+}
+
 int main (int argv,char **args,char **envp)
 {
 	char *line;
-	DIR *dir_now;
 	char *path;
 	char *tmp;
-	path = replace_str(envp[3]);
-
+	char **env;
+	// envp = ft_vecstrcpy(envp);
+	
+	
+	
+	// printf("%s\n", getenv("PATH"));
+	
+	// envp[] = "hello";
+	// int ind = ft_vecstr_search2(envp, "PATH", 0);
+	// envp[ind] = "PATH=hello";
+	// printf("%s\n", getenv("PATH"));
 	string_t str;
-
-	str = ft_string_constructor(TEXT_GREEN);
-	str.join2(&str, path);
-	str.join2(&str, "$> ");
-	str.join2(&str, TEXT_WHITE);
-	dir_now = opendir(path);
-	int pipe_problem;
-	t_last_command * last_command;
+	string_t root_path;
+	char *curr_path;
+	char *pwd;
+	char *first;
+	char *second;
+	int count;
+	
+	t_last_command lcmd;
+	int len;
 	int i;
-	i = 0;
-	last_command = (t_last_command *)malloc(sizeof(t_last_command));
-	last_command->variable_dic = NULL;
-	pipe_problem = 0;
-    last_command->fd[0] = dup(STDIN_FILE);
-    last_command->fd[1] = dup(STDOUT_FILE);
+
+	count = 0;
+	first = NULL;
+	second = NULL;
+	lcmd = ft_last_command_constructor();
+	pwd = getenv("PWD");
+	printf("\nssss %s\n\n", pwd);
+	curr_path = pwd;
 	while (true)
 	{
-		ft_fd_open(last_command);
+
+		curr_path = ft_strrchr(curr_path, '/');
+		if (!curr_path || count > PATH_SHOW_NUMBER + 1)
+			break ;
+		++count;
+	}
+	if (count > PATH_SHOW_NUMBER)
+	{
+		root_path = ft_string_constructor("..");
+		curr_path = pwd;
+		i = count - PATH_SHOW_NUMBER;
+		while (i)
+		{
+			curr_path = ft_strchr(curr_path + 1, '/');
+			--i;
+		}
+		root_path.join2(&root_path, curr_path);
+	}
+	else
+		root_path = ft_string_constructor(pwd);
+	// first = ft_strrchr(pwd, '/');
+	// if (first)
+	// 	second = ft_strrchr(first, '/');
+	// if(second)
+	path = replace_str(root_path.data);
+	str = ft_string_default_constructor();
+	str.join2(&str, path);
+	str.join2(&str, "$> ");
+
+	while (true)
+	{
+		ft_fd_open(&lcmd);
 		line = readline(str.data);
 		add_history(line);
 		if(quote_check(line, CHAR_QUATES, CHAR_DQUATES))
@@ -129,10 +189,13 @@ int main (int argv,char **args,char **envp)
 			ft_strdel(&line);
 			continue;
 		}
-		exec_inout(line, dir_now, envp, last_command);
+		exec_inout(line, envp, &lcmd);
 		ft_strdel(&line);
 	}
 	ft_string_destructor(&str);
+	ft_string_destructor(&root_path);
+	ft_last_command_destructor(&lcmd);
+	// ft_vecstrdel(&env);
 	// ft_strdel(&root);
 	return 0;
 }

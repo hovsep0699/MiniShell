@@ -111,6 +111,7 @@ char		*ft_equal_strjoin(char *s1, t_last_command *command_shablon, char *pars_st
 	dquate_exist = 1;
 	end_index = ft_zero_byte_strlen(s1);
 	count = ft_count_quote(pars_str);
+	//printf("\ncount = %i\n",(ft_zero_byte_strlen(pars_str) - count) + 1 + end_of_line);
 	subjoin = (char *)ft_calloc(sizeof(char), (end_index + (ft_zero_byte_strlen(pars_str) - count) + 1 + end_of_line));
 	if(end_index > 0)
 		subjoin = ft_strcpy(subjoin, s1);
@@ -140,8 +141,16 @@ char		*ft_equal_strjoin(char *s1, t_last_command *command_shablon, char *pars_st
 			ft_isalnum_str(pars_str + i + 1, &i);
 			i += 2;
 		}
+		else if(pars_str[i] == '~' && dquate_exist != 0 && quate_exist != 0 && i == 0 && (pars_str[i + 1] == '\0' || pars_str[i + 1] == '/'))
+		{
+			subjoin = ft_realloc_strjoin(subjoin, getenv("HOME"));
+			i++;
+			end_index = ft_zero_byte_strlen(subjoin);
+			//ft_putnbr(i);
+		}
 		else 
 			subjoin[end_index++] = pars_str[i++];
+			//ft_putnbr(i);
 	}
 	if(!end_of_line)
 		subjoin[end_index] = ' ';
