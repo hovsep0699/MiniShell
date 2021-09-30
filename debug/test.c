@@ -13,7 +13,7 @@
 #include <readline/history.h>
 #include <sys/stat.h>
 #include <errno.h>
-#include "clist.h"
+#include "cvector.h"
 
 // int main (int argv,char **args,char **envp){
 // struct  stat st;
@@ -45,31 +45,36 @@ struct test
 
 int main()
 {
+  // cvector_t cvec;
+
+
+  // cvector(cvec, int, 10);
+  // at(cvec.data, int, 0) = 10;
+  // printf("%d\n", at(cvec.data, int, 0))
   // while(1)
   // {
 
-    list_t lst;
-    test x;
+    // list_t lst;
+    // test x;
 
-    lst = ft_list_default_constructor();
-    x = (test){5};
-    lst.push_back(&lst, &x, sizeof(test));
-    x = (test){6};
-    lst.push_back(&lst, &x, sizeof(test));
-    test x1;
+    // list(lst);
+    // x = (test){2};
+    // lst.push_back(&lst, &x, sizeof(test));
+    // x = (test){6};
+    // lst.push_back(&lst, &x, sizeof(test));
+    // test x1;
 
-    node_t *it = lst.begin;
-    while (it != lst.end)
-    {
-
-      x1 = *(test *)it->data;
-      printf("%d\n", x1.x);
-      it = lst.advance(it, 1);
-    }
+    // node_t *it = lst.begin;
+    // while (it != lst.end)
+    // {
+    //   x1 = getlistItem(it, test);
+    //   printf("%d\n", x1.x);
+    //   it = lst.advance(it, 1);
+    // }
     
     // lst.pop_back(&lst);
     // lst.pop_back(&lst);
 
-      ft_list_destructor(&lst);
+      ft_cvector_destructor(&cvec);
   // }
 }

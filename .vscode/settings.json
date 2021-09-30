@@ -27,6 +27,7 @@
     "cstring.h": "c",
     "history.h": "c",
     "readline.h": "c",
-    "cstack.h": "c"
+    "cstack.h": "c",
+    "cvector.h": "c"
   }
 }

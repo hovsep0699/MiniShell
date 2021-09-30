@@ -103,18 +103,15 @@
 # include <unistd.h>
 # include "cstring.h"
 	
+#define getlistItem(node, type) *(type *)node->data
+
+#define list(lst) lst = ft_list_default_constructor()
+
 typedef struct list list_t;
 
 typedef struct node node_t;
 
 typedef struct element	element_t;
-
-struct	element
-{
-	int		value;
-	bool	isKeep;
-	int		index;
-};
 
 struct node
 {
