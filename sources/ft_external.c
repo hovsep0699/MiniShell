@@ -46,7 +46,4 @@
     ft_vecstrdel(&split_path);
     ft_vecstrdel(&av);
     return dictioanry->exit_status;
-
-    return 1;
-
   }
