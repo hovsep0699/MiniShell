@@ -111,7 +111,6 @@ char		*ft_equal_strjoin(char *s1, t_last_command *command_shablon, char *pars_st
 	dquate_exist = 1;
 	end_index = ft_zero_byte_strlen(s1);
 	count = ft_count_quote(pars_str);
-	//printf("\ncount = %i\n",(ft_zero_byte_strlen(pars_str) - count) + 1 + end_of_line);
 	subjoin = (char *)ft_calloc(sizeof(char), (end_index + (ft_zero_byte_strlen(pars_str) - count) + 1 + end_of_line));
 	if(end_index > 0)
 		subjoin = ft_strcpy(subjoin, s1);
@@ -185,33 +184,3 @@ char		*ft_dis_strjoin(char *s1, char *s2,int mod)
 	ft_strdel(&s1);
 	return (subjoin);
 }
-
-
-//ara rad ara es vat kody :))
-
-// int			get_next_line(int fd, char **line)
-// {
-// 	t_form_next_line	next_line;
-// 	static char			*c_line;
-
-// 	if ((next_line.bf = ((char *)malloc(sizeof(char) * (1
-// 							+ 1)))) == NULL && (c_line = NULL) == NULL)
-// 		return (-1);
-// 	if (fd < 0 || !line || 1 <= 0)
-// 		return (-1);
-// 	while ((next_line.r = read(0, next_line.bf, 1)) > 0)
-// 	{
-// 		next_line.bf[next_line.r] = '\0';
-// 		c_line = ft_dis_strjoin(c_line, next_line.bf,1);
-// 		if (ft_dis_strchr(c_line, '\n') || next_line.r == 0)
-// 			break ;
-// 	}
-// 	free(next_line.bf);
-// 	if (next_line.r < 0)
-// 		return (-1);
-// 	(*line) = ft_single_join(c_line);
-// 	c_line = ft_clean(c_line, ft_zero_byte_strlen(c_line));
-// 	if (next_line.r == 0 && !c_line)
-// 		return (0);
-// 	return (1);
-// }

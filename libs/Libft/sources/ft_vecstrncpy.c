@@ -12,6 +12,15 @@
 
 #include "libft.h"
 
+char **ft_vecstrinit(int size)
+{
+	char **vec;
+
+	vec = (char **)ft_calloc(size, sizeof(char *));
+	return vec;
+}
+
+
 char **ft_vecstrncpy(char **vecstr, int n)
 {
 	char	**vecstrcpy;
@@ -24,6 +33,7 @@ char **ft_vecstrncpy(char **vecstr, int n)
 	vecstrcpy[index] = NULL;
 	return vecstrcpy;
 }
+
 #include <stdio.h>
 char **ft_vecstrcpy(char **vecstr)
 {

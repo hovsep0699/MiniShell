@@ -15,13 +15,10 @@ int exec_inout(char *line, char **envp, t_last_command *last_command)
 	command = ft_split_Vache(tmp_line, ' ', CHAR_QUATES, CHAR_DQUATES);
 	count = ft_vecstrlen(command);
 	ft_default_set(last_command);
-	// ft_putstr(command[0]);
 	if((ret = (system_command(command, last_command, envp, count))) >= 1)
 		ft_putstr("Ok\n");
 	else
 		last_command->exit_status = ret;
-	// ft_strdel(&last_command->data);
-	//printf("\nha ha\n");
 	ft_strdel(&tmp_line);
 	ft_vecstrdel(&command);
 	return(1);
@@ -143,6 +140,7 @@ int main (int argv,char **args,char **envp)
 	t_last_command lcmd;
 	int len;
 	int i;
+	printf("echo %s\n", args[0]);
 	// env = ft_vecstrcpy(envp);
 	// envp = NULL;
 	// clear_env(envp);
@@ -176,15 +174,10 @@ int main (int argv,char **args,char **envp)
 	}
 	else
 		root_path = ft_string_constructor(pwd);
-	// first = ft_strrchr(pwd, '/');
-	// if (first)
-	// 	second = ft_strrchr(first, '/');
-	// if(second)
 	path = replace_str(root_path.data);
 	str = ft_string_default_constructor();
 	str.join2(&str, path);
 	str.join2(&str, "$> ");
-
 	while (true)
 	{
 		ft_fd_open(&lcmd);
@@ -201,7 +194,5 @@ int main (int argv,char **args,char **envp)
 	ft_string_destructor(&str);
 	ft_string_destructor(&root_path);
 	ft_last_command_destructor(&lcmd);
-	// ft_vecstrdel(&env);
-	// ft_strdel(&root);
 	return 0;
 }
