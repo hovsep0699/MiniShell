@@ -86,11 +86,6 @@ list_t				ft_list_copy_constructor(const list_t *list);
 
 list_t				ft_list_array_constructor(void *data, int elem_size, int size);
 
-
-//list_t				ft_list_initalizer_string_constructor(char **arr, int size);
-
-//list_t				ft_list_initalizer_char_constructor(char *arr, int size);
-
 void				ft_swap(void *a, void *b, size_t size);
 
 #endif

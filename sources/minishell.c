@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+	
 
 
 int exec_inout(char *line, char **envp, t_last_command *last_command)
@@ -21,6 +22,7 @@ int exec_inout(char *line, char **envp, t_last_command *last_command)
 		last_command->exit_status = ret;
 	ft_strdel(&tmp_line);
 	ft_vecstrdel(&command);
+	ft_strdel(&last_command->name_file);
 	return(1);
 }
 char *replace_str(char *curr_path)
@@ -129,7 +131,6 @@ int main (int argv,char **args,char **envp)
 	char *path;
 	char *tmp;
 	char **env;
-	string_t str;
 	string_t root_path;
 	char *curr_path;
 	char *pwd;
@@ -140,7 +141,7 @@ int main (int argv,char **args,char **envp)
 	t_last_command lcmd;
 	int len;
 	int i;
-	printf("echo %s\n", args[0]);
+	// printf("echo %s\n", args[0]);
 	// env = ft_vecstrcpy(envp);
 	// envp = NULL;
 	// clear_env(envp);
@@ -175,13 +176,14 @@ int main (int argv,char **args,char **envp)
 	else
 		root_path = ft_string_constructor(pwd);
 	path = replace_str(root_path.data);
-	str = ft_string_default_constructor();
-	str.join2(&str, path);
-	str.join2(&str, "$> ");
+	g_path = ft_string_default_constructor();
+	g_path.join2(&g_path, path);
+	g_path.join2(&g_path, "$> ");
 	while (true)
 	{
+		ft_process_signal();
 		ft_fd_open(&lcmd);
-		line = readline(str.data);
+		line = readline(g_path.data);
 		add_history(line);
 		if(quote_check(line, CHAR_QUATES, CHAR_DQUATES))
 		{
@@ -191,7 +193,7 @@ int main (int argv,char **args,char **envp)
 		exec_inout(line, envp, &lcmd);
 		ft_strdel(&line);
 	}
-	ft_string_destructor(&str);
+	ft_string_destructor(&g_path);
 	ft_string_destructor(&root_path);
 	ft_last_command_destructor(&lcmd);
 	return 0;

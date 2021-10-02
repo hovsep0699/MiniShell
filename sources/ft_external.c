@@ -38,11 +38,14 @@
            j++;
        }
        dictioanry->exit_status = COMMAND_NOT_FOUND;
-        printf("minishell: %s: lav ches ara hly chisht gri\n", data[dictioanry->last_command]);
+        printf("minishell: %s: lav ches hambal hly chisht gri\n", data[dictioanry->last_command]);
+        exit(0);
         
     }
     else
-        wait(NULL);
+    {
+      wait(NULL);
+    }
     ft_vecstrdel(&split_path);
     ft_vecstrdel(&av);
     return dictioanry->exit_status;

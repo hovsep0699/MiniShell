@@ -75,8 +75,8 @@ t_last_command ft_last_command_constructor()
     lcmd.functions[6] = (t_command_function){PWD, ft_pwd};
     lcmd.functions[7] = (t_command_function){UNDEFINED, ft_external};
     lcmd.side_functions[0] = (t_command_side_function){WRITE, ft_write_file};
-    lcmd.side_functions[1] = (t_command_side_function){READ, NULL};
-    lcmd.side_functions[2] = (t_command_side_function){DWRITE, NULL};
+    lcmd.side_functions[1] = (t_command_side_function){READ, ft_read_file};
+    lcmd.side_functions[2] = (t_command_side_function){DWRITE, ft_double_write_file};
     lcmd.side_functions[3] = (t_command_side_function){DREAD, NULL};
     lcmd.side_functions[4] = (t_command_side_function){PIPE, NULL};
     lcmd.side_functions[5] = (t_command_side_function){NONE, NULL};

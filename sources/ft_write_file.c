@@ -18,6 +18,62 @@ int 			ft_write_file(struct	s_last_command *dictioanry, char **envp, char **data
     return(1);
 }
 
+int 			ft_read_file(struct	s_last_command *dictioanry, char **envp, char **data, int count)
+{
+
+    int fd;
+
+    if((fd = open(dictioanry->name_file,O_RDONLY)) == -1)
+    {
+        ft_print_error(errno, strerror(errno), ' ', dictioanry->name_file);
+        return(SUCCESS);
+    }
+    if((dup2(fd, STDIN_FILE)) < 0)
+        strerror(errno);
+    ft_search_builtin_func(dictioanry)(dictioanry, envp, data, count);
+    close(fd);
+    ft_fd_open(dictioanry);
+    return(1);
+}
+
+int 			ft_double_write_file(struct	s_last_command *dictioanry, char **envp, char **data, int count)
+{
+    int fd;
+
+    if((fd = open(dictioanry->name_file, O_WRONLY | O_APPEND)) == -1)
+    {
+        ft_print_error(errno, strerror(errno), ' ', dictioanry->name_file);
+        return(SUCCESS);
+    }
+    if((dup2(fd, STDOUT_FILENO)) < 0)
+        strerror(errno);
+    ft_search_builtin_func(dictioanry)(dictioanry, envp, data, count);
+    close(fd);
+    ft_fd_open(dictioanry);
+    return(1);   
+}
+
+int 			ft_dread_file(struct	s_last_command *dictioanry, char **envp, char **data, int count)
+{
+    int fd;
+
+    /*while ()
+    {
+        
+    }*/
+    
+    if((fd = open(dictioanry->name_file, O_WRONLY | O_APPEND)) == -1)
+    {
+        ft_print_error(errno, strerror(errno), ' ', dictioanry->name_file);
+        return(SUCCESS);
+    }
+    if((dup2(fd, STDOUT_FILENO)) < 0)
+        strerror(errno);
+    ft_search_builtin_func(dictioanry)(dictioanry, envp, data, count);
+    close(fd);
+    ft_fd_open(dictioanry);
+    return(1);   
+}
 int only_create_file(char *file_name,struct	s_last_command *dictioanry)
 {
     int fd;

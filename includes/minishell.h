@@ -11,7 +11,7 @@
 #include <dirent.h>
 #include <stdio.h>
 #include "Libft_Vache.h"
-#include "cstring.h"
+#include "cstring.h" 
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <limits.h>
@@ -145,7 +145,7 @@ struct	s_last_command
 	t_command_side_function	side_functions[MAX_SIDE_FUNCS];
 	// int (*function_pointer[5][7])(struct	s_last_command *,char **, char **,int);
 };
-
+string_t g_path;
 
 /*    to do    */
 
@@ -213,12 +213,15 @@ int 			ft_put_env_export(struct	s_last_command * dictionary,char **envp,char **d
 int				ft_exit(t_last_command *command_shablon, char **envp_my, char **data, int count);
 int				ft_fd_open(t_last_command *command);
 void			ft_last_command_destructor(t_last_command *lcmd);
-void			ft_process_signal(int signal);
+int			ft_process_signal(void);
+void			handle(int);
 cmd_func_t		ft_search_side_func(t_last_command *lcmd);
 cmd_func_t		ft_search_builtin_func(t_last_command *lcmd);
 t_last_command	ft_last_command_constructor();
 int				ft_cd(t_last_command *command_shablon, char **envp_my, char **data, int count);
 int				ft_pwd(t_last_command *command_shablon, char **envp_my, char **data, int count);
+int 			ft_read_file(struct	s_last_command *dictioanry, char **envp, char **data, int count);
+int 			ft_double_write_file(struct	s_last_command *dictioanry, char **envp, char **data, int count);
 dictionary_t 	*ft_env_copy(char **env);
 void			ft_dictionary_destructor(dictionary_t *dict);
 #endif

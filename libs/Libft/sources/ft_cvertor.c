@@ -6,7 +6,7 @@ cvector_t ft_cvector_constructor(int elem_size, int size)
     cvector_t cvector;
 
     cvector.capacity = size * 2;
-    cvector.data = malloc(cvector.capacity * elem_size);
+    cvector.data = ft_calloc(cvector.capacity, elem_size);
     cvector.size = size;
     return cvector;
 }

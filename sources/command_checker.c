@@ -1,5 +1,19 @@
 #include "minishell.h"
 
+typedef struct st st;
+
+// struct st
+// {
+// 	int x;
+// 	int y;
+// };
+
+// st a;
+// st b;
+
+// b = a;
+
+
 int ft_alloc_split_minishell(char const *s, char c, char exp, char exp2)
 {
 	size_t	i;
@@ -108,7 +122,6 @@ int exec_in_function(char **arguments, t_last_command *command_shablon, int coun
 	end_of_line = 0;
 	while (i < count)
 	{
-	
 		if(end_of_line >= i)
 			end_of_line = ft_vecstr_search2(arguments, ";", i);
 		if(arguments[i][0] == ';')
@@ -118,10 +131,29 @@ int exec_in_function(char **arguments, t_last_command *command_shablon, int coun
 			ft_strdel(&command_shablon->data);
 			return (SUCCESS);
 		}
+		if(ft_strcmp(arguments[i],">>") == 0)
+		{	
+			only_create_file(arguments[i + 1], command_shablon);
+			command_shablon->util_commant = DWRITE;
+			i += 2;
+			continue;
+		}
+		if(ft_strcmp(arguments[i],"<<") == 0)
+		{	
+			command_shablon->util_commant = DREAD;
+			i += 2;
+			continue;
+		}
 		if(arguments[i][0] == '>')
 		{	
 			only_create_file(arguments[i + 1], command_shablon);
 			command_shablon->util_commant = WRITE;
+			i += 2;
+			continue;
+		}
+		if(arguments[i][0] == '<')
+		{	
+			command_shablon->util_commant = READ;
 			i += 2;
 			continue;
 		}
@@ -152,6 +184,7 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 	while (comand_shablon->index_command < count)
 	{
 		lower_case = ft_tolower_minishell(list_argument[i], &len);
+
 		if(ft_strcmp(lower_case, "echo") == 0)
 		{
 			exeption = PARSER_ERROR;
@@ -201,5 +234,6 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 		comand_shablon->last_command = comand_shablon->index_command;
 		ft_strdel(&lower_case);
 	}
+	
 	return(1);
 }
