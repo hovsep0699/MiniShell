@@ -33,12 +33,10 @@ string_t ft_string_default_constructor()
 string_t ft_string_copy_constructor(string_t *str)
 {
     string_t cstr;
-    size_t   len;
 
-    len = (str) ? ft_strlen(str->data) : 0;
     cstr = ft_string_default_constructor();
     cstr.data = ft_strdup(str->data);
-    cstr.size = str->size;
+    cstr.size = ft_zero_byte_strlen(str->data);
 
     return cstr;
 }

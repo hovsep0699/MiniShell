@@ -14,7 +14,7 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include "cvector.h"
-
+#include "clist.h"
 // int main (int argv,char **args,char **envp){
 // struct  stat st;
 // mode_t mode_file;
@@ -54,27 +54,28 @@ int main()
   // while(1)
   // {
 
-    // list_t lst;
-    // test x;
+	 list_t lst;
+	 test x;
 
-    // list(lst);
-    // x = (test){2};
-    // lst.push_back(&lst, &x, sizeof(test));
-    // x = (test){6};
-    // lst.push_back(&lst, &x, sizeof(test));
-    // test x1;
+	 list(lst);
+	 x = (test){2};
+	 lst.push_back(&lst, &x, sizeof(test));
+	 /*x = (test){6};*/
+	 /*lst.push_back(&lst, &x, sizeof(test));*/
+	 /*x = (test){6};*/
+	 /*lst.push_back(&lst, &x, sizeof(test));*/
+	test x1;
+	 node_t *it = lst.begin;
+	 while (it != lst.end && lst.size)
+	 {
+	   x1 = getlistItem(it, test);
+	   printf("%d\n", x1.x);
+	   it = lst.advance(it, 1);
+	 }
+	
+	 /*lst.pop_back(&lst);*/
+	 /*lst.pop_back(&lst);*/
 
-    // node_t *it = lst.begin;
-    // while (it != lst.end)
-    // {
-    //   x1 = getlistItem(it, test);
-    //   printf("%d\n", x1.x);
-    //   it = lst.advance(it, 1);
-    // }
-    
-    // lst.pop_back(&lst);
-    // lst.pop_back(&lst);
-
-      ft_cvector_destructor(&cvec);
+	  ft_list_destructor(&lst);
   // }
 }

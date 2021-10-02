@@ -1,12 +1,12 @@
 #include "clist.h"
-
+#include <stdio.h>
 void ft_list_push_back(list_t *self, void *data, int size)
 {
 	node_t *tmp;
 	
 	tmp = ft_node_constructor(data, size);
 	self->end->insert_before(self->end, tmp);
-	if (self->size == 0)
+	if (!self->size)
 		self->begin = tmp;
 	++self->size;
 }
@@ -44,6 +44,7 @@ void ft_list_pop_front(list_t *self)
 
 	if (self->size == 1)
 	{
+		/*printf("%p\n", self->begin);*/
 		ft_node_destructor(self->begin);
 		self->begin = self->end;
 		self->end->previous = NULL;
