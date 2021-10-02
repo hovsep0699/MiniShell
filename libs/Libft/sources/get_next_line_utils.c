@@ -30,8 +30,8 @@ char	*ft_realloc_strjoin(char *s1, char *s2)
 	size_t		f_index;
 	size_t		s_index;
 
-	if (!(new_str = malloc(sizeof(char) *
-					(ft_zero_byte_strlen(s1) + ft_zero_byte_strlen(s2) + 1))))
+	if (!(new_str = ft_calloc(
+					(ft_zero_byte_strlen(s1) + ft_zero_byte_strlen(s2) + 1), sizeof(char))))
 		return (NULL);
 	f_index = 0; 
 	s_index = 0;
@@ -42,7 +42,7 @@ char	*ft_realloc_strjoin(char *s1, char *s2)
 	if (s2)
 		while (s2[f_index])
 			new_str[s_index++] = s2[f_index++];
-	new_str[s_index] = '\0';
+	// new_str[s_index] = '\0';
 	ft_strdel(&s1);
 	return (new_str);
 }

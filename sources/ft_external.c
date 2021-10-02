@@ -1,39 +1,52 @@
 #include "minishell.h"
 
-//  int ft_external(struct	s_last_command * dictioanry,char **envp, char **data, int count)
-//  {
-//      int fd[2];
-//      int id;
-//      int i;
-//      int j;
-//      int res;
-//      char **exec_path;
-//      char *execute_path;
-//      char **argc;
+  int ft_external(t_last_command * dictioanry,char **envp, char **data, int count)
+  {
+    int fd[2];
+    char *path;
+    char *tmp_path;
+    char **split_path;
+    pid_t ret_fork;
+    int i;
+    int j;
+    int ret_execv;
+    char **av;
+    int len;
 
-//     i = 0;
-//     argc = ft_split_Vache(dictioanry->data, ' ', CHAR_QUATES, CHAR_DQUATES);
-//     while (count < i)
-//     {
-//         if(ft_strncmp(envp[i], "PATH", 4) == 0)
-//             break;
-//         i++;
-//     }
-//     i = 0;
-//     exec_path = ft_split((*envp) + 5,':');
-//     j = ft_vecstrlen(exec_path);
-//     i = 0;
-//     while (i < j)
-//     {
-//        execute_path = ft_realloc_strjoin(exec_path[i],"/");
-//         execute_path = ft_realloc_strjoin(execute_path,dictioanry->data);
-//        id = fork();
-//        if(id == 0)
-//        {
-//           res = execv(execute_path,dictioanry->data);
-//        }
-//        else
-            
-//         i++;
-//     }
-//  }
+    path = find_data("PATH",dictioanry->variable_dic);
+    split_path = ft_strsplit(path,':');
+    i = ft_vecstrlen(split_path);
+    for (int ind = 0; ind < i; ++ind)
+    {
+       split_path[ind] = ft_realloc_strjoin(split_path[ind], "/");
+    }
+    
+    av = ft_vecstrinit(3);
+    j = 0;
+    if((ret_fork = fork()) == 0)
+    {
+       
+       while (j < i)
+       {
+            tmp_path = ft_strdup(split_path[j]);
+            tmp_path = ft_realloc_strjoin(tmp_path, data[dictioanry->last_command]);
+            ft_strdel(&av[0]);
+            ft_strdel(&av[1]);
+            av[0] = ft_strdup(tmp_path);
+            av[1] = ft_strdup(dictioanry->data);
+           ret_execv = execve(tmp_path, av, envp);
+           j++;
+       }
+       dictioanry->exit_status = COMMAND_NOT_FOUND;
+        printf("minishell: %s: lav ches ara hly chisht gri\n", data[dictioanry->last_command]);
+        
+    }
+    else
+        wait(NULL);
+    ft_vecstrdel(&split_path);
+    ft_vecstrdel(&av);
+    return dictioanry->exit_status;
+
+    return 1;
+
+  }

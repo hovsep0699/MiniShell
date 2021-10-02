@@ -73,7 +73,7 @@ t_last_command ft_last_command_constructor()
     lcmd.functions[4] = (t_command_function){ENV, ft_put_env_export};
     lcmd.functions[5] = (t_command_function){CD, ft_cd};
     lcmd.functions[6] = (t_command_function){PWD, ft_pwd};
-    lcmd.functions[7] = (t_command_function){UNDEFINED, NULL};
+    lcmd.functions[7] = (t_command_function){UNDEFINED, ft_external};
     lcmd.side_functions[0] = (t_command_side_function){WRITE, ft_write_file};
     lcmd.side_functions[1] = (t_command_side_function){READ, NULL};
     lcmd.side_functions[2] = (t_command_side_function){DWRITE, NULL};

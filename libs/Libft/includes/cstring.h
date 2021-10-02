@@ -192,6 +192,8 @@ void                ft_vecstrprint(char **vecstr);
 
 bool                ft_isnum_str(char *str);
 
+char                **ft_vecstrinit(int size);
+
 
 
 

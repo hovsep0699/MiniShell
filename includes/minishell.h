@@ -165,6 +165,8 @@ t_command_side_function		ft_side_funcs_constructor(t_side_commands name, cmd_fun
 t_command_function			ft_command_funcs_default_constructor(void);
 t_command_function			ft_command_funcs_constructor(t_builtin_commands name, cmd_func_t cmd);
 
+
+int				ft_external(t_last_command * dictioanry,char **envp, char **data, int count);
 t_last_command	ft_last_command_constructor(void);
 int				get_next_line(int fd, char **line);
 char			*ft_dis_strjoin(char *s1, char  *s2,int mod);

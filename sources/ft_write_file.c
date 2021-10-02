@@ -5,14 +5,11 @@ int 			ft_write_file(struct	s_last_command *dictioanry, char **envp, char **data
 
     int fd;
 
-// ft_putendl(dictioanry->name_file);
     if((fd = open(dictioanry->name_file,O_WRONLY | O_TRUNC)) == -1)
     {
         ft_print_error(errno, strerror(errno), ' ', dictioanry->name_file);
         return(SUCCESS);
     }
-    // ft_putstr(dictioanry->data);
-    
     if((dup2(fd, STDOUT_FILENO)) < 0)
         strerror(errno);
     ft_search_builtin_func(dictioanry)(dictioanry, envp, data, count);

@@ -132,6 +132,8 @@ int exec_in_function(char **arguments, t_last_command *command_shablon, int coun
 	{
 		ft_search_side_func(command_shablon)(command_shablon, envp_my, arguments, count);
 		command_shablon->index_command = i;
+		// printf("index: %d\n", command_shablon->index_command);
+
 		return(SUCCESS);
 	}
 	return (1);
@@ -146,6 +148,7 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 	int exeption;
 	
 	i = 0;
+	
 	while (comand_shablon->index_command < count)
 	{
 		lower_case = ft_tolower_minishell(list_argument[i], &len);
@@ -192,10 +195,10 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 		}
 		else
 		{
-			ft_strdel(&lower_case);
-			comand_shablon->exit_status = COMMAND_NOT_FOUND;
-			break ;
+			comand_shablon->type_command = UNDEFINED;
+			exec_in_function(list_argument, comand_shablon, count, env_my);
 		}
+		comand_shablon->last_command = comand_shablon->index_command;
 		ft_strdel(&lower_case);
 	}
 	return(1);
