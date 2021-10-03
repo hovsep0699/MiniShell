@@ -46,8 +46,8 @@ int	ft_exit(t_last_command *command_shablon, char **envp_my, char **data, int co
 		else
 			exit_status = ft_atoi(command_shablon->data);
 	}
-	ft_last_command_destructor(command_shablon);
 	ft_vecstrdel(&data);
+	ft_last_command_destructor(command_shablon);
 	exit(exit_status);
 }
 

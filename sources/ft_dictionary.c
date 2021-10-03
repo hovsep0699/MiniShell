@@ -33,7 +33,7 @@ dictionary_t *ft_env_copy(char **env)
 			break;
 		}
 		i++;
-		ft_dictionaryadd_back(&(dict), tmp);
+		ft_dictionaryadd_back(&dict, tmp);
 		
 
 	}
@@ -108,11 +108,11 @@ dictionary_t *ft_dictionary_create(char *items)
 		index = len_items;
 	else
 		index_item = len_items - index;
-	if (!(ptr = (dictionary_t *)malloc(sizeof(dictionary_t))))
+	if (!(ptr = (dictionary_t *)ft_memalloc(sizeof(dictionary_t))))
 		return (NULL);
-	if (!(ptr->key = (char *)malloc(sizeof(char) * (index))))
+	if (!(ptr->key = (char *)ft_calloc(index, sizeof(char))))
 		return (NULL);
-	if (!(ptr->item = (char *)calloc(sizeof(char), index_item)))
+	if (!(ptr->item = (char *)ft_calloc(index_item, sizeof(char))))
 		return (NULL);
 	ptr->next = NULL;
 	ft_joins_dict(items, 0, index, ptr->key);
@@ -208,17 +208,15 @@ int find_data_int(char *key, dictionary_t *command)
 void change_item(char *new_item, int key_index, dictionary_t *dict)
 {
 	int len_new_item;
-	int i;
 	int j;
 
-	i = 0;
 	j = 0;
 	
 	while (new_item[j] != '=')
 		j++;
 	j++;
 	len_new_item = ft_strlen(new_item);
-	while (key_index!=0)
+	while (key_index != 0)
 	{
 		dict = dict->next;
 		key_index--;
@@ -258,6 +256,6 @@ void ft_dictionary_del_key(dictionary_t *del_stack)
 	ft_memdel((void **)&del_stack->key);
 	// if(del_stack->item != NULL)
 	ft_memdel((void **)&del_stack->item);
-	del_stack->next = NULL;
+	/*del_stack->next = NULL;*/
 	ft_memdel((void **)&del_stack);
 }

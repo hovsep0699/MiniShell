@@ -1,8 +1,5 @@
 #include "minishell.h"
 
-	
-
-
 int exec_inout(char *line, char **envp, t_last_command *last_command)
 {
 	char **command;
@@ -141,12 +138,8 @@ int main (int argv,char **args,char **envp)
 	t_last_command lcmd;
 	int len;
 	int i;
-	// printf("echo %s\n", args[0]);
-	// env = ft_vecstrcpy(envp);
-	// envp = NULL;
-	// clear_env(envp);
-	// envp = ft_vecstrcpy(env);
 	count = 0;
+	line = NULL;
 	first = NULL;
 	second = NULL;
 	lcmd = ft_last_command_constructor();
@@ -176,15 +169,17 @@ int main (int argv,char **args,char **envp)
 	else
 		root_path = ft_string_constructor(pwd);
 	path = replace_str(root_path.data);
-	g_path = ft_string_default_constructor();
+	g_path = ft_string_constructor(TEXT_GREEN);
 	g_path.join2(&g_path, path);
 	g_path.join2(&g_path, "$> ");
+	g_path.join2(&g_path, TEXT_WHITE);
 	while (true)
 	{
 		ft_process_signal();
 		ft_fd_open(&lcmd);
 		line = readline(g_path.data);
-		add_history(line);
+		if (line)
+			add_history(line);
 		if(quote_check(line, CHAR_QUATES, CHAR_DQUATES))
 		{
 			ft_strdel(&line);
