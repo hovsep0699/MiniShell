@@ -1,47 +1,5 @@
 #include "minishell.h"
 
-// t_command_function ft_command_funcs_constructor(t_builtin_commands name, cmd_func_t cmd)
-// {
-//     t_command_function function;
-
-//     function.name = name;
-//     function.function = cmd;
-//     return function;
-// }
-// t_command_function ft_command_funcs_default_constructor(void)
-// {
-//     t_command_function function;
-
-//     function.name = UNDEFINED;
-//     function.function = NULL;
-//     return function;
-// }
-
-
-
-// t_command_side_function ft_side_funcs_default_constructor(void)
-// {
-//     t_command_side_function function;
-
-//     function.name = NONE;
-//     function.function = NULL;
-//     return function;
-// }
-
-
-
-// t_command_side_function ft_side_funcs_constructor(t_side_commands name, cmd_func_t cmd)
-// {
-//     t_command_side_function function;
-
-//     function.name = name;
-//     function.function = cmd;
-//     return function;
-// }
-
-
-
-
 t_last_command ft_last_command_constructor()
 {
     t_last_command lcmd;
@@ -77,7 +35,7 @@ t_last_command ft_last_command_constructor()
     lcmd.side_functions[0] = (t_command_side_function){WRITE, ft_write_file};
     lcmd.side_functions[1] = (t_command_side_function){READ, ft_read_file};
     lcmd.side_functions[2] = (t_command_side_function){DWRITE, ft_double_write_file};
-    lcmd.side_functions[3] = (t_command_side_function){DREAD, NULL};
+    lcmd.side_functions[3] = (t_command_side_function){DREAD, ft_dwrite_file};
     lcmd.side_functions[4] = (t_command_side_function){PIPE, NULL};
     lcmd.side_functions[5] = (t_command_side_function){NONE, NULL};
     return lcmd;
@@ -89,10 +47,5 @@ void    ft_last_command_destructor(t_last_command *lcmd)
 	ft_strdel(&lcmd->data);
 	ft_strdel(&lcmd->output_data);
 	ft_strdel(&lcmd->name_file);
-    // ft_vecstrdel(&lcmd->envp);
-
-    // ft_memdel((void **)&lcmd->variable_dic);
-
 	ft_dictionary_destructor(lcmd->variable_dic);
-
 }

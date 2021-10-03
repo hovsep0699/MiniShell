@@ -23,17 +23,19 @@ static size_t	ft_joins(char const *s2, size_t i, char *subjoin)
 	return (i);
 }
 
-char			*ft_strjoin(char const *s1, char const *s2)
+char			*ft_strjoin( char const *s1,  char const *s2)
 {
 	char	*subjoin;
 	size_t	i;
 
 	i = 0;
 	subjoin = (char *)malloc((sizeof(s1)
-				* (ft_strlen(s1) + ft_strlen(s2)) + 2));
+				* (ft_zero_byte_strlen(s1) + ft_zero_byte_strlen(s2)) + 2));
 	if (!subjoin)
 		return (NULL);
+	if(ft_zero_byte_strlen(s1) > 0)
 	i = ft_joins(s1, i, subjoin);
+	if(ft_zero_byte_strlen(s2) > 0)
 	i = ft_joins(s2, i, subjoin);
 	subjoin[i] = '\0';
 	return (subjoin);

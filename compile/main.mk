@@ -12,7 +12,7 @@ OBJS			=	$(patsubst sources/%.c, objects/%.o, $(SRCS))
 
 CC				=	gcc
 
-INCLUDES	 	=	-Iincludes -Ilibs/Libft/includes -Ilibs/Libft_Vache
+INCLUDES	 	=	-Iincludes -Ilibs/Libft/includes -Ilibs/Libft_Vache -I ~/.brew/opt/readline/include
 
 RM				=	rm -f
 

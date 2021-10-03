@@ -9,7 +9,8 @@ int exec_inout(char *line, char **envp, t_last_command *last_command)
 	int count;
 	int ret;
 
-	tmp_line = enter_split_sapce(line);
+	tmp_line = enter_split_sapce(&line);
+	ft_strdel(&line);
 	command = ft_split_Vache(tmp_line, ' ', CHAR_QUATES, CHAR_DQUATES);
 	count = ft_vecstrlen(command);
 	ft_default_set(last_command);
@@ -103,24 +104,54 @@ void ft_setenv(char **envp, char *key, char *value)
 	str = ft_string_constructor(envp[key_index]);
 	str.erase_between(&str, env_key.size + 1, str.size);
 	str.join2(&str, value);
-	// ft_strdel(&envp[key_index]);
-	// envp[key_index] = ft_strdup(str.data);
 	ft_strcpy(envp[key_index], str.data);
 	ft_string_destructor(&str);
 	ft_string_destructor(&env_key);
 }
 
-// void clear_env(char **envp)
-// {
-// 	int i = -1;
-// 	while (envp[++i])
-// 	{
-// 		envp[i] = ft_strdup(NULL);
-// 	}
-// }
+string_t ft_get_put_terminal(int i)
+{
+	char pwd[PATH_MAX];
+	char *curr_path;
+	string_t root_path;
+	string_t new_root_path;
+	char *new_new_path;
+	int 	count;
+	int len;
+	int x;
+	char *path;
+	string_t g_path;
 
+	count = -1;
+	curr_path = getcwd(pwd,PATH_MAX);
+	root_path = ft_string_constructor(pwd);
+	x = root_path.size;
+	len = root_path.size;
+	while (++count < PATH_SHOW_NUMBER)
+	{
+		x = root_path.rfind4(&root_path, '/', x);
+		if (x <= 0)
+			break ;
+	}
+	root_path.erase_between(&root_path, 0, x);
+	if (root_path.size != (size_t)len)
+	{
 
-
+		new_root_path = ft_string_constructor("..");
+		new_new_path = ft_strjoin(new_root_path.data,root_path.data);
+	}
+	else
+		new_new_path = ft_strdup(root_path.data);
+	path = replace_str(new_new_path);
+	g_path = ft_string_default_constructor();
+	g_path.join2(&g_path, path);
+	g_path.join2(&g_path, "$> ");
+	ft_string_destructor(&root_path);
+	ft_string_destructor(&new_root_path);
+	ft_strdel(&path);
+	ft_strdel(&new_new_path);
+	return(g_path);
+}
 
 int main (int argv,char **args,char **envp)
 {
@@ -128,12 +159,13 @@ int main (int argv,char **args,char **envp)
 	char *path;
 	char *tmp;
 	char **env;
-	string_t root_path;
 	char *curr_path;
 	char *pwd;
 	char *first;
 	char *second;
 	int count;
+	string_t g_path;
+	line  = NULL;
 	
 	t_last_command lcmd;
 	int len;
@@ -143,38 +175,12 @@ int main (int argv,char **args,char **envp)
 	first = NULL;
 	second = NULL;
 	lcmd = ft_last_command_constructor();
-	pwd = getenv("PWD");
 	lcmd.variable_dic = ft_env_copy(envp);
-	curr_path = pwd;
 	while (true)
 	{
 
-		curr_path = ft_strrchr(curr_path, '/');
-		if (!curr_path || count > PATH_SHOW_NUMBER + 1)
-			break ;
-		++count;
-	}
-	if (count > PATH_SHOW_NUMBER)
-	{
-		root_path = ft_string_constructor("..");
-		curr_path = pwd;
-		i = count - PATH_SHOW_NUMBER;
-		while (i)
-		{
-			curr_path = ft_strchr(curr_path + 1, '/');
-			--i;
-		}
-		root_path.join2(&root_path, curr_path);
-	}
-	else
-		root_path = ft_string_constructor(pwd);
-	path = replace_str(root_path.data);
-	g_path = ft_string_constructor(TEXT_GREEN);
-	g_path.join2(&g_path, path);
-	g_path.join2(&g_path, "$> ");
-	g_path.join2(&g_path, TEXT_WHITE);
-	while (true)
-	{
+		g_path = ft_get_put_terminal(count);
+		
 		ft_process_signal();
 		ft_fd_open(&lcmd);
 		line = readline(g_path.data);
@@ -185,11 +191,10 @@ int main (int argv,char **args,char **envp)
 			ft_strdel(&line);
 			continue;
 		}
-		exec_inout(line, envp, &lcmd);
-		ft_strdel(&line);
+		exec_inout(line, envp, &lcmd);	
+		ft_string_destructor(&g_path);
+		count++;
 	}
-	ft_string_destructor(&g_path);
-	ft_string_destructor(&root_path);
 	ft_last_command_destructor(&lcmd);
 	return 0;
 }

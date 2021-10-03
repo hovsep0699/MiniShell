@@ -6,7 +6,7 @@ MAKELIBFT		=	$(MAKE) -C $(LIBFT_PATH)
 
 MAKELIBFT2		=	$(MAKE) -C $(LIBFT2_PATH)
 
-LINKERS			=	-L$(LIBFT_PATH)/bin -lft -L$(LIBFT2_PATH) -lft_vache -lreadline
+LINKERS			=	-L$(LIBFT_PATH)/bin -lft -L$(LIBFT2_PATH) -lft_vache -L ~/.brew/opt/readline/lib -lreadline 
 
 MAKELIBS		=	@if [ ! -f $(LIBFT_PATH)/bin/libft.a  ]; then $(MAKELIBFT); fi
 

@@ -30,6 +30,7 @@ struct string
     int                 (*rfind)(string_t *str, char c);
     int                 (*rfind2)(string_t *str, char *needle);
     int                 (*rfind3)(string_t *str, string_t *needle);
+    int                 (*rfind4)(string_t *str, char c, int index);
     void                (*reverse)(string_t *str);
     void                (*tolower)(string_t *str);
     void                (*toupper)(string_t *str);
@@ -194,7 +195,7 @@ bool                ft_isnum_str(char *str);
 
 char                **ft_vecstrinit(int size);
 
-
+int                 ft_string_rfind4(string_t *str, char c, int start);
 
 
 

@@ -121,7 +121,7 @@ int exec_in_function(char **arguments, t_last_command *command_shablon, int coun
 	dollar_index = 0;
 	end_of_line = 0;
 	while (i < count)
-	{
+	{//printf("\nargument =%s i=%i\n",arguments[i+1]);
 		if(end_of_line >= i)
 			end_of_line = ft_vecstr_search2(arguments, ";", i);
 		if(arguments[i][0] == ';')
@@ -141,7 +141,7 @@ int exec_in_function(char **arguments, t_last_command *command_shablon, int coun
 		if(ft_strcmp(arguments[i],"<<") == 0)
 		{	
 			command_shablon->util_commant = DREAD;
-			i += 2;
+			i += 1;
 			continue;
 		}
 		if(arguments[i][0] == '>')

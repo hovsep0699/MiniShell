@@ -5,6 +5,7 @@ int ft_put_env_export(t_last_command * dictionary, char **envp, char **data,int 
     dictionary_t *tmp;
     i = 0;
     tmp = dictionary->variable_dic;
+    //printf("\n data =%s\n",find_data("asd",dictionary->variable_dic));
     while (tmp != NULL)
     {
         ft_putstr_fd(tmp->key, 1);

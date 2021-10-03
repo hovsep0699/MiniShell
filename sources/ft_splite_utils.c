@@ -48,54 +48,64 @@ int ft_len_array(char *splite_array)
 			count += splite_array[i - 1] != ' ' ? 1 : 0;
 			count += splite_array[i + 2] != ' ' ? 1 : 0;
 			if((ft_strncmp(splite_array + i, "<>", 2) == 0) || (ft_strncmp(splite_array + i, ">>", 2) == 0))
-			{
 				i++;
-			}
 			state = 0;
 		}
 		i++;			
 	}
 	return(count + i);
 }
-char *enter_split_sapce(char *not_splite)
+char *enter_split_sapce(char **not_splite)
 {
 	int i;
 	int j;
 	int state;
 	char *splite_array;
 	int len;
+	char *str;
 
 	i = 0;
 	state = 0;
 	j = 0;
-	len = ft_len_array(not_splite);
+
+	str = ft_strdup(*(not_splite));
+	len = ft_len_array(str);
 	splite_array = ft_calloc(len + 1, sizeof(char));
 	//ft_strlcpy(splite_array,not_splite,ft_strlen(not_splite) + 1);
 
-	while (not_splite[i])	
+	while (str[i])	
 	{
 		
-		if((not_splite[i] == '|' || not_splite[i] == '>' || not_splite[i] == '<' || not_splite[i] == ';') && i != 0)
+		if((str[i] == '|' || str[i] == '>' || str[i] == '<' || str[i] == ';') && i != 0)
 		{	
-			if(not_splite[i - 1] != ' ')
+			if(str[i - 1] != ' ')
 					splite_array[j++] = ' ';
-			if((ft_strncmp(not_splite + i, "<>", 2) == 0) || (ft_strncmp(not_splite + i, ">>", 2) == 0))
+			if((ft_strncmp(str + i, "<<", 2) == 0) || (ft_strncmp(str + i, ">>", 2) == 0))
 			{
 				
-				splite_array[j++] = not_splite[i++];
-				splite_array[j++] = not_splite[i];
+				splite_array[j++] = str[i++];
+				splite_array[j++] = str[i];
 				
 			}
 			else 
-				splite_array[j++] = not_splite[i];
-			if(not_splite[i + 1] != ' ')
+				splite_array[j++] = str[i];
+			if(str[i + 1] != ' ')
 					splite_array[j++] = ' ';
 			i++;
+			/* ft_putchar('\n');
+			 ft_putstr("if");
+			 ft_putchar('\n');*/
 		}
 		else
-		 	splite_array[j++] = not_splite[i++];		
+		{
+		 	splite_array[j++] = str[i++];
+			/* ft_putchar('\n');
+			 ft_putstr("else");
+			 ft_putchar('\n');*/
+
+		}	
 	}
-	splite_array[j] = '\0';
+	ft_strdel(&str);
 	// ft_strdel(&not_splite);
 	return(splite_array);
 }

@@ -211,20 +211,19 @@ void change_item(char *new_item, int key_index, dictionary_t *dict)
 	int j;
 
 	j = 0;
-	
-	while (new_item[j] != '=')
+	while (new_item[j] && new_item[j] != '=')
 		j++;
-	j++;
-	len_new_item = ft_strlen(new_item);
+	len_new_item = ft_zero_byte_strlen(new_item);
+	if(j == len_new_item)
+		j = 0;
+	else j++;
 	while (key_index != 0)
 	{
 		dict = dict->next;
 		key_index--;
 	}
 	ft_strdel(&dict->item);
-	dict->item = ft_strdup(new_item);
-	//(char *)ft_calloc(len_new_item - (j - 1),sizeof(char));
-//	ft_strlcpy(dict->item, new_item + j, len_new_item);
+	dict->item = ft_strdup(new_item + j);
 }
 
 void	ft_dictionaryadd_back(dictionary_t **lst, dictionary_t *new)

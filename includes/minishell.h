@@ -143,21 +143,7 @@ struct	s_last_command
 	dictionary_t			*variable_dic;
 	t_command_function		functions[MAX_BUILTIN_FUNCS];
 	t_command_side_function	side_functions[MAX_SIDE_FUNCS];
-	// int (*function_pointer[5][7])(struct	s_last_command *,char **, char **,int);
 };
-string_t g_path;
-
-/*    to do    */
-
-// struct s_function_args
-// {
-// 	t_last_command lcmd;
-// 	char **envp;
-// 	char **data;
-// 	int		count
-// };
-// cmd_funcs_t cmds = {ft_export, ft_write_file};
-
 void ft_setenv(char **envp, char *key, char *value);
 
 t_command_side_function		ft_side_funcs_default_constructor(void);
@@ -177,7 +163,7 @@ char			*ft_single_join();
 char			*ft_strnull(void);
 int 			ft_strcmp_char(char *str,char c,int count);
 int 			ft_flag_find(char str);
-char 			*enter_split_sapce(char *not_splite);
+char 			*enter_split_sapce( char **not_splite);
 int 			ft_default_set(t_last_command *command);
 void 			ft_print_welcome(char *path);
 char			*ft_strjoin_minishell(char *s1, int start_index, int end_index,int isflag);
@@ -224,4 +210,5 @@ int 			ft_read_file(struct	s_last_command *dictioanry, char **envp, char **data,
 int 			ft_double_write_file(struct	s_last_command *dictioanry, char **envp, char **data, int count);
 dictionary_t 	*ft_env_copy(char **env);
 void			ft_dictionary_destructor(dictionary_t *dict);
+int 			ft_dwrite_file(struct	s_last_command *dictioanry, char **envp, char **data, int count);
 #endif

@@ -60,14 +60,18 @@ int	ft_cd(t_last_command *command_shablon, char **envp, char **data, int count)
 	if (!command_shablon->data)
 		return 0;
 	err = chdir(command_shablon->data);
+	
 	if (err == -1)
 	{
 		printf("%s\n", strerror(errno));
 		return errno;
 	}
 	getcwd(new_path,PATH_MAX);
+
 	change_item(find_data("PWD",command_shablon->variable_dic),find_data_int("OLDPWD=",command_shablon->variable_dic),command_shablon->variable_dic);
+		ft_putstr("\ndzech\n");
 	change_item(new_path,find_data_int("PWD=",command_shablon->variable_dic),command_shablon->variable_dic);
+	
 	return 0;
 }
 

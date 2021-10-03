@@ -21,6 +21,7 @@ string_t ft_string_default_constructor()
     str.rfind = ft_string_rfind;
     str.rfind2 = ft_string_rfind2;
     str.rfind3 = ft_string_rfind3;
+    str.rfind4 = ft_string_rfind4;
     str.tolower = ft_string_tolower;
     str.toupper = ft_string_tolower;
     str.compare = ft_string_compare;
@@ -123,7 +124,9 @@ void   ft_string_erase_between(string_t *str, size_t start, size_t end)
         start = end;
         end = tmp;
     }
-    copy = (char *)malloc(sizeof(char) * str->size);
+    if (!(start - end))
+        return ;
+    copy = (char *)ft_calloc(str->size, sizeof(char));
     ft_strncpy(copy, str->data, start);
     copy[start - 1] = '\0';
     ft_strcat(copy, str->data + end);
@@ -193,6 +196,21 @@ int     ft_string_find(string_t *str, char c)
     if (!c)
         return ft_zero_byte_strlen(str->data);
     while (str->data[++index])
+    {
+        if (str->data[index] == c)
+            return index;
+    }
+    return -1;
+}
+
+int     ft_string_rfind4(string_t *str, char c, int start)
+{
+    int index;
+
+    index = start;
+    if (!c)
+        return ft_zero_byte_strlen(str->data);
+    while (str->data[--index])
     {
         if (str->data[index] == c)
             return index;
