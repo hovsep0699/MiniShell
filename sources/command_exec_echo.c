@@ -77,7 +77,7 @@ int	ft_cd(t_last_command *command_shablon, char **envp, char **data, int count)
 
 int	ft_pwd(t_last_command *command_shablon, char **envp_my, char **data, int count)
 {
-
+ft_putendl("\n\n\nparent\n");
 	printf("%s\n", find_data("PWD",command_shablon->variable_dic));
 	return 0;
 }

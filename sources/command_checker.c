@@ -133,29 +133,35 @@ int exec_in_function(char **arguments, t_last_command *command_shablon, int coun
 		}
 		if(ft_strcmp(arguments[i],">>") == 0)
 		{	
-			only_create_file(arguments[i + 1], command_shablon);
+			//only_create_file(arguments[i + 1], command_shablon);
 			command_shablon->util_commant = DWRITE;
-			i += 2;
+			i++;
 			continue;
 		}
 		if(ft_strcmp(arguments[i],"<<") == 0)
 		{	
 			command_shablon->util_commant = DREAD;
-			i += 1;
+			i++;
 			continue;
 		}
 		if(arguments[i][0] == '>')
 		{	
-			only_create_file(arguments[i + 1], command_shablon);
 			command_shablon->util_commant = WRITE;
-			i += 2;
+			i++;
 			continue;
 		}
 		if(arguments[i][0] == '<')
 		{	
 			command_shablon->util_commant = READ;
-			i += 2;
+			i++;
 			continue;
+		}
+		if(arguments[i][0] == '|')
+		{
+			command_shablon->index_command = i + 1;
+			command_shablon->util_commant = PIPE;
+			ft_search_side_func(command_shablon)(command_shablon, envp_my, arguments, count);
+			return(SUCCESS);
 		}
 		command_shablon->data = ft_equal_strjoin(command_shablon->data, command_shablon, arguments[i], (end_of_line == i || count - 1 == i));
 		i++;
@@ -164,8 +170,6 @@ int exec_in_function(char **arguments, t_last_command *command_shablon, int coun
 	{
 		ft_search_side_func(command_shablon)(command_shablon, envp_my, arguments, count);
 		command_shablon->index_command = i;
-		// printf("index: %d\n", command_shablon->index_command);
-
 		return(SUCCESS);
 	}
 	return (1);
@@ -184,7 +188,6 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 	while (comand_shablon->index_command < count)
 	{
 		lower_case = ft_tolower_minishell(list_argument[i], &len);
-
 		if(ft_strcmp(lower_case, "echo") == 0)
 		{
 			exeption = PARSER_ERROR;
@@ -231,9 +234,13 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 			comand_shablon->type_command = UNDEFINED;
 			exec_in_function(list_argument, comand_shablon, count, env_my);
 		}
+		i = comand_shablon->index_command;
+		ft_pipe_close(comand_shablon->change_fd_in);
+		ft_pipe_close(comand_shablon->change_fd_out);
 		comand_shablon->last_command = comand_shablon->index_command;
+		//if(comand_shablon->isparrent == 0)
+		//	exit(0);
 		ft_strdel(&lower_case);
 	}
-	
 	return(1);
 }

@@ -47,10 +47,12 @@ int quote_check(char *s, char exp, char exp2)
 	int static exp_state2;
 	int i;
 	int pipe_problem;
+	int flag_caharacter;
 
 	exp_state = 1;
 	exp_state2 = 1;
-	pipe_problem = 0;
+	pipe_problem = 1;
+	flag_caharacter = 0;
 	i = 0;
 	while (s[i])
 	{
@@ -191,7 +193,9 @@ int main (int argv,char **args,char **envp)
 			ft_strdel(&line);
 			continue;
 		}
-		exec_inout(line, envp, &lcmd);	
+		exec_inout(line, envp, &lcmd);
+		ft_pipe_close(lcmd.change_fd_in);
+		ft_pipe_close(lcmd.change_fd_out);
 		ft_string_destructor(&g_path);
 		count++;
 	}

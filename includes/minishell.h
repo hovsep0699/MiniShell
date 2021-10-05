@@ -123,11 +123,14 @@ struct	s_dictionary
 };
 struct	s_last_command
 {
+	int						change_fd_in;
+	int						change_fd_out;
 	int						start_program;
 	int						echo_option;
 	int 					quote_staet_new;
 	size_t					exit_status;
 	int 					rut;
+	int 					isparrent;
 	t_builtin_commands		type_command;
 	t_side_commands			util_commant;
 	int						index_command;
@@ -139,7 +142,6 @@ struct	s_last_command
 	char					*output_data;
 	char					*name_file;
 	int						fd[2];
-	int						change_fd[2];
 	dictionary_t			*variable_dic;
 	t_command_function		functions[MAX_BUILTIN_FUNCS];
 	t_command_side_function	side_functions[MAX_SIDE_FUNCS];
@@ -211,4 +213,6 @@ int 			ft_double_write_file(struct	s_last_command *dictioanry, char **envp, char
 dictionary_t 	*ft_env_copy(char **env);
 void			ft_dictionary_destructor(dictionary_t *dict);
 int 			ft_dwrite_file(struct	s_last_command *dictioanry, char **envp, char **data, int count);
+int	ft_pipe(t_last_command *command_shablon, char **envp_my, char **data, int count);
+void ft_pipe_close(int fd);
 #endif

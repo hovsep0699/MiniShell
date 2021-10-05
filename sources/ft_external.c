@@ -22,7 +22,6 @@
     j = 0;
     if((ret_fork = fork()) == 0)
     {
-       
        while (j < i)
        {
         tmp_path = ft_strdup(split_path[j]);
@@ -39,7 +38,7 @@
     }
     else
     {
-      wait(NULL);
+      waitpid(ret_fork,NULL,0);
     }
     ft_vecstrdel(&split_path);
     ft_vecstrdel(&av);
