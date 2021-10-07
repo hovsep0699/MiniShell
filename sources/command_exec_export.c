@@ -28,8 +28,8 @@ int 			ft_export(t_last_command * dictioanry,char **envp, char **data,int count)
     int start_index;
     int end_index;
 
-    if(dictioanry->data == NULL && dictioanry->env_exist == 1)
-        return(UNPRINT_ERROR);
+ //   if(dictioanry->data == NULL)
+  //      return(UNPRINT_ERROR);
     
     if(ft_zero_byte_strlen(dictioanry->data) == 0)
     {

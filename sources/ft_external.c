@@ -12,7 +12,9 @@
     int ret_execv;
     char **av;
     int len;
+//ft_putchar('\n');
 
+    //  ft_putendl(data[dictioanry->last_command]);
     path = find_data("PATH",dictioanry->variable_dic);
     split_path = ft_strsplit(path,':');
     i = ft_vecstrlen(split_path);
@@ -22,6 +24,7 @@
     j = 0;
     if((ret_fork = fork()) == 0)
     {
+    
        while (j < i)
        {
         tmp_path = ft_strdup(split_path[j]);
@@ -37,9 +40,7 @@
       exit(0);
     }
     else
-    {
       waitpid(ret_fork,NULL,0);
-    }
     ft_vecstrdel(&split_path);
     ft_vecstrdel(&av);
     return dictioanry->exit_status;

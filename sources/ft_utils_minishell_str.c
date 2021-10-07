@@ -96,12 +96,8 @@ int ft_default_set(t_last_command *command)
 	command->quote_staet_new = 0;
 	command->type_command = UNDEFINED;
 	command->index_command = 0;
-	command->rut = 0;
 	command->util_commant = NONE;
 	command->last_command = 0;
-	command->dollar_exist = 0;
-	command->env_exist = 0;
-	command->isparrent = -1;
 	command->name_file = NULL;
 	return(1);
 }

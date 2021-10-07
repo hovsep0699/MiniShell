@@ -238,8 +238,6 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 		ft_pipe_close(comand_shablon->change_fd_in);
 		ft_pipe_close(comand_shablon->change_fd_out);
 		comand_shablon->last_command = comand_shablon->index_command;
-		//if(comand_shablon->isparrent == 0)
-		//	exit(0);
 		ft_strdel(&lower_case);
 	}
 	return(1);

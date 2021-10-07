@@ -8,7 +8,6 @@ t_last_command ft_last_command_constructor()
     lcmd.last_command = 0;
     lcmd.nerar_exeption = 0;
     lcmd.quote_staet_new = 0;
-    lcmd.rut = 0;
     lcmd.start_program = 0;
     lcmd.type_command = UNDEFINED;
     lcmd.util_commant = NONE;
@@ -20,9 +19,6 @@ t_last_command ft_last_command_constructor()
     lcmd.change_fd_out = 0;
     lcmd.echo_option = 0;
     lcmd.exit_status = 0;
-    lcmd.dollar_exist = 0;
-    lcmd.isparrent = -1;
-    lcmd.env_exist = 0;
     lcmd.fd[0] = dup(STDIN_FILE);
     lcmd.fd[1] = dup(STDIN_FILE);
     lcmd.functions[0] = (t_command_function){ECHO, ft_print_echo};
@@ -37,7 +33,7 @@ t_last_command ft_last_command_constructor()
     lcmd.side_functions[1] = (t_command_side_function){READ, ft_read_file};
     lcmd.side_functions[2] = (t_command_side_function){DWRITE, ft_double_write_file};
     lcmd.side_functions[3] = (t_command_side_function){DREAD, ft_dwrite_file};
-    lcmd.side_functions[4] = (t_command_side_function){PIPE, ft_pipe};
+    lcmd.side_functions[4] = (t_command_side_function){PIPE, NULL};
     lcmd.side_functions[5] = (t_command_side_function){NONE, NULL};
     return lcmd;
 }

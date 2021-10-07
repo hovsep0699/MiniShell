@@ -129,15 +129,12 @@ struct	s_last_command
 	int						echo_option;
 	int 					quote_staet_new;
 	size_t					exit_status;
-	int 					rut;
 	int 					isparrent;
 	t_builtin_commands		type_command;
 	t_side_commands			util_commant;
 	int						index_command;
 	int						last_command;
 	int						nerar_exeption;
-	int						dollar_exist;
-	int						env_exist;
 	char					*data;
 	char					*output_data;
 	char					*name_file;
@@ -213,6 +210,6 @@ int 			ft_double_write_file(struct	s_last_command *dictioanry, char **envp, char
 dictionary_t 	*ft_env_copy(char **env);
 void			ft_dictionary_destructor(dictionary_t *dict);
 int 			ft_dwrite_file(struct	s_last_command *dictioanry, char **envp, char **data, int count);
-int	ft_pipe(t_last_command *command_shablon, char **envp_my, char **data, int count);
+char 			*ft_pipe(t_last_command *command_shablon, char *data);
 void ft_pipe_close(int fd);
 #endif

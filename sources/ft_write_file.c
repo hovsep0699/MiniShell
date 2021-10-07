@@ -119,7 +119,6 @@ int ft_dwrite_file(struct	s_last_command *dictioanry, char **envp, char **data, 
     ft_strdel(&line);
     if (pipe(p) < 0)
         exit(1);
-    printf("\n%s\n",new_str);
    if ((i = fork()) > 0) {
        if((dup2(p[1], 1)) < 0)
         strerror(errno);

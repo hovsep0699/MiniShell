@@ -8,7 +8,7 @@ int exec_inout(char *line, char **envp, t_last_command *last_command)
 	int i;
 	int count;
 	int ret;
-
+	if(ft_pipe)
 	tmp_line = enter_split_sapce(&line);
 	ft_strdel(&line);
 	command = ft_split_Vache(tmp_line, ' ', CHAR_QUATES, CHAR_DQUATES);
