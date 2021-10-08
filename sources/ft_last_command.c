@@ -15,8 +15,8 @@ t_last_command ft_last_command_constructor()
     lcmd.data = NULL;
     lcmd.output_data = NULL;
     lcmd.name_file = NULL;
-    lcmd.change_fd_in = 0;
-    lcmd.change_fd_out = 0;
+    lcmd.change_fd_in = -1;
+    lcmd.change_fd_out = -1;
     lcmd.echo_option = 0;
     lcmd.exit_status = 0;
     lcmd.isparrent = 1;
