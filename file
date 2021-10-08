@@ -1,10 +1,7 @@
-dsadsdfdsgfd
-fds
-gdh
-dsadsdfdsgfdfds
+dfasdfsdfgdfgfdgfdh
+fsdgdfg
 
-char **av;
+hello
 
-av[0] = "cmd"
-av[1] = NULL
-execve("cmd", av, env)
+
+hi

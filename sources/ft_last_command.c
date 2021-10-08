@@ -19,6 +19,7 @@ t_last_command ft_last_command_constructor()
     lcmd.change_fd_out = 0;
     lcmd.echo_option = 0;
     lcmd.exit_status = 0;
+    lcmd.isparrent = 1;
     lcmd.fd[0] = dup(STDIN_FILE);
     lcmd.fd[1] = dup(STDIN_FILE);
     lcmd.functions[0] = (t_command_function){ECHO, ft_print_echo};

@@ -121,7 +121,7 @@ int exec_in_function(char **arguments, t_last_command *command_shablon, int coun
 	dollar_index = 0;
 	end_of_line = 0;
 	while (i < count)
-	{//printf("\nargument =%s i=%i\n",arguments[i+1]);
+	{
 		if(end_of_line >= i)
 			end_of_line = ft_vecstr_search2(arguments, ";", i);
 		if(arguments[i][0] == ';')
@@ -131,14 +131,13 @@ int exec_in_function(char **arguments, t_last_command *command_shablon, int coun
 			ft_strdel(&command_shablon->data);
 			return (SUCCESS);
 		}
-		if(ft_strcmp(arguments[i],">>") == 0)
-		{	
-			//only_create_file(arguments[i + 1], command_shablon);
+		if(ft_strcmp(arguments[i], ">>") == 0)
+		{
 			command_shablon->util_commant = DWRITE;
 			i++;
 			continue;
 		}
-		if(ft_strcmp(arguments[i],"<<") == 0)
+		if(ft_strcmp(arguments[i], "<<") == 0)
 		{	
 			command_shablon->util_commant = DREAD;
 			i++;
@@ -155,13 +154,6 @@ int exec_in_function(char **arguments, t_last_command *command_shablon, int coun
 			command_shablon->util_commant = READ;
 			i++;
 			continue;
-		}
-		if(arguments[i][0] == '|')
-		{
-			command_shablon->index_command = i + 1;
-			command_shablon->util_commant = PIPE;
-			ft_search_side_func(command_shablon)(command_shablon, envp_my, arguments, count);
-			return(SUCCESS);
 		}
 		command_shablon->data = ft_equal_strjoin(command_shablon->data, command_shablon, arguments[i], (end_of_line == i || count - 1 == i));
 		i++;
@@ -235,8 +227,8 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 			exec_in_function(list_argument, comand_shablon, count, env_my);
 		}
 		i = comand_shablon->index_command;
-		ft_pipe_close(comand_shablon->change_fd_in);
-		ft_pipe_close(comand_shablon->change_fd_out);
+	//	ft_pipe_close(comand_shablon->change_fd_in);
+		//ft_pipe_close(comand_shablon->change_fd_out);
 		comand_shablon->last_command = comand_shablon->index_command;
 		ft_strdel(&lower_case);
 	}

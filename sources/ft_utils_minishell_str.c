@@ -98,6 +98,7 @@ int ft_default_set(t_last_command *command)
 	command->index_command = 0;
 	command->util_commant = NONE;
 	command->last_command = 0;
+	command->isparrent = 1;
 	command->name_file = NULL;
 	return(1);
 }

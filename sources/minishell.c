@@ -5,22 +5,26 @@ int exec_inout(char *line, char **envp, t_last_command *last_command)
 	char **command;
 	pid_t pid_child;
 	char *tmp_line;
+	char *pipe_line;
 	int i;
 	int count;
 	int ret;
-	if(ft_pipe)
-	tmp_line = enter_split_sapce(&line);
-	ft_strdel(&line);
-	command = ft_split_Vache(tmp_line, ' ', CHAR_QUATES, CHAR_DQUATES);
-	count = ft_vecstrlen(command);
+
 	ft_default_set(last_command);
-	if((ret = (system_command(command, last_command, envp, count))) >= 1)
-		ft_putstr("Ok\n");
-	else
-		last_command->exit_status = ret;
+	pipe_line = ft_pipe(last_command, line); 
+	tmp_line = enter_split_sapce(&pipe_line);
+	command = ft_split(tmp_line, ' ');
+	count = ft_vecstrlen(command);
+	ret = system_command(command, last_command, envp, count);
+	last_command->exit_status = ret;
+	ft_pipe_close(last_command->change_fd_in);
+	ft_pipe_close(last_command->change_fd_out);
+	ft_fd_open(last_command);
+	if(last_command->isparrent == 0)
+		exit(0);
 	ft_strdel(&tmp_line);
+	// ft_strdel(&pipe_line);
 	ft_vecstrdel(&command);
-	ft_strdel(&last_command->name_file);
 	return(1);
 }
 char *replace_str(char *curr_path)
@@ -143,7 +147,10 @@ string_t ft_get_put_terminal(int i)
 		new_new_path = ft_strjoin(new_root_path.data,root_path.data);
 	}
 	else
+	{
+		new_root_path = ft_string_default_constructor();
 		new_new_path = ft_strdup(root_path.data);
+	}
 	path = replace_str(new_new_path);
 	g_path = ft_string_default_constructor();
 	g_path.join2(&g_path, path);
@@ -196,6 +203,7 @@ int main (int argv,char **args,char **envp)
 		exec_inout(line, envp, &lcmd);
 		ft_pipe_close(lcmd.change_fd_in);
 		ft_pipe_close(lcmd.change_fd_out);
+		ft_strdel(&line);
 		ft_string_destructor(&g_path);
 		count++;
 	}

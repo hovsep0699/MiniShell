@@ -5,7 +5,6 @@ int ft_put_env_export(t_last_command * dictionary, char **envp, char **data,int 
     dictionary_t *tmp;
     i = 0;
     tmp = dictionary->variable_dic;
-    //printf("\n data =%s\n",find_data("asd",dictionary->variable_dic));
     while (tmp != NULL)
     {
         ft_putstr_fd(tmp->key, 1);
@@ -27,9 +26,6 @@ int 			ft_export(t_last_command * dictioanry,char **envp, char **data,int count)
     int i;
     int start_index;
     int end_index;
-
- //   if(dictioanry->data == NULL)
-  //      return(UNPRINT_ERROR);
     
     if(ft_zero_byte_strlen(dictioanry->data) == 0)
     {
