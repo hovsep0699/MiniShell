@@ -23,7 +23,7 @@ int exec_inout(char *line, char **envp, t_last_command *last_command)
 	if(last_command->isparrent == 0)
 		exit(0);
 	ft_strdel(&tmp_line);
-	// ft_strdel(&pipe_line);
+	ft_strdel(&pipe_line);
 	ft_vecstrdel(&command);
 	return(1);
 }
@@ -133,6 +133,7 @@ string_t ft_get_put_terminal(int i)
 	root_path = ft_string_constructor(pwd);
 	x = root_path.size;
 	len = root_path.size;
+
 	while (++count < PATH_SHOW_NUMBER)
 	{
 		x = root_path.rfind4(&root_path, '/', x);
@@ -183,18 +184,18 @@ int main (int argv,char **args,char **envp)
 	line = NULL;
 	first = NULL;
 	second = NULL;
+	
 	lcmd = ft_last_command_constructor();
 	lcmd.variable_dic = ft_env_copy(envp);
 	while (true)
 	{
-
-		g_path = ft_get_put_terminal(count);
 		
-		ft_process_signal();
+		g_path = ft_get_put_terminal(count);
 		ft_fd_open(&lcmd);
+		ft_process_signal();
+	if(!line)
 		line = readline(g_path.data);
-		if (line)
-			add_history(line);
+		add_history(line);
 		if(quote_check(line, CHAR_QUATES, CHAR_DQUATES))
 		{
 			ft_strdel(&line);

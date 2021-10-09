@@ -11,9 +11,11 @@ void handle(int signum)
 	else
 	{
 		// getcwd(path_new,PATH_MAX);
+	ft_putstr("\nchaskacha\n");
 		ft_putchar('\n');
 		rl_on_new_line();
 		rl_replace_line("", 1);
+
 		/*rl_redisplay();*/
 		rl_done = 1;
 	}
@@ -23,7 +25,6 @@ void handle(int signum)
 		/*line = readline(g_path.data);*/
 		/*add_history(line);*/
 	/*}*/
-
 }
 
 int event(void)
@@ -35,5 +36,6 @@ int    ft_process_signal(void)
 {
 	rl_event_hook = event;
     signal(SIGINT, handle);
+
     return(0);
 }

@@ -11,13 +11,18 @@ char *ft_pipe(t_last_command *command_shablon, char *data)
     int len;
     int i;
     int fd[2];
+    char *pipe_line;
     pid_t id;
 
     i = 0;
     str = ft_split_Vache(data, '|', CHAR_QUATES, CHAR_DQUATES);
     len = ft_vecstrlen(str);
-    if(len == 1)
-        return(str[0]);
+    if(len <= 1)
+    {
+        pipe_line = ft_strdup(str[i]);
+        ft_vecstrdel(&str);
+        return(pipe_line);
+    }
     i = len;
     while (i > 1)
     {
@@ -33,7 +38,9 @@ char *ft_pipe(t_last_command *command_shablon, char *data)
                 command_shablon->isparrent = 1;
             else
                 command_shablon->isparrent = 0;
-            return(str[i]);
+            pipe_line = ft_strdup(str[i]);
+            ft_vecstrdel(&str);
+            return(pipe_line);
         }
         if(i > 0)
         {
@@ -43,6 +50,7 @@ char *ft_pipe(t_last_command *command_shablon, char *data)
             command_shablon->isparrent = 0;
         }
     }
-     ft_putendl(str[0]);
-    return(str[0]);
+    pipe_line = ft_strdup(str[0]);
+    ft_vecstrdel(&str);
+    return(pipe_line);
 }
