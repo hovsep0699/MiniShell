@@ -242,19 +242,9 @@ void	ft_dictionaryadd_back(dictionary_t **lst, dictionary_t *new)
 	ptr->next = new;
 }
 
-/*void ft_dictionary_del(dictionary_t *del_stack)
-{
-	int size = ft_dictionarysize(del_stack);
-	if(size == 1)
-		ft_memdel((void **)&del_stack);
-}*/
-
 void ft_dictionary_del_key(dictionary_t *del_stack)
 {
-	// if(del_stack->key != NULL)
 	ft_memdel((void **)&del_stack->key);
-	// if(del_stack->item != NULL)
 	ft_memdel((void **)&del_stack->item);
-	/*del_stack->next = NULL;*/
 	ft_memdel((void **)&del_stack);
 }

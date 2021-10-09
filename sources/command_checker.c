@@ -1,19 +1,5 @@
 #include "minishell.h"
 
-typedef struct st st;
-
-// struct st
-// {
-// 	int x;
-// 	int y;
-// };
-
-// st a;
-// st b;
-
-// b = a;
-
-
 int ft_alloc_split_minishell(char const *s, char c, char exp, char exp2)
 {
 	size_t	i;
@@ -227,8 +213,6 @@ int system_command(char **list_argument, t_last_command *comand_shablon, char **
 			exec_in_function(list_argument, comand_shablon, count, env_my);
 		}
 		i = comand_shablon->index_command;
-	//	ft_pipe_close(comand_shablon->change_fd_in);
-		//ft_pipe_close(comand_shablon->change_fd_out);
 		comand_shablon->last_command = comand_shablon->index_command;
 		ft_strdel(&lower_case);
 	}

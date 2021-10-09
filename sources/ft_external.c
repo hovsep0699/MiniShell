@@ -13,18 +13,17 @@
     char **av;
     int len;
 
-    path = find_data("PATH",dictioanry->variable_dic);
-    split_path = ft_strsplit(path,':');
+    path = find_data("PATH", dictioanry->variable_dic);
+    split_path = ft_strsplit(path, ':');
     i = ft_vecstrlen(split_path);
     for (int ind = 0; ind < i; ++ind)
        split_path[ind] = ft_realloc_strjoin(split_path[ind], "/");  
     av = ft_vecstrinit(3);
     j = 0;
-    if((ret_fork = fork()) == 0)
+    if((ret_fork = fork()) == CHILD_PROC)
     {
-    
-       while (j < i)
-       {
+      while (j < i)
+      {
         tmp_path = ft_strdup(split_path[j]);
         tmp_path = ft_realloc_strjoin(tmp_path, data[dictioanry->last_command]);
         ft_strdel(&av[0]);
@@ -38,7 +37,19 @@
       exit(0);
     }
     else
+    {
+      string_t path;
+
+      path = ft_get_put_terminal();
+      signal(SIGINT, SIG_IGN);
+      signal(SIGQUIT, ft_signal_handle);
+      // add_history(dictioanry->line);
       waitpid(ret_fork, NULL, 0);
+      ft_putchar('\n');
+      rl_on_new_line();
+      ft_string_destructor(&path);
+
+    }
     ft_vecstrdel(&split_path);
     ft_vecstrdel(&av);
     return dictioanry->exit_status;

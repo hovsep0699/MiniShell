@@ -1,41 +1,26 @@
 #include "minishell.h"
 
-void handle(int signum)
+void ft_signal_handle(int signum)
 {
-
-    // printf("cntr c\n");
-	char path_new[PATH_MAX];
-
-    if (!isatty(STDIN_FILE))
-        exit(0);
-	else
+	if (signum == SIGINT || signum == SIGQUIT)
 	{
-		// getcwd(path_new,PATH_MAX);
-	ft_putstr("\nchaskacha\n");
-		ft_putchar('\n');
+		if(signum == SIGQUIT)
+		{
+			rl_replace_line("", 1);
+			ft_putstr("Quit\n");
+		}
+		else
+			ft_putchar('\n');
 		rl_on_new_line();
 		rl_replace_line("", 1);
-
-		/*rl_redisplay();*/
-		rl_done = 1;
+		rl_redisplay();
 	}
-	/*else*/
-	/*{*/
-		/*ft_putchar('\n');*/
-		/*line = readline(g_path.data);*/
-		/*add_history(line);*/
-	/*}*/
-}
-
-int event(void)
-{
-	return 0;
 }
 
 int    ft_process_signal(void)
 {
-	rl_event_hook = event;
-    signal(SIGINT, handle);
+    signal(SIGINT, ft_signal_handle);
+	signal(SIGQUIT, SIG_IGN);
 
     return(0);
 }

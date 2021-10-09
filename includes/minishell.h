@@ -29,6 +29,8 @@
 #define FIRSTDIGIT -8
 #define SUCCESS 1
 
+#define CHILD_PROC 0
+
 
 #define PATH_SHOW_NUMBER 3
 //tiper
@@ -139,6 +141,7 @@ struct	s_last_command
 	char					*output_data;
 	char					*name_file;
 	int						fd[2];
+	char					*line;
 	dictionary_t			*variable_dic;
 	t_command_function		functions[MAX_BUILTIN_FUNCS];
 	t_command_side_function	side_functions[MAX_SIDE_FUNCS];
@@ -151,6 +154,9 @@ t_command_function			ft_command_funcs_default_constructor(void);
 t_command_function			ft_command_funcs_constructor(t_builtin_commands name, cmd_func_t cmd);
 
 
+
+void			ft_signal_handle(int signum);
+string_t		ft_get_put_terminal();
 int				ft_external(t_last_command * dictioanry,char **envp, char **data, int count);
 t_last_command	ft_last_command_constructor(void);
 int				get_next_line(int fd, char **line);
@@ -205,11 +211,11 @@ cmd_func_t		ft_search_builtin_func(t_last_command *lcmd);
 t_last_command	ft_last_command_constructor();
 int				ft_cd(t_last_command *command_shablon, char **envp_my, char **data, int count);
 int				ft_pwd(t_last_command *command_shablon, char **envp_my, char **data, int count);
-int 			ft_read_file(struct	s_last_command *dictioanry, char **envp, char **data, int count);
-int 			ft_double_write_file(struct	s_last_command *dictioanry, char **envp, char **data, int count);
+int 			ft_read_file(t_last_command *dictioanry, char **envp, char **data, int count);
+int 			ft_double_write_file(t_last_command *dictioanry, char **envp, char **data, int count);
 dictionary_t 	*ft_env_copy(char **env);
 void			ft_dictionary_destructor(dictionary_t *dict);
-int 			ft_dwrite_file(struct	s_last_command *dictioanry, char **envp, char **data, int count);
+int 			ft_dwrite_file(t_last_command *dictioanry, char **envp, char **data, int count);
 char 			*ft_pipe(t_last_command *command_shablon, char *data);
 void ft_pipe_close(int fd);
 #endif

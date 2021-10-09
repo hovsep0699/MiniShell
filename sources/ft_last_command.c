@@ -13,6 +13,7 @@ t_last_command ft_last_command_constructor()
     lcmd.util_commant = NONE;
     lcmd.variable_dic = NULL;
     lcmd.data = NULL;
+    lcmd.line = NULL;
     lcmd.output_data = NULL;
     lcmd.name_file = NULL;
     lcmd.change_fd_in = -1;

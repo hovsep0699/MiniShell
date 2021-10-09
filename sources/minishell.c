@@ -115,7 +115,7 @@ void ft_setenv(char **envp, char *key, char *value)
 	ft_string_destructor(&env_key);
 }
 
-string_t ft_get_put_terminal(int i)
+string_t ft_get_put_terminal()
 {
 	char pwd[PATH_MAX];
 	char *curr_path;
@@ -129,7 +129,7 @@ string_t ft_get_put_terminal(int i)
 	string_t g_path;
 
 	count = -1;
-	curr_path = getcwd(pwd,PATH_MAX);
+	curr_path = getcwd(pwd, PATH_MAX);
 	root_path = ft_string_constructor(pwd);
 	x = root_path.size;
 	len = root_path.size;
@@ -165,7 +165,6 @@ string_t ft_get_put_terminal(int i)
 
 int main (int argv,char **args,char **envp)
 {
-	char *line;
 	char *path;
 	char *tmp;
 	char **env;
@@ -174,14 +173,11 @@ int main (int argv,char **args,char **envp)
 	char *first;
 	char *second;
 	int count;
-	string_t g_path;
-	line  = NULL;
+	string_t cwd_path;
 	
 	t_last_command lcmd;
 	int len;
 	int i;
-	count = 0;
-	line = NULL;
 	first = NULL;
 	second = NULL;
 	
@@ -190,23 +186,25 @@ int main (int argv,char **args,char **envp)
 	while (true)
 	{
 		
-		g_path = ft_get_put_terminal(count);
+		cwd_path = ft_get_put_terminal();
 		ft_fd_open(&lcmd);
 		ft_process_signal();
-	if(!line)
-		line = readline(g_path.data);
-		add_history(line);
-		if(quote_check(line, CHAR_QUATES, CHAR_DQUATES))
+		if (!lcmd.line)
+			lcmd.line = readline(cwd_path.data);
+		add_history(lcmd.line);
+		if (*lcmd.line)
 		{
-			ft_strdel(&line);
-			continue;
+			if (quote_check(lcmd.line, CHAR_QUATES, CHAR_DQUATES))
+			{
+				ft_strdel(&lcmd.line);
+				continue;
+			}
+			exec_inout(lcmd.line, envp, &lcmd);
 		}
-		exec_inout(line, envp, &lcmd);
 		ft_pipe_close(lcmd.change_fd_in);
 		ft_pipe_close(lcmd.change_fd_out);
-		ft_strdel(&line);
-		ft_string_destructor(&g_path);
-		count++;
+		ft_strdel(&lcmd.line);
+		ft_string_destructor(&cwd_path);
 	}
 	ft_last_command_destructor(&lcmd);
 	return 0;
