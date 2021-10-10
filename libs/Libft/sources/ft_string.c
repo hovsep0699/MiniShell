@@ -128,7 +128,6 @@ void   ft_string_erase_between(string_t *str, size_t start, size_t end)
         return ;
     copy = (char *)ft_calloc(str->size, sizeof(char));
     ft_strncpy(copy, str->data, start);
-    copy[start - 1] = '\0';
     ft_strcat(copy, str->data + end);
     ft_strdel(&str->data);
     str->data = copy;

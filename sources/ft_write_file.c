@@ -103,6 +103,7 @@ int ft_dwrite_file(struct	s_last_command *dictioanry, char **envp, char **data, 
     check_str = ft_strdup(dictioanry->data);
     ft_strdel(&dictioanry->data);
     dictioanry->data = NULL;
+    pipe(dictioanry->fd);
     while (true)
     {
         // ft_putchar('\n');
@@ -115,29 +116,8 @@ int ft_dwrite_file(struct	s_last_command *dictioanry, char **envp, char **data, 
        new_str = ft_realloc_strjoin(new_str, line);
         //ft_strdel(&line);
     }
-    ft_strdel(&check_str);
-    ft_strdel(&line);
-    if (pipe(p) < 0)
-        exit(1);
-   if ((i = fork()) > 0) {
-       if((dup2(p[1], 1)) < 0)
-        strerror(errno);
-        write(p[1], new_str, ft_zero_byte_strlen(new_str));
-        close(p[1]);
-        close(p[0]);
-        ft_fd_open(dictioanry);
-        ft_strdel(&new_str);
-        wait(NULL);
-   }
-   else
-   {
-   // waitpid(i,NULL,WNOHANG);
-    if((dup2(p[0], 0)) < 0)
-        strerror(errno);
-    close(p[0]);
-     ft_search_builtin_func(dictioanry)(dictioanry, envp, data, count);
-     ft_fd_open(dictioanry);
-     exit(dictioanry->exit_status);
-   }
-return(1);
+    dictioanry->data = ft_strdup(new_str);
+    ft_search_builtin_func(dictioanry)(dictioanry, envp, data, count);
+    ft_fd_open(dictioanry);
+    return(1);
 }

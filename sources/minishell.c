@@ -11,7 +11,7 @@ int exec_inout(char *line, char **envp, t_last_command *last_command)
 	int ret;
 
 	ft_default_set(last_command);
-	pipe_line = ft_pipe(last_command, line); 
+	pipe_line = ft_pipe(last_command, line);
 	tmp_line = enter_split_sapce(&pipe_line);
 	command = ft_split(tmp_line, ' ');
 	count = ft_vecstrlen(command);
@@ -22,9 +22,11 @@ int exec_inout(char *line, char **envp, t_last_command *last_command)
 	ft_fd_open(last_command);
 	if(last_command->isparrent == 0)
 		exit(0);
+	// printf("before pipe\n");
 	ft_strdel(&tmp_line);
 	ft_strdel(&pipe_line);
 	ft_vecstrdel(&command);
+	// printf("after pipe\n");
 	return(1);
 }
 char *replace_str(char *curr_path)
@@ -35,7 +37,7 @@ char *replace_str(char *curr_path)
 
 	i = 0;
 	j = 0;
-	if((path = (char *)ft_calloc(ft_strlen(curr_path) + 1, sizeof(char))) == NULL)
+	if((path = (char *)ft_calloc(ft_zero_byte_strlen(curr_path) + 1, sizeof(char))) == NULL)
 		return(NULL);
 	while (curr_path[i])
 	{
@@ -121,7 +123,7 @@ string_t ft_get_put_terminal()
 	char *curr_path;
 	string_t root_path;
 	string_t new_root_path;
-	char *new_new_path;
+	string_t new_new_path;
 	int 	count;
 	int len;
 	int x;
@@ -145,21 +147,19 @@ string_t ft_get_put_terminal()
 	{
 
 		new_root_path = ft_string_constructor("..");
-		new_new_path = ft_strjoin(new_root_path.data,root_path.data);
+		new_new_path = ft_string_copy_constructor(&new_root_path);
+		new_new_path.join(&new_new_path, &root_path);
 	}
 	else
 	{
 		new_root_path = ft_string_default_constructor();
-		new_new_path = ft_strdup(root_path.data);
+		new_new_path = ft_string_copy_constructor(&root_path);
 	}
-	path = replace_str(new_new_path);
 	g_path = ft_string_default_constructor();
-	g_path.join2(&g_path, path);
+	g_path.join(&g_path, &new_new_path);
 	g_path.join2(&g_path, "$> ");
 	ft_string_destructor(&root_path);
-	ft_string_destructor(&new_root_path);
-	ft_strdel(&path);
-	ft_strdel(&new_new_path);
+	ft_string_destructor(&new_new_path);
 	return(g_path);
 }
 
@@ -185,10 +185,11 @@ int main (int argv,char **args,char **envp)
 	lcmd.variable_dic = ft_env_copy(envp);
 	while (true)
 	{
-		
 		cwd_path = ft_get_put_terminal();
 		ft_fd_open(&lcmd);
-		ft_process_signal();
+		ft_process_signal(&lcmd);
+		// signal(SIGINT, ft_signal_handle);
+		// signal(SIGQUIT, SIG_IGN);
 		if (!lcmd.line)
 			lcmd.line = readline(cwd_path.data);
 		add_history(lcmd.line);
@@ -201,6 +202,7 @@ int main (int argv,char **args,char **envp)
 			}
 			exec_inout(lcmd.line, envp, &lcmd);
 		}
+
 		ft_pipe_close(lcmd.change_fd_in);
 		ft_pipe_close(lcmd.change_fd_out);
 		ft_strdel(&lcmd.line);

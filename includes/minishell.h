@@ -141,6 +141,7 @@ struct	s_last_command
 	char					*output_data;
 	char					*name_file;
 	int						fd[2];
+	bool					is_parent;
 	char					*line;
 	dictionary_t			*variable_dic;
 	t_command_function		functions[MAX_BUILTIN_FUNCS];
@@ -204,7 +205,7 @@ int 			ft_put_env_export(struct	s_last_command * dictionary,char **envp,char **d
 int				ft_exit(t_last_command *command_shablon, char **envp_my, char **data, int count);
 int				ft_fd_open(t_last_command *command);
 void			ft_last_command_destructor(t_last_command *lcmd);
-int			ft_process_signal(void);
+int				ft_process_signal(t_last_command *lcmd);
 void			handle(int);
 cmd_func_t		ft_search_side_func(t_last_command *lcmd);
 cmd_func_t		ft_search_builtin_func(t_last_command *lcmd);
@@ -217,5 +218,6 @@ dictionary_t 	*ft_env_copy(char **env);
 void			ft_dictionary_destructor(dictionary_t *dict);
 int 			ft_dwrite_file(t_last_command *dictioanry, char **envp, char **data, int count);
 char 			*ft_pipe(t_last_command *command_shablon, char *data);
-void ft_pipe_close(int fd);
+void			ft_pipe_close(int fd);
+
 #endif

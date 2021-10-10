@@ -93,6 +93,7 @@ int ft_default_set(t_last_command *command)
 {
 	command->echo_option = 0;
 	ft_strdel(&command->data);
+	// command->is_child = false;
 	command->quote_staet_new = 0;
 	command->change_fd_in = -1;
     command->change_fd_out = -1;

@@ -20,7 +20,9 @@
        split_path[ind] = ft_realloc_strjoin(split_path[ind], "/");  
     av = ft_vecstrinit(3);
     j = 0;
-    if((ret_fork = fork()) == CHILD_PROC)
+    ret_fork = fork();
+    dictioanry->is_parent = ret_fork;
+    if(ret_fork == CHILD_PROC)
     {
       while (j < i)
       {
@@ -31,23 +33,24 @@
         av[0] = ft_strdup(tmp_path);
         av[1] = ft_strdup(dictioanry->data);
         ret_execv = execve(tmp_path, av, envp);
+        // signal(SIGINT, SIG_IGN);
+		    // signal(SIGQUIT, ft_signal_handle);
+        // signal(SIGQUIT, ft_signal_handle);
+        // ft_putchar('\n');
+        // rl_on_new_line();
         j++;
       }
-      dictioanry->exit_status = COMMAND_NOT_FOUND;
       exit(0);
+      dictioanry->exit_status = COMMAND_NOT_FOUND;
     }
     else
     {
-      string_t path;
+      // string_t path;
 
-      path = ft_get_put_terminal();
-      signal(SIGINT, SIG_IGN);
-      signal(SIGQUIT, ft_signal_handle);
+      // path = ft_get_put_terminal();
       // add_history(dictioanry->line);
       waitpid(ret_fork, NULL, 0);
-      ft_putchar('\n');
-      rl_on_new_line();
-      ft_string_destructor(&path);
+      // ft_string_destructor(&path);
 
     }
     ft_vecstrdel(&split_path);
