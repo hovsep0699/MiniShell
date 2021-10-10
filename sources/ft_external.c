@@ -32,6 +32,7 @@
         ft_strdel(&av[1]);
         av[0] = ft_strdup(tmp_path);
         av[1] = ft_strdup(dictioanry->data);
+        ft_putstr("\nhasav\n");
         ret_execv = execve(tmp_path, av, envp);
         // signal(SIGINT, SIG_IGN);
 		    // signal(SIGQUIT, ft_signal_handle);

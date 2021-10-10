@@ -111,12 +111,13 @@ int ft_dwrite_file(struct	s_last_command *dictioanry, char **envp, char **data, 
          //add_history(line);
         if(ft_strcmp(check_str,line) == 0)
             break;
+         write(dictioanry->fd[1],new_str,ft_zero_byte_strlen(new_str));
         if(dictioanry->data != NULL)
            new_str = ft_realloc_strjoin(new_str, "\n");
        new_str = ft_realloc_strjoin(new_str, line);
         //ft_strdel(&line);
     }
-    dictioanry->data = ft_strdup(new_str);
+   
     ft_search_builtin_func(dictioanry)(dictioanry, envp, data, count);
     ft_fd_open(dictioanry);
     return(1);
