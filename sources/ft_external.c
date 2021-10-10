@@ -24,6 +24,8 @@
     dictioanry->is_parent = ret_fork;
     if(ret_fork == CHILD_PROC)
     {
+      signal(SIGINT, SIG_IGN);
+      // signal(SIGQUIT, ft_signal_handle);
       while (j < i)
       {
         tmp_path = ft_strdup(split_path[j]);
@@ -32,27 +34,15 @@
         ft_strdel(&av[1]);
         av[0] = ft_strdup(tmp_path);
         av[1] = ft_strdup(dictioanry->data);
-        ft_putstr("\nhasav\n");
         ret_execv = execve(tmp_path, av, envp);
-        // signal(SIGINT, SIG_IGN);
-		    // signal(SIGQUIT, ft_signal_handle);
-        // signal(SIGQUIT, ft_signal_handle);
-        // ft_putchar('\n');
-        // rl_on_new_line();
         j++;
       }
-      exit(0);
-      dictioanry->exit_status = COMMAND_NOT_FOUND;
+      exit(COMMAND_NOT_FOUND);
     }
     else
     {
-      // string_t path;
-
-      // path = ft_get_put_terminal();
-      // add_history(dictioanry->line);
       waitpid(ret_fork, NULL, 0);
-      // ft_string_destructor(&path);
-
+      dictioanry->exit_status = errno;
     }
     ft_vecstrdel(&split_path);
     ft_vecstrdel(&av);

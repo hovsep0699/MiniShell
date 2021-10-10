@@ -9,7 +9,7 @@ int 			ft_write_file(struct	s_last_command *dictioanry, char **envp, char **data
         ft_putendl("syntax error\n");
         return(258);
     }
-    if((fd = open(dictioanry->data,O_CREAT | O_WRONLY | O_TRUNC)) == -1)
+    if((fd = open(dictioanry->data, O_CREAT | O_WRONLY | O_TRUNC)) == -1)
     {
         ft_print_error(errno, strerror(errno), ' ', dictioanry->name_file);
         return(SUCCESS);
@@ -32,13 +32,17 @@ int 			ft_read_file(struct	s_last_command *dictioanry, char **envp, char **data,
         ft_putendl("syntax error\n");
         return(258);
     }
-    if((fd = open(dictioanry->data,O_RDONLY)) == -1)
+    if((fd = open(dictioanry->data, O_RDONLY)) == -1)
     {
-         ft_putstr(strerror(errno));
+        printf("thisss\n");
+        ft_putstr(strerror(errno));
         return(SUCCESS);
     }
     if((dup2(fd, STDIN_FILE)) < 0)
+    {
+        printf("this\n");
         strerror(errno);
+    }
     ft_search_builtin_func(dictioanry)(dictioanry, envp, data, count);
     close(fd);
     ft_fd_open(dictioanry);
@@ -103,21 +107,19 @@ int ft_dwrite_file(struct	s_last_command *dictioanry, char **envp, char **data, 
     check_str = ft_strdup(dictioanry->data);
     ft_strdel(&dictioanry->data);
     dictioanry->data = NULL;
-    pipe(dictioanry->fd);
+    pipe(p);
     while (true)
     {
-        // ft_putchar('\n');
          line = readline(">");
-         //add_history(line);
-        if(ft_strcmp(check_str,line) == 0)
+        if(ft_strcmp(check_str, line) == 0)
             break;
-         write(dictioanry->fd[1],new_str,ft_zero_byte_strlen(new_str));
+         write(p[1], new_str, ft_zero_byte_strlen(new_str));
         if(dictioanry->data != NULL)
            new_str = ft_realloc_strjoin(new_str, "\n");
        new_str = ft_realloc_strjoin(new_str, line);
-        //ft_strdel(&line);
     }
-   
+   //dup2(p[0],STDOUT_FILENO);
+    ft_pipe_close(p[1]);
     ft_search_builtin_func(dictioanry)(dictioanry, envp, data, count);
     ft_fd_open(dictioanry);
     return(1);
