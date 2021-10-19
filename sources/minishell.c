@@ -1,4 +1,5 @@
 #include "minishell.h"
+t_signal g_signal;
 
 int exec_inout(char *line, char **envp, t_last_command *last_command)
 {
@@ -22,11 +23,9 @@ int exec_inout(char *line, char **envp, t_last_command *last_command)
 	ft_fd_open(last_command);
 	if(last_command->isparrent == 0)
 		exit(0);
-	// printf("before pipe\n");
 	ft_strdel(&tmp_line);
 	ft_strdel(&pipe_line);
 	ft_vecstrdel(&command);
-	// printf("after pipe\n");
 	return(1);
 }
 char *replace_str(char *curr_path)
@@ -173,6 +172,7 @@ int main (int argv,char **args,char **envp)
 	char *first;
 	char *second;
 	int count;
+	
 	// string_t cwd_path;
 	
 	t_last_command lcmd;
@@ -188,6 +188,9 @@ int main (int argv,char **args,char **envp)
 		// cwd_path = ft_get_put_terminal();
 		ft_fd_open(&lcmd);
 		ft_process_signal(&lcmd);
+		g_signal.pid = -1;
+		g_signal.heredoc = 0;
+		g_signal.exit_status = -1;
 		if (!lcmd.line)
 			lcmd.line = readline("Minishell$> ");
 		add_history(lcmd.line);

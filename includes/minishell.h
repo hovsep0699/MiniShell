@@ -75,6 +75,7 @@
 
 
 typedef struct s_dictionary dictionary_t;
+typedef struct s_signal t_signal;
 typedef	enum e_builtin_commands t_builtin_commands;
 typedef	enum e_side_commands t_side_commands;
 typedef struct s_last_command t_last_command;
@@ -109,6 +110,13 @@ struct s_command_function
 {
 	t_builtin_commands name;
 	cmd_func_t function;
+};
+
+struct s_signal
+{
+	int			exit_status;
+	pid_t		pid;
+	int		heredoc;
 };
 
 struct s_command_side_function
@@ -154,7 +162,7 @@ t_command_side_function		ft_side_funcs_constructor(t_side_commands name, cmd_fun
 t_command_function			ft_command_funcs_default_constructor(void);
 t_command_function			ft_command_funcs_constructor(t_builtin_commands name, cmd_func_t cmd);
 
-
+extern t_signal				g_signal;
 
 void			ft_signal_handle(int signum);
 string_t		ft_get_put_terminal();
@@ -219,5 +227,7 @@ void			ft_dictionary_destructor(dictionary_t *dict);
 int 			ft_dwrite_file(t_last_command *dictioanry, char **envp, char **data, int count);
 char 			*ft_pipe(t_last_command *command_shablon, char *data);
 void			ft_pipe_close(int fd);
+void s_int(int signum);
+void s_quit(int signum);
 
 #endif

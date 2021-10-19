@@ -29,6 +29,7 @@ char *ft_pipe(t_last_command *command_shablon, char *data)
         i--;
         pipe(fd);
         id = fork();
+
         if (id > 0)
         {
             dup2(fd[0], STDIN_FILENO);

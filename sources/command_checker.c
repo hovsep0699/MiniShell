@@ -120,7 +120,8 @@ int exec_in_function(char **arguments, t_last_command *command_shablon, int coun
 		if(ft_strcmp(arguments[i], ">>") == 0)
 		{
 			command_shablon->util_commant = DWRITE;
-			i++;
+			command_shablon->name_file = ft_equal_strjoin(command_shablon->name_file,command_shablon,arguments[i+1],1);
+			i+=2;
 			continue;
 		}
 		if(ft_strcmp(arguments[i], "<<") == 0)
@@ -132,13 +133,15 @@ int exec_in_function(char **arguments, t_last_command *command_shablon, int coun
 		if(arguments[i][0] == '>')
 		{	
 			command_shablon->util_commant = WRITE;
-			i++;
+			command_shablon->name_file = ft_equal_strjoin(command_shablon->name_file,command_shablon,arguments[i+1],1);
+			i+=2;
 			continue;
 		}
 		if(arguments[i][0] == '<')
 		{	
 			command_shablon->util_commant = READ;
-			i++;
+			command_shablon->name_file = ft_equal_strjoin(command_shablon->name_file,command_shablon,arguments[i+1],1);
+			i+=2;
 			continue;
 		}
 		command_shablon->data = ft_equal_strjoin(command_shablon->data, command_shablon, arguments[i], (end_of_line == i || count - 1 == i));
