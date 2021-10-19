@@ -21,10 +21,11 @@
     av = ft_vecstrinit(3);
     j = 0;
     ret_fork = fork();
+    g_signal.pid = ret_fork;
     dictioanry->is_parent = ret_fork;
     if(ret_fork == CHILD_PROC)
     {
-      signal(SIGINT, SIG_IGN);
+      //signal(SIGINT, SIG_IGN);
       // signal(SIGQUIT, ft_signal_handle);
       while (j < i)
       {
