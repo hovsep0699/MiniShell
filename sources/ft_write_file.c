@@ -4,6 +4,7 @@ int 			ft_write_file(struct	s_last_command *dictioanry, char **envp, char **data
 {
 
     int fd;
+    char *name_file;
     if(dictioanry->data == NULL)
     { 
         ft_putendl("syntax error\n");
