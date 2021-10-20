@@ -17,7 +17,6 @@ int exec_inout(char *line, char **envp, t_last_command *last_command)
 	command = ft_split(tmp_line, ' ');
 	count = ft_vecstrlen(command);
 	ret = system_command(command, last_command, envp, count);
-	last_command->exit_status = ret;
 	ft_pipe_close(last_command->change_fd_in);
 	ft_pipe_close(last_command->change_fd_out);
 	ft_fd_open(last_command);
@@ -116,52 +115,6 @@ void ft_setenv(char **envp, char *key, char *value)
 	ft_string_destructor(&env_key);
 }
 
-// string_t ft_get_put_terminal()
-// {
-// 	char pwd[PATH_MAX];
-// 	char *curr_path;
-// 	string_t root_path;
-// 	string_t new_root_path;
-// 	string_t new_new_path;
-// 	int 	count;
-// 	int len;
-// 	int x;
-// 	char *path;
-// 	string_t g_path;
-
-// 	count = -1;
-// 	curr_path = getcwd(pwd, PATH_MAX);
-// 	root_path = ft_string_constructor(pwd);
-// 	x = root_path.size;
-// 	len = root_path.size;
-
-// 	while (++count < PATH_SHOW_NUMBER)
-// 	{
-// 		x = root_path.rfind4(&root_path, '/', x);
-// 		if (x <= 0)
-// 			break ;
-// 	}
-// 	root_path.erase_between(&root_path, 0, x);
-// 	if (root_path.size != (size_t)len)
-// 	{
-
-// 		new_root_path = ft_string_constructor("..");
-// 		new_new_path = ft_string_copy_constructor(&new_root_path);
-// 		new_new_path.join(&new_new_path, &root_path);
-// 	}
-// 	else
-// 	{
-// 		new_root_path = ft_string_default_constructor();
-// 		new_new_path = ft_string_copy_constructor(&root_path);
-// 	}
-// 	g_path = ft_string_default_constructor();
-// 	g_path.join(&g_path, &new_new_path);
-// 	g_path.join2(&g_path, "$> ");
-// 	ft_string_destructor(&root_path);
-// 	ft_string_destructor(&new_new_path);
-// 	return(g_path);
-// }
-
 int main (int argv,char **args,char **envp)
 {
 	char *path;
@@ -172,9 +125,7 @@ int main (int argv,char **args,char **envp)
 	char *first;
 	char *second;
 	int count;
-	
-	// string_t cwd_path;
-	
+
 	t_last_command lcmd;
 	int len;
 	int i;
@@ -185,7 +136,6 @@ int main (int argv,char **args,char **envp)
 	lcmd.variable_dic = ft_env_copy(envp);
 	while (true)
 	{
-		// cwd_path = ft_get_put_terminal();
 		ft_fd_open(&lcmd);
 		ft_process_signal(&lcmd);
 		signal(SIGQUIT,SIG_IGN);
@@ -204,7 +154,6 @@ int main (int argv,char **args,char **envp)
 		ft_pipe_close(lcmd.change_fd_in);
 		ft_pipe_close(lcmd.change_fd_out);
 		ft_strdel(&lcmd.line);
-		// ft_string_destructor(&cwd_path);
 	}
 	ft_last_command_destructor(&lcmd);
 	return 0;

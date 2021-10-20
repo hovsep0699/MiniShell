@@ -1,34 +1,10 @@
 #include "minishell.h"
 
-
-// static bool g_is_parent;
-/*void ft_signal_handle(int signum)
-{
-	if (signum == SIGINT || signum == SIGQUIT)
-	{
-		
-		if(signum == SIGQUIT)
-		{
-			rl_replace_line("", 1);
-			ft_putstr("Quit\n");
-		}
-		else
-			ft_putchar('\n');
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-	}
-}
-*/
 void s_quit(int signum)
 {
 	(void)signum;
-	//ft_putchar('\n');
-	//ft_putnbr(g_signal.heredoc);
-	//ft_putchar('\n');
 	if (g_signal.pid > 0 && !g_signal.heredoc)
 	{
-		//ft_putstr_fd("Quit (core dumped)\n", 1);
 		ft_putstr_fd("Quit (core dumped)\n", 1);
 		kill(g_signal.pid,SIGINT);
 		g_signal.exit_status = 131;
@@ -58,18 +34,7 @@ void s_int(int signum)
 }
 int    ft_process_signal(t_last_command *lcmd)
 {
-
-	// g_is_parent = lcmd->is_parent;
-	// if (lcmd->is_parent)
-	// {
-		// ft_putstr("\nparent\n");
-		//signal(SIGINT, ft_signal_handle);
-		//signal(SIGQUIT, SIG_IGN);
-	// }
-	
-	// signal(SIGQUIT, ft_signal_handle);
-	// signal(SIGINT, ft_signal_handle);
-		signal(SIGINT, s_int);
-		signal(SIGQUIT, s_quit);
+	signal(SIGINT, s_int);
+	signal(SIGQUIT, s_quit);
     return(0);
 }

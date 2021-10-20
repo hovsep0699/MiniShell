@@ -2,10 +2,6 @@
 
 void ft_print_welcome(char *path)
 {
-	// ft_putstr(TEXT_GREEN);
-	// ft_putstr(path);
-	// ft_putstr("$>");
-	// ft_putstr(TEXT_WHITE);
 	ft_putstr(path);
 }
 

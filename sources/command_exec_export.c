@@ -16,7 +16,8 @@ int ft_put_env_export(t_last_command * dictionary, char **envp, char **data,int 
         ft_putchar_fd('\n', 1);
         tmp = tmp->next;
     }
-    return(1);
+    g_signal.exit_status = 0;
+    return(g_signal.exit_status);
 }
 
 int 			ft_export(t_last_command * dictioanry,char **envp, char **data,int count)
@@ -55,7 +56,8 @@ int 			ft_export(t_last_command * dictioanry,char **envp, char **data,int count)
     }
     
     ft_vecstrdel(&str);
-    return(SUCCESS);
+    g_signal.exit_status = 0;
+    return(g_signal.exit_status);
 }
 
 int ft_unset(t_last_command * dictioanry, char **envp, char **data, int count)
@@ -96,9 +98,10 @@ int ft_unset(t_last_command * dictioanry, char **envp, char **data, int count)
         }
         tmp = dictioanry->variable_dic;
         if (len <= endindex)
-            break; 
+            break;
         contindex = endindex + 1;
     }
-    return(1);
+    g_signal.exit_status = 0;
+    return(g_signal.exit_status);
     
 }

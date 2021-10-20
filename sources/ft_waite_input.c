@@ -126,7 +126,7 @@ char		*ft_equal_strjoin(char *s1, t_last_command *command_shablon, char *pars_st
 		}
 		else if(pars_str[i] == '$' && pars_str[i + 1] == '?' && quate_exist != 0)
 		{
-			tmp_str = ft_itoa(command_shablon->exit_status);
+			tmp_str = ft_itoa(g_signal.exit_status);
 			len_key = ft_zero_byte_strlen(tmp_str);
 			subjoin = ft_realloc_strjoin(subjoin, tmp_str);
 			end_index += len_key;

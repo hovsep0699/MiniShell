@@ -26,7 +26,6 @@
     dictioanry->is_parent = ret_fork;
     if(ret_fork == CHILD_PROC)
     {	
-      
       while (j < i)
       {
 
@@ -39,14 +38,16 @@
         ret_execv = execve(tmp_path, av, envp);
         j++;
       }
-      exit(COMMAND_NOT_FOUND);
+      ft_putstr_fd("asd: command not found\n",2);
+      g_signal.exit_status = COMMAND_NOT_FOUND;
+      exit(g_signal.exit_status);
     }
     else
     {
       waitpid(ret_fork, NULL, 0);
-      dictioanry->exit_status = errno;
+      g_signal.exit_status = errno;
     }
     ft_vecstrdel(&split_path);
     ft_vecstrdel(&av);
-    return dictioanry->exit_status;
+    return g_signal.exit_status;
   }

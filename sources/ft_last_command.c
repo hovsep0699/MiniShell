@@ -19,7 +19,6 @@ t_last_command ft_last_command_constructor()
     lcmd.change_fd_in = -1;
     lcmd.change_fd_out = -1;
     lcmd.echo_option = 0;
-    lcmd.exit_status = 0;
     lcmd.isparrent = 1;
     lcmd.is_parent = true;
     lcmd.fd[0] = dup(STDIN_FILE);

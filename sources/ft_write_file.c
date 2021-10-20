@@ -7,21 +7,24 @@ int 			ft_write_file(struct	s_last_command *dictioanry, char **envp, char **data
     char *name_file;
     if(dictioanry->data == NULL)
     { 
-        ft_putendl("syntax error\n");
-        return(258);
+        ft_putstr_fd("syntax error\n",2);
+        g_signal.exit_status = 258;
+        return(g_signal.exit_status);
     }
-    if((fd = open(dictioanry->name_file, O_CREAT | O_WRONLY | O_TRUNC,0777)) == -1)
+    if((fd = open(dictioanry->name_file, O_CREAT | O_WRONLY | O_TRUNC,0664)) == -1)
     {
         ft_print_error(errno, strerror(errno), ' ', "");
         ft_putstr("\n");
-        return(SUCCESS);
+        g_signal.exit_status = errno;
+        return(g_signal.exit_status);
     }
     if((dup2(fd, STDOUT_FILENO)) < 0)
         strerror(errno);
     ft_search_builtin_func(dictioanry)(dictioanry, envp, data, count);
     close(fd);
     ft_fd_open(dictioanry);
-    return(1);
+    g_signal.exit_status = 0;
+    return(g_signal.exit_status);
 }
 
 int 			ft_read_file(struct	s_last_command *dictioanry, char **envp, char **data, int count)
@@ -31,14 +34,16 @@ int 			ft_read_file(struct	s_last_command *dictioanry, char **envp, char **data,
    
     if(dictioanry->data == NULL)
     { 
-        ft_putendl("syntax error\n");
-        return(258);
+        ft_putstr_fd("syntax error\n",2);
+        g_signal.exit_status = 258;
+        return(g_signal.exit_status);
     }
     if((fd = open(dictioanry->name_file, O_RDONLY)) == -1)
     {
         ft_putstr(strerror(errno));
         ft_putstr("\n");
-        return(SUCCESS);
+        g_signal.exit_status = errno;
+        return(g_signal.exit_status);
     }
     if((dup2(fd, STDIN_FILE)) < 0)
     {
@@ -47,6 +52,7 @@ int 			ft_read_file(struct	s_last_command *dictioanry, char **envp, char **data,
     ft_search_builtin_func(dictioanry)(dictioanry, envp, data, count);
     close(fd);
     ft_fd_open(dictioanry);
+    g_signal.exit_status = 0;
     return(1);
 }
 
@@ -54,9 +60,12 @@ int 			ft_double_write_file(struct	s_last_command *dictioanry, char **envp, char
 {
     int fd;
 
-    if((fd = open(dictioanry->name_file, O_CREAT |O_WRONLY | O_APPEND,0777)) == -1)
+    if((fd = open(dictioanry->name_file, O_CREAT |O_WRONLY | O_APPEND,0664)) == -1)
     {
         ft_print_error(errno, strerror(errno), ' ', dictioanry->name_file);
+        ft_putstr_fd(strerror(errno),2);
+        ft_putchar('\n');
+        g_signal.exit_status = errno;
         return(SUCCESS);
     }
     if((dup2(fd, STDOUT_FILENO)) < 0)
@@ -64,6 +73,7 @@ int 			ft_double_write_file(struct	s_last_command *dictioanry, char **envp, char
     ft_search_builtin_func(dictioanry)(dictioanry, envp, data, count);
     close(fd);
     ft_fd_open(dictioanry);
+    g_signal.exit_status = 0;
     return(1);   
 }
 
@@ -73,14 +83,17 @@ int 			ft_dread_file(struct	s_last_command *dictioanry, char **envp, char **data
 
     if((fd = open(dictioanry->name_file, O_WRONLY | O_APPEND)) == -1)
     {
-        ft_print_error(errno, strerror(errno), ' ', "");
-        return(SUCCESS);
+        ft_putstr_fd(strerror(errno),2);
+        ft_putchar('\n');
+        g_signal.exit_status = errno;
+        return(g_signal.exit_status);
     }
     if((dup2(fd, STDOUT_FILENO)) < 0)
         strerror(errno);
     ft_search_builtin_func(dictioanry)(dictioanry, envp, data, count);
     close(fd);
     ft_fd_open(dictioanry);
+    g_signal.exit_status = 0;
     return(1);   
 }
 int only_create_file(char *file_name,struct	s_last_command *dictioanry)
@@ -122,9 +135,7 @@ int ft_dwrite_file(struct	s_last_command *dictioanry, char **envp, char **data, 
         {
             line = readline(">");
             if(ft_strcmp(check_str, line) == 0)
-            {
                 break;
-            }
             write(p[1], line, ft_zero_byte_strlen(line));
             write(p[1],"\n",1);
             ft_strdel(&line);
@@ -132,7 +143,6 @@ int ft_dwrite_file(struct	s_last_command *dictioanry, char **envp, char **data, 
         ft_strdel(&check_str);
         ft_strdel(&line);
         ft_pipe_close(p[1]);
-        //ft_search_builtin_func(dictioanry)(dictioanry, envp, data, count);
         exit(1);
     }
     else

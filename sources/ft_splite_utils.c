@@ -9,8 +9,6 @@ char * ft_add_space(char *source, int count, int mod, int index)
 	i = 0;
 	int j;
 	 j = index;
-//	if((tmp = (char *) malloc(sizeof(char) * (ft_strlen(source) + (count == 1? count + 1:count) )))== NULL)
-	//	return (NULL);
 	while (source[j])
 	{
 		tmp_character = source[j-1];	
@@ -71,8 +69,6 @@ char *enter_split_sapce(char **not_splite)
 	str = ft_strdup(*(not_splite));
 	len = ft_len_array(str);
 	splite_array = ft_calloc(len + 1, sizeof(char));
-	//ft_strlcpy(splite_array,not_splite,ft_strlen(not_splite) + 1);
-
 	while (str[i])	
 	{
 		
@@ -92,20 +88,10 @@ char *enter_split_sapce(char **not_splite)
 			if(str[i + 1] != ' ')
 					splite_array[j++] = ' ';
 			i++;
-			/* ft_putchar('\n');
-			 ft_putstr("if");
-			 ft_putchar('\n');*/
 		}
 		else
-		{
 		 	splite_array[j++] = str[i++];
-			/* ft_putchar('\n');
-			 ft_putstr("else");
-			 ft_putchar('\n');*/
-
-		}	
 	}
 	ft_strdel(&str);
-	// ft_strdel(&not_splite);
 	return(splite_array);
 }

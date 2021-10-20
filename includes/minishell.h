@@ -138,7 +138,6 @@ struct	s_last_command
 	int						start_program;
 	int						echo_option;
 	int 					quote_staet_new;
-	size_t					exit_status;
 	int 					isparrent;
 	t_builtin_commands		type_command;
 	t_side_commands			util_commant;

@@ -16,9 +16,8 @@ cmd_func_t    ft_search_builtin_func(t_last_command *lcmd)
 
 cmd_func_t    ft_search_side_func(t_last_command *lcmd)
 {
-    // ft_putendl("ok");
     int index;
-    // ft_putnbr(lcmd->util_commant);
+
     index = -1;
     while (++index < MAX_SIDE_FUNCS)
     {
