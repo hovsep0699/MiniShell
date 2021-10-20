@@ -103,6 +103,6 @@ int ft_default_set(t_last_command *command)
 	command->last_command = 0;
 	command->isparrent = 1;
 	command->name_file = NULL;
-
+	g_signal.heredoc = 0;
 	return(1);
 }

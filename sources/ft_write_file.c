@@ -103,23 +103,27 @@ int ft_dwrite_file(struct	s_last_command *dictioanry, char **envp, char **data, 
     line = NULL;
     int p[2];
     pid_t i;
+    int break_loop;
 
     check_str = ft_strdup(dictioanry->data);
     ft_strdel(&dictioanry->data);
     dictioanry->data = NULL;
     pipe(p);
-    g_signal.heredoc = 1;
-    signal(SIGQUIT,&s_quit);
+    //signal(SIGQUIT,&s_quit);
     int id = fork();
+    signal(SIGQUIT,SIG_IGN);
     g_signal.heredoc = 1;
     g_signal.pid = id;
     if(id == 0)
     {
+        ft_pipe_close(p[0]);
         while (true)
         {
             line = readline(">");
             if(ft_strcmp(check_str, line) == 0)
+            {
                 break;
+            }
             write(p[1], line, ft_zero_byte_strlen(line));
             write(p[1],"\n",1);
             ft_strdel(&line);
@@ -127,11 +131,19 @@ int ft_dwrite_file(struct	s_last_command *dictioanry, char **envp, char **data, 
         ft_strdel(&check_str);
         ft_strdel(&line);
         ft_pipe_close(p[1]);
+        //ft_search_builtin_func(dictioanry)(dictioanry, envp, data, count);
         exit(1);
+    }
+    else
+    {
+        ft_pipe_close(p[1]);
+        dup2(p[0],STDIN_FILENO);
+        waitpid(id,NULL,0);
     }
    //dup2(p[0],STDOUT_FILENO);
     g_signal.heredoc = 0;
     //waitpid(id,)
+    if(g_signal.exit_status != 130)
     ft_search_builtin_func(dictioanry)(dictioanry, envp, data, count);
     ft_fd_open(dictioanry);
     return(1);

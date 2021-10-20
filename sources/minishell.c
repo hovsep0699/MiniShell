@@ -190,6 +190,7 @@ int main (int argv,char **args,char **envp)
 		// cwd_path = ft_get_put_terminal();
 		ft_fd_open(&lcmd);
 		ft_process_signal(&lcmd);
+		signal(SIGQUIT,SIG_IGN);
 		g_signal.pid = -1;
 		g_signal.heredoc = 0;
 		g_signal.exit_status = -1;

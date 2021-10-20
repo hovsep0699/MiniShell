@@ -23,22 +23,28 @@
 void s_quit(int signum)
 {
 	(void)signum;
-	//printf("\n%i\n",g_signal.pid);
+	//ft_putchar('\n');
+	//ft_putnbr(g_signal.heredoc);
+	//ft_putchar('\n');
 	if (g_signal.pid > 0 && !g_signal.heredoc)
 	{
+		//ft_putstr_fd("Quit (core dumped)\n", 1);
 		ft_putstr_fd("Quit (core dumped)\n", 1);
+		kill(g_signal.pid,SIGINT);
 		g_signal.exit_status = 131;
 	}
-	else
-		ft_putstr_fd("\b\b  \b\b", 2);
+	//else if(g_signal.pid == -1)
+	//{
+	//	ft_putstr_fd("\b\b\b",2);
+	//}
 }
 
 void s_int(int signum)
 {
 	(void)signum;
-	if(g_signal.heredoc & g_signal.pid == 0)
+	if(g_signal.heredoc && g_signal.pid == 0)
 	{
-		ft_putstr_fd("\b\b\b^C\b\b", 1);
+		ft_putstr_fd("\b\b^C\b\b", 1);
 		exit(0);
 	}
 	if (g_signal.pid == 0)
@@ -67,7 +73,7 @@ int    ft_process_signal(t_last_command *lcmd)
 	
 	// signal(SIGQUIT, ft_signal_handle);
 	// signal(SIGINT, ft_signal_handle);
-		signal(SIGINT, &s_int);
-		signal(SIGQUIT, &s_quit);
+		signal(SIGINT, s_int);
+		signal(SIGQUIT, s_quit);
     return(0);
 }
