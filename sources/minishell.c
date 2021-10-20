@@ -23,11 +23,9 @@ int exec_inout(char *line, char **envp, t_last_command *last_command)
 	ft_fd_open(last_command);
 	if(last_command->isparrent == 0)
 		exit(0);
-	// printf("before pipe\n");
 	ft_strdel(&tmp_line);
 	ft_strdel(&pipe_line);
 	ft_vecstrdel(&command);
-	// printf("after pipe\n");
 	return(1);
 }
 char *replace_str(char *curr_path)

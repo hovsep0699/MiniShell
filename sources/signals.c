@@ -33,10 +33,6 @@ void s_quit(int signum)
 		kill(g_signal.pid,SIGINT);
 		g_signal.exit_status = 131;
 	}
-	//else if(g_signal.pid == -1)
-	//{
-	//	ft_putstr_fd("\b\b\b",2);
-	//}
 }
 
 void s_int(int signum)

@@ -10,10 +10,10 @@ int 			ft_write_file(struct	s_last_command *dictioanry, char **envp, char **data
         ft_putendl("syntax error\n");
         return(258);
     }
-    //name_file = ft_equal_strjoin(NULL, dictioanry, file_name, 1);
-    if((fd = open(dictioanry->data, O_CREAT | O_WRONLY | O_TRUNC)) == -1)
+    if((fd = open(dictioanry->name_file, O_CREAT | O_WRONLY | O_TRUNC,0777)) == -1)
     {
-        ft_print_error(errno, strerror(errno), ' ', dictioanry->name_file);
+        ft_print_error(errno, strerror(errno), ' ', "");
+        ft_putstr("\n");
         return(SUCCESS);
     }
     if((dup2(fd, STDOUT_FILENO)) < 0)
@@ -34,9 +34,10 @@ int 			ft_read_file(struct	s_last_command *dictioanry, char **envp, char **data,
         ft_putendl("syntax error\n");
         return(258);
     }
-    if((fd = open(dictioanry->data, O_RDONLY)) == -1)
+    if((fd = open(dictioanry->name_file, O_RDONLY)) == -1)
     {
         ft_putstr(strerror(errno));
+        ft_putstr("\n");
         return(SUCCESS);
     }
     if((dup2(fd, STDIN_FILE)) < 0)
@@ -53,7 +54,7 @@ int 			ft_double_write_file(struct	s_last_command *dictioanry, char **envp, char
 {
     int fd;
 
-    if((fd = open(dictioanry->data, O_CREAT |O_WRONLY | O_APPEND)) == -1)
+    if((fd = open(dictioanry->name_file, O_CREAT |O_WRONLY | O_APPEND,0777)) == -1)
     {
         ft_print_error(errno, strerror(errno), ' ', dictioanry->name_file);
         return(SUCCESS);
@@ -72,7 +73,7 @@ int 			ft_dread_file(struct	s_last_command *dictioanry, char **envp, char **data
 
     if((fd = open(dictioanry->name_file, O_WRONLY | O_APPEND)) == -1)
     {
-        ft_print_error(errno, strerror(errno), ' ', dictioanry->name_file);
+        ft_print_error(errno, strerror(errno), ' ', "");
         return(SUCCESS);
     }
     if((dup2(fd, STDOUT_FILENO)) < 0)
@@ -87,8 +88,8 @@ int only_create_file(char *file_name,struct	s_last_command *dictioanry)
     int fd;
     int len;
 
-    dictioanry->name_file = ft_equal_strjoin(dictioanry->name_file, dictioanry, file_name, 1);
-    fd = open(dictioanry->name_file, O_CREAT, 0777);
+    dictioanry->name_file = ft_equal_strjoin("", dictioanry, file_name, 1);
+    fd = open("", O_CREAT, 0777);
     close(fd);
     return(fd);
 }
