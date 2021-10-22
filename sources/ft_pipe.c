@@ -5,7 +5,7 @@ void ft_pipe_close(int fd)
 	if (fd > 0)
 		close(fd);
 }
-char *ft_pipe(t_last_command *command_shablon, char *data)
+char *ft_pipe(t_dict *command_shablon, char *data)
 {
     char **str;
     int len;

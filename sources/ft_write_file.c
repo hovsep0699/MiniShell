@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int 			ft_write_file(struct	s_last_command *dictioanry, char **envp, char **data, int count)
+int 			ft_write_file(struct	s_dict *dictioanry, char **envp, char **data, int count)
 {
 
     int fd;
@@ -27,7 +27,7 @@ int 			ft_write_file(struct	s_last_command *dictioanry, char **envp, char **data
     return(g_signal.exit_status);
 }
 
-int 			ft_read_file(struct	s_last_command *dictioanry, char **envp, char **data, int count)
+int 			ft_read_file(struct	s_dict *dictioanry, char **envp, char **data, int count)
 {
 
     int fd;
@@ -56,7 +56,7 @@ int 			ft_read_file(struct	s_last_command *dictioanry, char **envp, char **data,
     return(1);
 }
 
-int 			ft_double_write_file(struct	s_last_command *dictioanry, char **envp, char **data, int count)
+int 			ft_double_write_file(struct	s_dict *dictioanry, char **envp, char **data, int count)
 {
     int fd;
 
@@ -77,7 +77,7 @@ int 			ft_double_write_file(struct	s_last_command *dictioanry, char **envp, char
     return(1);   
 }
 
-int 			ft_dread_file(struct	s_last_command *dictioanry, char **envp, char **data, int count)
+int 			ft_dread_file(struct	s_dict *dictioanry, char **envp, char **data, int count)
 {
     int fd;
 
@@ -96,7 +96,7 @@ int 			ft_dread_file(struct	s_last_command *dictioanry, char **envp, char **data
     g_signal.exit_status = 0;
     return(1);   
 }
-int only_create_file(char *file_name,struct	s_last_command *dictioanry)
+int only_create_file(char *file_name,struct	s_dict *dictioanry)
 {
     int fd;
     int len;
@@ -107,7 +107,7 @@ int only_create_file(char *file_name,struct	s_last_command *dictioanry)
     return(fd);
 }
 
-int ft_dwrite_file(struct	s_last_command *dictioanry, char **envp, char **data, int count)
+int ft_dwrite_file(struct	s_dict *dictioanry, char **envp, char **data, int count)
 {
     char *line;
     char *check_str;

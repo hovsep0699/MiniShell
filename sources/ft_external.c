@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-  int ft_external(t_last_command * dictioanry,char **envp, char **data, int count)
+  int ft_external(t_dict * dictioanry,char **envp, char **data, int count)
   {
     int fd[2];
     char *path;

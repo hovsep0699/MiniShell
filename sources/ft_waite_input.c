@@ -93,7 +93,7 @@ size_t		ft_joins(char const *s2, size_t i,int count, char *subjoin)
 	return (i);
 }
 
-char		*ft_equal_strjoin(char *s1, t_last_command *command_shablon, char *pars_str, int end_of_line)
+char		*ft_equal_strjoin(char *s1, t_dict *command_shablon, char *pars_str, int end_of_line)
 {
 	char	*subjoin;
 	int i;

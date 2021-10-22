@@ -89,7 +89,7 @@ void    ft_char_pointer_erase(char *str, size_t it)
     str = copy;
 }
 
-int ft_default_set(t_last_command *command)
+int ft_default_set(t_dict *command)
 {
 	command->echo_option = 0;
 	ft_strdel(&command->data);

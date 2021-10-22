@@ -78,11 +78,11 @@ typedef struct s_dictionary dictionary_t;
 typedef struct s_signal t_signal;
 typedef	enum e_builtin_commands t_builtin_commands;
 typedef	enum e_side_commands t_side_commands;
-typedef struct s_last_command t_last_command;
+typedef struct s_dict t_dict;
 typedef struct s_command_function t_command_function;
 typedef struct s_command_side_function t_command_side_function;
-typedef	int (*cmd_func_t)(t_last_command *, char **, char **, int);
-// typedef	int (**cmd_funcs_t[])(t_last_command *, char **, char **, int);
+typedef	int (*cmd_func_t)(t_dict *, char **, char **, int);
+typedef struct s_quote_check t_quote_check;
 
 enum e_builtin_commands
 {
@@ -105,7 +105,12 @@ enum e_side_commands
 	PIPE,
 	NONE
 };
-
+struct s_quote_check
+{
+	int i;
+	int pipe_problem;
+	int flag_caharacter;
+};
 struct s_command_function
 {
 	t_builtin_commands name;
@@ -131,7 +136,7 @@ struct	s_dictionary
 	char *item;
 	struct	s_dictionary *next;
 };
-struct	s_last_command
+struct	s_dict
 {
 	int						change_fd_in;
 	int						change_fd_out;
@@ -153,6 +158,7 @@ struct	s_last_command
 	dictionary_t			*variable_dic;
 	t_command_function		functions[MAX_BUILTIN_FUNCS];
 	t_command_side_function	side_functions[MAX_SIDE_FUNCS];
+	int						i;
 };
 void ft_setenv(char **envp, char *key, char *value);
 
@@ -165,8 +171,8 @@ extern t_signal				g_signal;
 
 void			ft_signal_handle(int signum);
 string_t		ft_get_put_terminal();
-int				ft_external(t_last_command * dictioanry,char **envp, char **data, int count);
-t_last_command	ft_last_command_constructor(void);
+int				ft_external(t_dict * dictioanry,char **envp, char **data, int count);
+t_dict	ft_dict_constructor(void);
 int				get_next_line(int fd, char **line);
 char			*ft_dis_strjoin(char *s1, char  *s2,int mod);
 size_t			ft_joins(char const *s2, size_t i,int count, char *subjoin);
@@ -177,14 +183,14 @@ char			*ft_strnull(void);
 int 			ft_strcmp_char(char *str,char c,int count);
 int 			ft_flag_find(char str);
 char 			*enter_split_sapce( char **not_splite);
-int 			ft_default_set(t_last_command *command);
+int 			ft_default_set(t_dict *command);
 void 			ft_print_welcome(char *path);
 char			*ft_strjoin_minishell(char *s1, int start_index, int end_index,int isflag);
-int 			system_command(char **command,t_last_command *command_list,char **envp_my,int count);
-int 			exec_echo(char **arguments,t_last_command *comand_shablon, int count,char **envp_my);
+int 			system_command(char **command,t_dict *command_list,char **envp_my,int count);
+int 			exec_echo(char **arguments,t_dict *comand_shablon, int count,char **envp_my);
 int 			print_pipe(int pipe_count);
 int 			free_space(char *clean_space);
-int 			ft_print_echo(t_last_command *command_shablon, char **envp_my,char **data, int count);
+int 			ft_print_echo(t_dict *command_shablon, char **envp_my,char **data, int count);
 void 			ft_dictionary_del(dictionary_t *del_stack);
 void			ft_dictionaryadd_back(dictionary_t **lst, dictionary_t *new);
 dictionary_t	*ft_dictionarylast(dictionary_t *lst);
@@ -193,40 +199,46 @@ int				ft_dictionarysize(dictionary_t *stack);
 int 			ft_alloc_split_minishell(char const *s, char c, char exp, char exp2);
 char 			*find_data(char *key,dictionary_t *command);
 char 			*ft_tolower_minishell(char *upper_str,int *len);
-int 			ft_export(struct	s_last_command * dictioanry,char **envp, char **data,int count);
+int 			ft_export(struct	s_dict * dictioanry,char **envp, char **data,int count);
 void 			ft_print_error(int exeption,char *str_exeption,char element_exeption,char *command_name);
 int 			find_data_int(char *key,dictionary_t *command);
 void 			change_item(char *new_item,int key_index,dictionary_t *dict);
-char			*ft_equal_strjoin(char *s1,t_last_command *command_shablon,char *pars_str,int end_of_line);
+char			*ft_equal_strjoin(char *s1,t_dict *command_shablon,char *pars_str,int end_of_line);
 int 			find_equal_part(char *str);
-int 			ft_unset(struct	s_last_command * dictioanry,char **envp, char **data,int count);
+int 			ft_unset(struct	s_dict * dictioanry,char **envp, char **data,int count);
 void 			ft_dictionary_del_key(dictionary_t *del_stack);
-int 			ft_write_file(struct	s_last_command * dictioanry,char **envp, char **data,int count);
-int 			only_create_file(char *file_name,struct	s_last_command *dictioanry);
+int 			ft_write_file(struct	s_dict * dictioanry,char **envp, char **data,int count);
+int 			only_create_file(char *file_name,struct	s_dict *dictioanry);
 int 			ft_count_quote(char *s);
 void			ft_char_pointer_erase(char *str, size_t it);
 int 			ft_isalnum_str(char *str,int *i);
 int 			ft_count_quote_character(char character,int *quoet_exist,int *dquoet_exist);
-int 			ft_Dwrite_file(struct	s_last_command * dictioanry,char **envp, char **data,int count);
-int 			ft_put_env_export(struct	s_last_command * dictionary,char **envp,char **data,int count);
-int				ft_exit(t_last_command *command_shablon, char **envp_my, char **data, int count);
-int				ft_fd_open(t_last_command *command);
-void			ft_last_command_destructor(t_last_command *lcmd);
-int				ft_process_signal(t_last_command *lcmd);
+int 			ft_Dwrite_file(struct	s_dict * dictioanry,char **envp, char **data,int count);
+int 			ft_put_env_export(struct	s_dict * dictionary,char **envp,char **data,int count);
+int				ft_exit(t_dict *command_shablon, char **envp_my, char **data, int count);
+int				ft_fd_open(t_dict *command);
+void			ft_dict_destructor(t_dict *lcmd);
+int				ft_process_signal(t_dict *lcmd);
 void			handle(int);
-cmd_func_t		ft_search_side_func(t_last_command *lcmd);
-cmd_func_t		ft_search_builtin_func(t_last_command *lcmd);
-t_last_command	ft_last_command_constructor();
-int				ft_cd(t_last_command *command_shablon, char **envp_my, char **data, int count);
-int				ft_pwd(t_last_command *command_shablon, char **envp_my, char **data, int count);
-int 			ft_read_file(t_last_command *dictioanry, char **envp, char **data, int count);
-int 			ft_double_write_file(t_last_command *dictioanry, char **envp, char **data, int count);
+cmd_func_t		ft_search_side_func(t_dict *lcmd);
+cmd_func_t		ft_search_builtin_func(t_dict *lcmd);
+t_dict	ft_dict_constructor();
+int				ft_cd(t_dict *command_shablon, char **envp_my, char **data, int count);
+int				ft_pwd(t_dict *command_shablon, char **envp_my, char **data, int count);
+int 			ft_read_file(t_dict *dictioanry, char **envp, char **data, int count);
+int 			ft_double_write_file(t_dict *dictioanry, char **envp, char **data, int count);
 dictionary_t 	*ft_env_copy(char **env);
 void			ft_dictionary_destructor(dictionary_t *dict);
-int 			ft_dwrite_file(t_last_command *dictioanry, char **envp, char **data, int count);
-char 			*ft_pipe(t_last_command *command_shablon, char *data);
+int 			ft_dwrite_file(t_dict *dictioanry, char **envp, char **data, int count);
+char 			*ft_pipe(t_dict *command_shablon, char *data);
 void			ft_pipe_close(int fd);
-void s_int(int signum);
-void s_quit(int signum);
-
+void 			s_int(int signum);
+void 			s_quit(int signum);
+int 			ft_qch(int state, int state2,char now_character, char quote);
+void 			set_default_gloabl();
+int 			runfileutil(char **argum, t_dict *dict, int i);
+int 			ft_execendline(char **arg, t_dict *dict, int count, char **envp_my);
+void 			ft_command_dict(char *lower_case, char *upper_case, t_dict *dict);
+bool 			ft_exit_status(t_dict *dict);
+void 			ft_putcommanderror(t_dict *dict);
 #endif

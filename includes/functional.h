@@ -3,7 +3,7 @@
 
 // #include "minishell.h"
 
-// typedef	int (**cmd_funcs_t[])(t_last_command *, char **, char **, int);
+// typedef	int (**cmd_funcs_t[])(t_dict *, char **, char **, int);
 
 
 #endif

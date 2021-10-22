@@ -32,9 +32,9 @@ void s_int(int signum)
 	}
 
 }
-int    ft_process_signal(t_last_command *lcmd)
+int    ft_process_signal(t_dict *lcmd)
 {
 	signal(SIGINT, s_int);
-	signal(SIGQUIT, s_quit);
+	signal(SIGQUIT,SIG_IGN);
     return(0);
 }

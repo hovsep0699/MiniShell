@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-t_last_command ft_last_command_constructor()
+t_dict ft_dict_constructor()
 {
-    t_last_command lcmd;
+    t_dict lcmd;
 
     lcmd.index_command = 0;
     lcmd.last_command = 0;
@@ -41,7 +41,7 @@ t_last_command ft_last_command_constructor()
 }
 
 
-void    ft_last_command_destructor(t_last_command *lcmd)
+void    ft_dict_destructor(t_dict *lcmd)
 {
 	ft_strdel(&lcmd->data);
 	ft_strdel(&lcmd->output_data);

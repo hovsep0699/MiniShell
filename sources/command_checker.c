@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   command_checker.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/20 22:24:54 by vgaspary          #+#    #+#             */
+/*   Updated: 2021/10/20 22:51:41 by vgaspary         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int ft_alloc_split_minishell(char const *s, char c, char exp, char exp2)
+int	ft_alloc_split_minishell(char const *s, char c, char exp, char exp2)
 {
 	size_t	i;
 	size_t	total;
-	int exp_state;
-	int exp_state2;
+	int		exp_state;
+	int		exp_state2;
 
 	i = 0;
 	total = 0;
@@ -13,67 +25,45 @@ int ft_alloc_split_minishell(char const *s, char c, char exp, char exp2)
 	exp_state2 = 1;
 	while (s[i])
 	{
-		if((s[i] == exp && exp_state2 == 1) && exp_state == 1)
-			exp_state = 0;
-		 else if ((s[i] == exp && exp_state2 == 1) && exp_state == 0)
-			exp_state = 1;
-		if((s[i] == exp2 && exp_state == 1) && exp_state2 == 1)
-			exp_state2 = 0;
-		else if((s[i] == exp2 && exp_state == 1) && exp_state2 == 0)
-			exp_state2 = 1;
-		if (s[i] == c && exp_state && exp_state2)
+		exp_state = ft_qch(exp_state, exp_state2, s[i], exp);
+		exp_state2 = ft_qch(exp_state2, exp_state, s[i], exp2);
+		if (s[i++] == c && exp_state && exp_state2)
 			total++;
-		
-		i++;
 	}
 	return (total);
 }
-int ft_isalnum_str(char *str,int *i)
-{
-	int index;
 
-	index = 0;
-	while (str[index])
+int	ft_count_quote_character(char charac, int *qu_exist, int *dqu_exist)
+{
+	if ((charac == CHAR_QUATES && *dqu_exist == 1) && *qu_exist == 1)
 	{
-		if(!ft_isalnum(str[index]))
-			break;
-		index++;
+		*qu_exist = 0;
+		return (true);
 	}
-	*i += index - 1;
-	return(index);
-	
+	else if ((charac == CHAR_QUATES && *dqu_exist == 1) && *qu_exist == 0)
+	{
+		*qu_exist = 1;
+		return (true);
+	}		
+	else if ((charac == CHAR_DQUATES && *qu_exist == 1) && *dqu_exist == 1)
+	{
+		*dqu_exist = 0;
+		return (true);
+	}
+	else if ((charac == CHAR_DQUATES && *qu_exist == 1) && *dqu_exist == 0)
+	{
+		*dqu_exist = 1;
+		return (true);
+	}
+	return (false);
 }
-int ft_count_quote_character(char character,int *quoet_exist,int *dquoet_exist)
+
+int	ft_count_quote(char *s)
 {
-		if((character == CHAR_QUATES && *dquoet_exist == 1) && *quoet_exist == 1)
-		{
-			*quoet_exist = 0;
-			return(true);
-		}
-		 else if ((character == CHAR_QUATES && *dquoet_exist == 1) && *quoet_exist == 0)
-		 {
-			*quoet_exist = 1;
-			return(true);
-		}
-			
-		else if((character == CHAR_DQUATES && *quoet_exist == 1) && *dquoet_exist == 1)
-		{
-			*dquoet_exist = 0;
-			return(true);
-		}
-		else if((character == CHAR_DQUATES && *quoet_exist == 1) && *dquoet_exist == 0)
-		{
-			*dquoet_exist = 1;
-			return(true);
-		}
-		return(false);
-}
-int ft_count_quote(char  *s)
-{
-	int	i;
+	int		i;
 	size_t	total;
-	int quoet_exist;
-	int dquoet_exist;
+	int		quoet_exist;
+	int		dquoet_exist;
 
 	i = 0;
 	total = 0;
@@ -81,150 +71,66 @@ int ft_count_quote(char  *s)
 	dquoet_exist = 1;
 	while (s[i])
 	{
-		if(ft_count_quote_character(s[i],&quoet_exist,&dquoet_exist))
+		if (ft_count_quote_character(s[i], &quoet_exist, &dquoet_exist))
 			total++;
-		else if(s[i] == '\\' && (quoet_exist != 0 || dquoet_exist != 0))
+		else if (s[i] == '\\' && (quoet_exist != 0 || dquoet_exist != 0))
 			total += 1;
-		else if(s[i] == '$' && s[i + 1] == '?' && quoet_exist != 0)
+		else if (s[i] == '$' && s[i + 1] == '?' && quoet_exist != 0)
 			total += 2;
-		else if(s[i] == '$' && quoet_exist != 0)
-			total += ft_isalnum_str(s + i + 1,&i) + 1;
-		else if(s[i] == '~' && quoet_exist != 0 && dquoet_exist != 0 && i == 0 && (s[i + 1] == '\0' || s[i + 1] == '/'))
+		else if (s[i] == '$' && quoet_exist != 0)
+			total += ft_isalnum_str(s + i + 1, &i) + 1;
+		else if (s[i] == '~' && quoet_exist != 0 && dquoet_exist != 0
+			&& i == 0 && (s[i + 1] == '\0' || s[i + 1] == '/'))
 			total++;
 		i++;
 	}
 	return (total);
 }
 
-int exec_in_function(char **arguments, t_last_command *command_shablon, int count, char **envp_my)
+int	exec_in_function(char **arg, t_dict *dict, int count, char **envp_my)
 {
-	int i;
-	int dollar_index;
-	int end_of_line;
-	
-	
-	i = command_shablon->index_command + 1;
+	int	dollar_index;
+	int	end_of_line;
+
+	dict->i = dict->index_command + 1;
 	dollar_index = 0;
 	end_of_line = 0;
-	while (i < count)
+	while (dict->i < count)
 	{
-		if(end_of_line >= i)
-			end_of_line = ft_vecstr_search2(arguments, ";", i);
-		if(arguments[i][0] == ';')
-		{
-			ft_search_side_func(command_shablon)(command_shablon, envp_my, arguments, count);
-			command_shablon->index_command = i + 1;
-			ft_strdel(&command_shablon->data);
-			return (SUCCESS);
-		}
-		if(ft_strcmp(arguments[i], ">>") == 0)
-		{
-			command_shablon->util_commant = DWRITE;
-			command_shablon->name_file = ft_equal_strjoin(command_shablon->name_file,command_shablon,arguments[i+1],1);
-			i+=2;
-			continue;
-		}
-		if(ft_strcmp(arguments[i], "<<") == 0)
-		{	
-			command_shablon->util_commant = DREAD;
-			i++;
-			continue;
-		}
-		if(arguments[i][0] == '>')
-		{	
-			command_shablon->util_commant = WRITE;
-			command_shablon->name_file = ft_equal_strjoin(command_shablon->name_file,command_shablon,arguments[i+1],1);
-			i+=2;
-			continue;
-		}
-		if(arguments[i][0] == '<')
-		{	
-			command_shablon->util_commant = READ;
-			command_shablon->name_file = ft_equal_strjoin(command_shablon->name_file,command_shablon,arguments[i+1],1);
-			i+=2;
-			continue;
-		}
-		if(ft_strcmp(arguments[i], "-n") == 0)
-		{
-			
-			command_shablon->echo_option = 1;
-			i++;
-			continue;
-		}
-		command_shablon->data = ft_equal_strjoin(command_shablon->data, command_shablon, arguments[i], (end_of_line == i || count - 1 == i));
-		i++;
+		if (end_of_line >= dict->i)
+			end_of_line = ft_vecstr_search2(arg, ";", dict->i);
+		if (arg[dict->i][0] == ';')
+			return (ft_execendline(arg, dict, count, envp_my));
+		else if (!(ft_strcmp(arg[dict->i], ">>")
+				|| ft_strcmp(arg[dict->i], "<<")
+				|| arg[dict->i][0] != '>' || arg[dict->i][0] != '<'))
+			dict->i = runfileutil(arg, dict, dict->i);
+		else if (ft_strcmp(arg[dict->i], "-n") == 0)
+			dict->echo_option = 1;
+		dict->data = ft_equal_strjoin(dict->data, dict, arg[dict->i],
+				(end_of_line == dict->i || count - 1 == dict->i++));
 	}
-	if(count == i)
-	{
-		ft_search_side_func(command_shablon)(command_shablon, envp_my, arguments, count);
-		command_shablon->index_command = i;
-		return(SUCCESS);
-	}
+	ft_search_side_func(dict)(dict, envp_my, arg, count);
+	dict->index_command = dict->i;
 	return (1);
 }
 
-
-int system_command(char **list_argument, t_last_command *comand_shablon, char **env_my, int count)
+int	system_command(char **list, t_dict *dict, char **env_my, int count)
 {
-	int len;
-	char *lower_case;
-	int i;
-	int exeption;
-	
+	int		len;
+	char	*lower_case;
+	int		i;
+	int		exeption;
+
 	i = 0;
-	
-	while (comand_shablon->index_command < count)
+	while (dict->index_command < count)
 	{
-		lower_case = ft_tolower_minishell(list_argument[i], &len);
-		if(ft_strcmp(lower_case, "echo") == 0)
-		{
-			exeption = PARSER_ERROR;
-			comand_shablon->type_command = ECHO;
-			exeption =  exec_in_function(list_argument, comand_shablon, count, env_my);
-		}
-		else if(ft_strcmp(lower_case, "pwd") == 0)
-		{
-			comand_shablon->type_command = PWD;
-			exeption =  exec_in_function(list_argument, comand_shablon, count, env_my);
-		}
-		else if(ft_strcmp(lower_case, "env") == 0)
-		{
-			if(len == 3)
-			{
-				comand_shablon->type_command = ENV;
-				exeption =  exec_in_function(list_argument, comand_shablon, count, env_my);
-			}
-			else
-				ft_print_error(PARSER_ERROR, list_argument[i], '\n', NULL);
-		}
-		else if(ft_strcmp(list_argument[i], "exit") == 0)
-		{
-			comand_shablon->type_command = EXIT;
-			exec_in_function(list_argument, comand_shablon, count, env_my);	
-		}
-		else if(ft_strcmp(lower_case, "export") == 0)
-		{
-			comand_shablon->type_command = EXPORT;
-			exec_in_function(list_argument, comand_shablon, count, env_my);	
-		}
-		else if(ft_strcmp(lower_case, "unset") == 0)
-		{
-			comand_shablon->type_command = UNSET;
-			exec_in_function(list_argument, comand_shablon, count, env_my);
-		}
-		else if(ft_strcmp(lower_case, "cd") == 0)
-		{
-			comand_shablon->type_command = CD;
-			exec_in_function(list_argument, comand_shablon, count, env_my);
-		}
-		else
-		{
-			comand_shablon->type_command = UNDEFINED;
-			exec_in_function(list_argument, comand_shablon, count, env_my);
-		}
-		i = comand_shablon->index_command;
-		comand_shablon->last_command = comand_shablon->index_command;
+		lower_case = ft_tolower_minishell(list[i], &len);
+		ft_command_dict(lower_case, list[i], dict);
+		exec_in_function(list, dict, count, env_my);
+		i = dict->index_command;
+		dict->last_command = dict->index_command;
 		ft_strdel(&lower_case);
 	}
-	return(1);
+	return (1);
 }

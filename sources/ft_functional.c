@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 
-cmd_func_t    ft_search_builtin_func(t_last_command *lcmd)
+cmd_func_t    ft_search_builtin_func(t_dict *lcmd)
 {
     int index;
 
@@ -14,7 +14,7 @@ cmd_func_t    ft_search_builtin_func(t_last_command *lcmd)
     return NULL;
 }
 
-cmd_func_t    ft_search_side_func(t_last_command *lcmd)
+cmd_func_t    ft_search_side_func(t_dict *lcmd)
 {
     int index;
 
