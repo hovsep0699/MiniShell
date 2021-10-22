@@ -50,69 +50,48 @@ int	ft_export(t_dict *dict, char **envp, char **data, int count)
 	start_index = ft_vecstrlen(str);
 	end_index = 0;
 	while (end_index < start_index)
-	{
-		if ((dict->i = find_data_int(str[end_index], dict->variable_dic)) == -1)
-		{
-			if ((tmp = ft_dictionary_create(str[end_index])) == NULL)
-			{
-				tmp = NULL;
-				end_index++;
-				continue;
-			}
-			ft_dictionaryadd_back(&(dict->variable_dic), tmp);
-		}
-		else
-			change_item(str[end_index],dict->i,dict->variable_dic);
-		tmp = NULL;
-		end_index++;
-	}
-	ft_vecstrdel(&str);
+		end_index = ft_dict_init(dict, end_index, str[end_index])
+			ft_vecstrdel(&str);
 	g_signal.exit_status = 0;
 	return (g_signal.exit_status);
 }
 
-int ft_unset(t_dict * dictioanry, char **envp, char **data, int count)
+int	ft_unset(t_dict *dictioanry, char **envp, char **data, int count)
 {
-    int i;
-    int len;
-    int contindex;
-    int endindex;
-    dictionary_t *tmp;
-    dictionary_t *provide;
+	t_unset	unset_var;
 
-    i = 0;
-    len = ft_zero_byte_strlen(dictioanry->data);
-    int dict_key_len = 0;
-    endindex = 0;
-    contindex = 0;
-    provide = NULL;
-    tmp = dictioanry->variable_dic; 
-    while (dictioanry->data[contindex])
-    {
-       endindex = (endindex = ft_strcmp_char(dictioanry->data + contindex,' ',len)) > 0 ? endindex : len;
-        while (tmp != NULL)
-        {
-            dict_key_len = ft_zero_byte_strlen(tmp->key);
-           if(ft_strncmp(dictioanry->data + contindex,tmp->key,endindex) == 0 && endindex - contindex == dict_key_len)
-            {
-                if(dictioanry->variable_dic == tmp)
-                    dictioanry->variable_dic = dictioanry->variable_dic->next;
-                if(provide != NULL)
-                    provide->next = tmp->next;
-                else
-                    provide = tmp->next;
-                ft_dictionary_del_key(tmp);
-                break;
-            }
-            provide = tmp;
-            tmp = tmp->next;
-        }
-        tmp = dictioanry->variable_dic;
-        if (len <= endindex)
-            break;
-        contindex = endindex + 1;
-    }
-    g_signal.exit_status = 0;
-    return(g_signal.exit_status);
-    
+	unset_var.i = 0;
+	unset_var.len = ft_zero_byte_strlen(dictioanry->data);
+	unset_var.dict_key_len = 0;
+	unset_var.endindex = 0;
+	unset_var.contindex = 0;
+	unset_var.provide = NULL;
+	unset_var.tmp = dictioanry->variable_dic;
+	while (dictioanry->data[unset_var.contindex])
+	{
+		unset_var.endindex = (unset_var.endindex = ft_strcmp_char(dictioanry->data + unset_var.contindex,' ', unset_var.len)) > 0 ? unset_var.endindex : unset_var.len;
+    	while (unset_var.tmp != NULL)
+    	{
+        	unset_var.dict_key_len = ft_zero_byte_strlen(tmp->key);
+        	if(ft_strncmp(dictioanry->data + unset_var.contindex,tmp->key,unset_var.endindex) == 0 && unset_var.endindex - unset_var.contindex == unset_var.dict_key_len)
+			{
+				if(dictioanry->variable_dic == unset_var.tmp)
+				dictioanry->variable_dic = dictioanry->variable_dic->next;
+				if(provide != NULL)
+					unset_var.provide->next = tmp->next;
+				else
+					unset_var.provide = tmp->next;
+				ft_dictionary_del_key(unset_var.tmp);
+				break;
+			}
+			unset_var.provide = unset_var.tmp;
+			unset_var.tmp = tmp->next;
+		}
+		unset_var.tmp = dictioanry->variable_dic;
+		if (unset_var.len <= unset_var.endindex)
+			break;
+		unset_var.contindex = unset_var.endindex + 1;
+	}
+	g_signal.exit_status = 0;
+	return (g_signal.exit_status);  
 }

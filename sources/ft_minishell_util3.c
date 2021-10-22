@@ -41,3 +41,25 @@ void ft_putcommanderror(t_dict *dict)
 	ft_putstr_fd("numeric argument required\n", 2);
 	g_signal.exit_status = COMMAND_NOT_FOUND;
 }
+
+int ft_dict_init(t_dict *dict,int end_index, char *str)
+{
+	dictionary_t	*tmp;
+
+	dict->i = find_data_int(str, dict->variable_dic);
+	if (dict->i == -1)
+	{
+		tmp = ft_dictionary_create(str);
+		if (tmp == NULL)
+		{
+			tmp = NULL;
+			end_index++;
+			continue ;
+		}
+		ft_dictionaryadd_back(&(dict->variable_dic), tmp);
+	}
+	else
+		change_item(str,dict->i,dict->variable_dic);
+	tmp = NULL;
+	end_index++;
+}
