@@ -1,13 +1,13 @@
 #ifndef CLIST_H
-#define CLIST_H
+# define CLIST_H
 
 # include <stdlib.h>
 # include <unistd.h>
 # include "cstring.h"
 	
-#define getlistItem(node, type) *(type *)node->data
+// #define getlistItem(node, type) *(type *)node->data
 
-#define list(lst) lst = ft_list_default_constructor()
+// #define list(lst) lst = ft_list_default_constructor()
 
 typedef struct list list_t;
 

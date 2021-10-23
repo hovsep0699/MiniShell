@@ -4,8 +4,7 @@
 #include "cstdlib.h"
 
 typedef struct cvector cvector_t;
-#define cvector(vector, type, size) vector = ft_cvector_constructor(sizeof(type), size)
-#define at(vector, type, index) *(type *)vector[index]
+
 struct cvector
 {
     void *data;

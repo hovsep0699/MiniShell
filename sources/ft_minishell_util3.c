@@ -55,7 +55,7 @@ int	ft_dict_init(t_dict *dict, int end_index, char *str)
 		{
 			tmp = NULL;
 			end_index++;
-			continue ;
+			return (end_index);
 		}
 		ft_dictionaryadd_back(&(dict->variable_dic), tmp);
 	}
@@ -63,4 +63,5 @@ int	ft_dict_init(t_dict *dict, int end_index, char *str)
 		change_item(str, dict->i, dict->variable_dic);
 	tmp = NULL;
 	end_index++;
+	return (end_index);
 }

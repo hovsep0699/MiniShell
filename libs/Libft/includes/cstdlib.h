@@ -1,11 +1,13 @@
 #ifndef CSTDLIB_H
-#define CSTDLIB_H
+# define CSTDLIB_H
 
 # include <stdlib.h>
 # include <unistd.h>
 
+/*
 # define FT_MAX(x,y)(x > y ? x : y)
 # define FT_MIN(x,y)(x < y ? x : y)
+*/
 
 void	*ft_realloc(void *ptr, size_t newsize);
 

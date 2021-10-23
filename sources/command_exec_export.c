@@ -36,7 +36,6 @@ int	ft_put_env_export(t_dict *dictionary, char **envp, char **data, int count)
 
 int	ft_export(t_dict *dict, char **envp, char **data, int count)
 {
-	dictionary_t	*tmp;
 	char			**str;
 	int				start_index;
 	int				end_index;
@@ -50,15 +49,14 @@ int	ft_export(t_dict *dict, char **envp, char **data, int count)
 	start_index = ft_vecstrlen(str);
 	end_index = 0;
 	while (end_index < start_index)
-		end_index = ft_dict_init(dict, end_index, str[end_index])
-			ft_vecstrdel(&str);
+		end_index = ft_dict_init(dict, end_index, str[end_index]);
+	ft_vecstrdel(&str);
 	g_signal.exit_status = 0;
 	return (g_signal.exit_status);
 }
-
-int	ft_unset(t_dict *dictioanry, char **envp, char **data, int count)
+t_unset ft_unset_construct(t_dict *dictioanry)
 {
-	t_unset	unset_var;
+	t_unset unset_var;
 
 	unset_var.i = 0;
 	unset_var.len = ft_zero_byte_strlen(dictioanry->data);
@@ -67,30 +65,51 @@ int	ft_unset(t_dict *dictioanry, char **envp, char **data, int count)
 	unset_var.contindex = 0;
 	unset_var.provide = NULL;
 	unset_var.tmp = dictioanry->variable_dic;
-	while (dictioanry->data[unset_var.contindex])
-	{
-		unset_var.endindex = (unset_var.endindex = ft_strcmp_char(dictioanry->data + unset_var.contindex,' ', unset_var.len)) > 0 ? unset_var.endindex : unset_var.len;
-    	while (unset_var.tmp != NULL)
-    	{
-        	unset_var.dict_key_len = ft_zero_byte_strlen(tmp->key);
-        	if(ft_strncmp(dictioanry->data + unset_var.contindex,tmp->key,unset_var.endindex) == 0 && unset_var.endindex - unset_var.contindex == unset_var.dict_key_len)
-			{
-				if(dictioanry->variable_dic == unset_var.tmp)
-				dictioanry->variable_dic = dictioanry->variable_dic->next;
-				if(provide != NULL)
-					unset_var.provide->next = tmp->next;
-				else
-					unset_var.provide = tmp->next;
-				ft_dictionary_del_key(unset_var.tmp);
-				break;
-			}
-			unset_var.provide = unset_var.tmp;
-			unset_var.tmp = tmp->next;
-		}
-		unset_var.tmp = dictioanry->variable_dic;
-		if (unset_var.len <= unset_var.endindex)
+	unset_var.end_inde_n = 0;
+	return (unset_var);
+}
+void ft_del(t_dict *dic,t_unset *unvar)
+{
+	if(unvar->end_inde_n == unvar->len)
+		unvar->endindex = unvar->len;
+	else
+		unvar->endindex += unvar->end_inde_n;
+    while (unvar->tmp != NULL)
+    {
+		unvar->dict_key_len = ft_zero_byte_strlen(unvar->tmp->key);
+        if(ft_strncmp(dic->data + unvar->contindex,unvar->tmp->key,unvar->end_inde_n) == 0 && unvar->endindex - unvar->contindex == unvar->dict_key_len)
+		{
+			if(dic->variable_dic == unvar->tmp)
+				dic->variable_dic = dic->variable_dic->next;
+			if(unvar->provide != NULL)
+				unvar->provide->next = unvar->tmp->next;
+			else
+				unvar->provide = unvar->tmp->next;
+			ft_dictionary_del_key(unvar->tmp);
 			break;
-		unset_var.contindex = unset_var.endindex + 1;
+		}
+	unvar->provide = unvar->tmp;
+	unvar->tmp = unvar->tmp->next;
+	}
+}
+
+int	ft_unset(t_dict *dic, char **envp, char **data, int count)
+{
+	t_unset	unvar;
+
+	unvar = ft_unset_construct(dic);
+	while (dic->data[unvar.contindex])
+	{
+		if(ft_strcmp_char(dic->data + unvar.contindex,' ', unvar.len) > 0)
+			unvar.end_inde_n = ft_strcmp_char(dic->data + unvar.contindex,' ', unvar.len);
+		else
+			unvar.end_inde_n = unvar.len;
+    	ft_del(dic,&unvar);
+		unvar.tmp = dic->variable_dic;
+		if (unvar.len <= unvar.endindex)
+			break;
+		unvar.contindex = unvar.endindex + 1;
+		unvar.endindex++;
 	}
 	g_signal.exit_status = 0;
 	return (g_signal.exit_status);  

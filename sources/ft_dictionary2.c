@@ -68,7 +68,7 @@ char	*find_data(char *key, dictionary_t *command)
 
 	klen = 0;
 	while (ft_isalnum(*(key + klen)))
-		key_len++;
+		klen++;
 	while (command != NULL)
 	{
 		dlen = ft_zero_byte_strlen(command->key);

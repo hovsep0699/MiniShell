@@ -83,6 +83,7 @@ typedef struct s_command_function t_command_function;
 typedef struct s_command_side_function t_command_side_function;
 typedef	int (*cmd_func_t)(t_dict *, char **, char **, int);
 typedef struct s_quote_check t_quote_check;
+typedef struct s_unset t_unset;
 
 enum e_builtin_commands
 {
@@ -136,6 +137,18 @@ struct	s_dictionary
 	char *item;
 	struct	s_dictionary *next;
 };
+
+struct s_unset
+{
+	int i;
+    int len;
+    int contindex;
+    int endindex;
+	int end_inde_n;
+	int dict_key_len;
+    dictionary_t *tmp;
+    dictionary_t *provide;
+};
 struct	s_dict
 {
 	int						change_fd_in;
@@ -146,7 +159,7 @@ struct	s_dict
 	int 					isparrent;
 	t_builtin_commands		type_command;
 	t_side_commands			util_commant;
-	int						index_command;
+	int						icom;
 	int						last_command;
 	int						nerar_exeption;
 	char					*data;
@@ -241,4 +254,7 @@ int 			ft_execendline(char **arg, t_dict *dict, int count, char **envp_my);
 void 			ft_command_dict(char *lower_case, char *upper_case, t_dict *dict);
 bool 			ft_exit_status(t_dict *dict);
 void 			ft_putcommanderror(t_dict *dict);
+int				ft_dict_init(t_dict *dict, int end_index, char *str);
+int				ft_find_element(char *str);
+size_t			ft_joins_dict(char const *s2, size_t i, int count, char *subjoin);
 #endif

@@ -89,29 +89,29 @@ int	ft_count_quote(char *s)
 
 int	exec_in_function(char **arg, t_dict *dict, int count, char **envp_my)
 {
-	int	dollar_index;
 	int	end_of_line;
 
-	dict->i = dict->index_command + 1;
-	dollar_index = 0;
 	end_of_line = 0;
-	while (dict->i < count)
+	while (dict->icom < count)
 	{
-		if (end_of_line >= dict->i)
-			end_of_line = ft_vecstr_search2(arg, ";", dict->i);
-		if (arg[dict->i][0] == ';')
+		if (end_of_line >= dict->icom)
+			end_of_line = ft_vecstr_search2(arg, ";", dict->icom);
+		if (arg[dict->icom][0] == ';')
 			return (ft_execendline(arg, dict, count, envp_my));
-		else if (!(ft_strcmp(arg[dict->i], ">>")
-				|| ft_strcmp(arg[dict->i], "<<")
-				|| arg[dict->i][0] != '>' || arg[dict->i][0] != '<'))
-			dict->i = runfileutil(arg, dict, dict->i);
-		else if (ft_strcmp(arg[dict->i], "-n") == 0)
+		else if (!(ft_strcmp(arg[dict->icom], ">>")
+				|| ft_strcmp(arg[dict->icom], "<<")
+				|| arg[dict->icom][0] != '>' || arg[dict->icom][0] != '<'))
+		{
+			dict->icom = runfileutil(arg, dict, dict->icom);
+			continue ;
+		}
+		else if (ft_strcmp(arg[dict->icom], "-n") == 0)
 			dict->echo_option = 1;
-		dict->data = ft_equal_strjoin(dict->data, dict, arg[dict->i],
-				(end_of_line == dict->i || count - 1 == dict->i++));
+		dict->data = ft_equal_strjoin(dict->data, dict, arg[dict->icom],
+				(end_of_line == dict->i || count - 1 == dict->icom));
+		dict->icom++;
 	}
 	ft_search_side_func(dict)(dict, envp_my, arg, count);
-	dict->index_command = dict->i;
 	return (1);
 }
 
@@ -123,13 +123,14 @@ int	system_command(char **list, t_dict *dict, char **env_my, int count)
 	int		exeption;
 
 	i = 0;
-	while (dict->index_command < count)
+	while (dict->icom < count)
 	{
 		lower_case = ft_tolower_minishell(list[i], &len);
 		ft_command_dict(lower_case, list[i], dict);
+		dict->icom = dict->icom + 1;
 		exec_in_function(list, dict, count, env_my);
-		i = dict->index_command;
-		dict->last_command = dict->index_command;
+		i = dict->icom;
+		dict->last_command = dict->icom;
 		ft_strdel(&lower_case);
 	}
 	return (1);

@@ -1,5 +1,5 @@
 #ifndef CSTRING_H
-#define CSTRING_H
+# define CSTRING_H
 
 # include <stdlib.h>
 # include <unistd.h>

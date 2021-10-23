@@ -97,7 +97,7 @@ int ft_default_set(t_dict *command)
 	command->change_fd_in = -1;
     command->change_fd_out = -1;
 	command->type_command = UNDEFINED;
-	command->index_command = 0;
+	command->icom = 0;
 	command->util_commant = NONE;
 	command->last_command = 0;
 	command->isparrent = 1;

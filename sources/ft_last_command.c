@@ -4,7 +4,7 @@ t_dict	ft_dict_constructor2(void)
 {
 	t_dict	lcmd;
 
-	lcmd.index_command = 0;
+	lcmd.icom = 0;
 	lcmd.last_command = 0;
 	lcmd.nerar_exeption = 0;
 	lcmd.quote_staet_new = 0;

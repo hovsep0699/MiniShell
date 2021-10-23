@@ -54,7 +54,7 @@ int	ft_isalnum_str(char *str, int *i)
 int	ft_execendline(char **arg, t_dict *dict, int count, char **envp_my)
 {
 	ft_search_side_func(dict)(dict, envp_my, arg, count);
-	dict->index_command = dict->i + 1;
+	dict->icom = dict->i + 1;
 	ft_strdel(&dict->data);
 	return (SUCCESS);
 }

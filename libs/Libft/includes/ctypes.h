@@ -1,6 +1,5 @@
 #ifndef CTYPES_H
-#define CTYPES_H
-
+# define CTYPES_H
 
 int					ft_isalpha(int c);
 
