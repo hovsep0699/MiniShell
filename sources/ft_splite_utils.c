@@ -1,24 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_splite_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/24 12:46:30 by vgaspary          #+#    #+#             */
+/*   Updated: 2021/10/24 16:25:06 by vgaspary         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char * ft_add_space(char *source, int count, int mod, int index)
+char	*ft_add_space(char *source, int count, int mod, int index)
 {
-	char *tmp;
-	int i;
-	char tmp_character;
+	char	*tmp;
+	int		i;
+	char	tmp_character;
+	int		j;
 
 	i = 0;
-	int j;
-	 j = index;
+	j = index;
 	while (source[j])
 	{
-		tmp_character = source[j-1];	
-		if(count == 0)
-			return(tmp);
-		if(count == 1 && j == index + 1)
+		tmp_character = source[j - 1];
+		if (count == 0)
+			return (tmp);
+		if (count == 1 && j == index + 1)
 			source[j] = ' ';
 		if (count == 2)
 			source[j + 1] = ' ';
-		if(count == 3)
+		if (count == 3)
 		{
 			source[j] = ' ';
 			source[j + 2] = ' ';
@@ -26,72 +38,75 @@ char * ft_add_space(char *source, int count, int mod, int index)
 		}
 		source[j] = tmp_character;
 	}
-	
-	
 	return (tmp);
 }
-int ft_len_array(char *splite_array)
+
+int	ft_len_array(char *splite_array)
 {
-	int i;
-	int state;
-	int count;
+	int	i;
+	int	state;
+	int	count;
 
 	i = 0;
 	state = 0;
 	count = 0;
-	while (splite_array[i])	
+	while (splite_array[i])
 	{
-		if((splite_array[i] == '|' || splite_array[i] == '>' || splite_array[i] == '<' || splite_array[i] == ';') && i != 0)
+		if ((splite_array[i] == '|' || splite_array[i] == '>'
+				|| splite_array[i] == '<' || splite_array[i] == ';') && i != 0)
 		{
-			count += splite_array[i - 1] != ' ' ? 1 : 0;
-			count += splite_array[i + 2] != ' ' ? 1 : 0;
-			if((ft_strncmp(splite_array + i, "<>", 2) == 0) || (ft_strncmp(splite_array + i, ">>", 2) == 0))
+			if (splite_array[i - 1] != ' ')
+				count++;
+			if (splite_array[i + 2] != ' ')
+				count++;
+			if ((ft_strncmp(splite_array + i, "<>", 2) == 0)
+				|| (ft_strncmp(splite_array + i, ">>", 2) == 0))
 				i++;
 			state = 0;
 		}
-		i++;			
+		i++;
 	}
-	return(count + i);
+	return (count + i);
 }
-char *enter_split_sapce(char **not_splite)
+
+void	change_splitem(char *splite_array, t_split *splvar, char *str)
 {
-	int i;
-	int j;
-	int state;
-	char *splite_array;
-	int len;
-	char *str;
-
-	i = 0;
-	state = 0;
-	j = 0;
-
-	str = ft_strdup(*(not_splite));
-	len = ft_len_array(str);
-	splite_array = ft_calloc(len + 1, sizeof(char));
-	while (str[i])	
+	if (str[splvar->i - 1] != ' ')
+		splite_array[splvar->j++] = ' ';
+	if ((ft_strncmp(str + splvar->i, "<<", 2) == 0)
+		|| (ft_strncmp(str + splvar->i, ">>", 2) == 0))
 	{
-		
-		if((str[i] == '|' || str[i] == '>' || str[i] == '<' || str[i] == ';') && i != 0)
-		{	
-			if(str[i - 1] != ' ')
-					splite_array[j++] = ' ';
-			if((ft_strncmp(str + i, "<<", 2) == 0) || (ft_strncmp(str + i, ">>", 2) == 0))
-			{
-				
-				splite_array[j++] = str[i++];
-				splite_array[j++] = str[i];
-				
-			}
-			else 
-				splite_array[j++] = str[i];
-			if(str[i + 1] != ' ')
-					splite_array[j++] = ' ';
-			i++;
-		}
+		splite_array[splvar->j++] = str[splvar->i++];
+		splite_array[splvar->j++] = str[splvar->i];
+	}
+	else
+		splite_array[splvar->j++] = str[splvar->i];
+	if (str[splvar->i + 1] != ' ')
+		splite_array[splvar->j++] = ' ';
+	splvar->i++;
+}
+
+char	*enter_split_sapce(char **not_splite)
+{
+	char	*splite_array;
+	char	*str;
+	t_split	splvar;
+
+	splvar.i = 0;
+	splvar.state = 0;
+	splvar.j = 0;
+	str = ft_strdup(*(not_splite));
+	splvar.len = ft_len_array(str);
+	splite_array = ft_calloc(splvar.len + 1, sizeof(char));
+	while (str[splvar.i])
+	{
+		if ((str[splvar.i] == '|' || str[splvar.i] == '>'
+				|| str[splvar.i] == '<' || str[splvar.i] == ';')
+			&& splvar.i != 0)
+			change_splitem(splite_array, &splvar, str);
 		else
-		 	splite_array[j++] = str[i++];
+			splite_array[splvar.j++] = str[splvar.i++];
 	}
 	ft_strdel(&str);
-	return(splite_array);
+	return (splite_array);
 }

@@ -54,42 +54,46 @@ int	ft_export(t_dict *dict, char **envp, char **data, int count)
 	g_signal.exit_status = 0;
 	return (g_signal.exit_status);
 }
-t_unset ft_unset_construct(t_dict *dictioanry)
+
+t_unset	ft_unset_construct(t_dict *dictioanry)
 {
-	t_unset unset_var;
+	t_unset	unset_var;
 
 	unset_var.i = 0;
 	unset_var.len = ft_zero_byte_strlen(dictioanry->data);
-	unset_var.dict_key_len = 0;
-	unset_var.endindex = 0;
-	unset_var.contindex = 0;
+	unset_var.dklen = 0;
+	unset_var.eind = 0;
+	unset_var.cind = 0;
 	unset_var.provide = NULL;
 	unset_var.tmp = dictioanry->variable_dic;
-	unset_var.end_inde_n = 0;
+	unset_var.esp = 0;
 	return (unset_var);
 }
-void ft_del(t_dict *dic,t_unset *unvar)
+
+void	ft_del(t_dict *dic, t_unset *unvar)
 {
-	if(unvar->end_inde_n == unvar->len)
-		unvar->endindex = unvar->len;
+	if (unvar->esp == unvar->len)
+		unvar->eind = unvar->len;
 	else
-		unvar->endindex += unvar->end_inde_n;
-    while (unvar->tmp != NULL)
-    {
-		unvar->dict_key_len = ft_zero_byte_strlen(unvar->tmp->key);
-        if(ft_strncmp(dic->data + unvar->contindex,unvar->tmp->key,unvar->end_inde_n) == 0 && unvar->endindex - unvar->contindex == unvar->dict_key_len)
+		unvar->eind += unvar->esp;
+	while (unvar->tmp != NULL)
+	{
+		unvar->dklen = ft_zero_byte_strlen(unvar->tmp->key);
+		if (ft_strncmp(dic->data + unvar->cind,
+				unvar->tmp->key, unvar->esp) == 0
+			&& unvar->eind - unvar->cind == unvar->dklen)
 		{
-			if(dic->variable_dic == unvar->tmp)
+			if (dic->variable_dic == unvar->tmp)
 				dic->variable_dic = dic->variable_dic->next;
-			if(unvar->provide != NULL)
+			if (unvar->provide != NULL)
 				unvar->provide->next = unvar->tmp->next;
 			else
 				unvar->provide = unvar->tmp->next;
 			ft_dictionary_del_key(unvar->tmp);
-			break;
+			break ;
 		}
-	unvar->provide = unvar->tmp;
-	unvar->tmp = unvar->tmp->next;
+		unvar->provide = unvar->tmp;
+		unvar->tmp = unvar->tmp->next;
 	}
 }
 
@@ -98,19 +102,19 @@ int	ft_unset(t_dict *dic, char **envp, char **data, int count)
 	t_unset	unvar;
 
 	unvar = ft_unset_construct(dic);
-	while (dic->data[unvar.contindex])
+	while (dic->data[unvar.cind])
 	{
-		if(ft_strcmp_char(dic->data + unvar.contindex,' ', unvar.len) > 0)
-			unvar.end_inde_n = ft_strcmp_char(dic->data + unvar.contindex,' ', unvar.len);
+		if (ft_strcmp_char(dic->data + unvar.cind, ' ', unvar.len) > 0)
+			unvar.esp = ft_strcmp_char(dic->data + unvar.cind, ' ', unvar.len);
 		else
-			unvar.end_inde_n = unvar.len;
-    	ft_del(dic,&unvar);
+			unvar.esp = unvar.len;
+		ft_del(dic, &unvar);
 		unvar.tmp = dic->variable_dic;
-		if (unvar.len <= unvar.endindex)
-			break;
-		unvar.contindex = unvar.endindex + 1;
-		unvar.endindex++;
+		if (unvar.len <= unvar.eind)
+			break ;
+		unvar.cind = unvar.eind + 1;
+		unvar.eind++;
 	}
 	g_signal.exit_status = 0;
-	return (g_signal.exit_status);  
+	return (g_signal.exit_status);
 }

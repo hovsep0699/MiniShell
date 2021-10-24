@@ -1,38 +1,67 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_dictionary2.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/24 12:44:26 by vgaspary          #+#    #+#             */
+/*   Updated: 2021/10/24 12:44:30 by vgaspary         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
+
+dictionary_t	*ft_dict_mem(int index_item, int index)
+{
+	dictionary_t	*ptr;
+
+	ptr = (dictionary_t *)ft_memalloc(sizeof(dictionary_t));
+	if (ptr == NULL)
+		return (NULL);
+	ptr->key = (char *)ft_calloc(index, sizeof(char));
+	if (ptr->key == NULL)
+	{
+		ft_memdel((void **)&ptr);
+		return (NULL);
+	}
+	ptr->item = (char *)ft_calloc(index_item, sizeof(char));
+	if (ptr == NULL)
+	{
+		ft_memdel((void **)&ptr->key);
+		ft_memdel((void **)&ptr);
+		return (NULL);
+	}
+	return (ptr);
+}
 
 dictionary_t	*ft_dictionary_create(char *items)
 {
-	dictionary_t	*ptr;
-	int				index;
-	int				index_item;
-	int				len_items;
+	t_dictone	dict;
 
-	index_item = 1;
-	len_items = ft_strlen(items);
-	index = ft_find_element(items);
-	if (index == -1)
+	dict.index_item = 1;
+	dict.len_items = ft_strlen(items);
+	dict.index = ft_find_element(items);
+	if (dict.index == -1)
 		return (NULL);
 	if (ft_isdigit(items[0]) == 1)
 	{
-		ft_print_error(FIRSTDIGIT, items, ' ', "export");
+		export_error(items);
 		return (NULL);
 	}
-	if (index == (-1))
-		index = len_items;
+	if (dict.index == (-1))
+		dict.index = dict.len_items;
 	else
-		index_item = len_items - index;
-	if (!(ptr = (dictionary_t *)ft_memalloc(sizeof(dictionary_t))))
+		dict.index_item = dict.len_items - dict.index;
+	dict.ptr = ft_dict_mem(dict.index_item, dict.index);
+	if (dict.ptr == NULL)
 		return (NULL);
-	if (!(ptr->key = (char *)ft_calloc(index, sizeof(char))))
-		return (NULL);
-	if (!(ptr->item = (char *)ft_calloc(index_item, sizeof(char))))
-		return (NULL);
-	ptr->next = NULL;
-	ft_joins_dict(items, 0, index, ptr->key);
-	ptr->key[index] = '\0';
-	if (len_items != index)
-		ft_joins_dict(items, index + 1, ft_strlen(items), ptr->item);
-	return (ptr);
+	dict.ptr->next = NULL;
+	ft_joins_dict(items, 0, dict.index, dict.ptr->key);
+	dict.ptr->key[dict.index] = '\0';
+	if (dict.len_items != dict.index)
+		ft_joins_dict(items, dict.index + 1, ft_strlen(items), dict.ptr->item);
+	return (dict.ptr);
 }
 
 dictionary_t	*ft_dictionarylast(dictionary_t *lst)

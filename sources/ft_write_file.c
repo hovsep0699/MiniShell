@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_write_file.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/24 12:46:59 by vgaspary          #+#    #+#             */
+/*   Updated: 2021/10/24 12:47:00 by vgaspary         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int 			ft_write_file(struct	s_dict *dictioanry, char **envp, char **data, int count)
@@ -13,8 +25,8 @@ int 			ft_write_file(struct	s_dict *dictioanry, char **envp, char **data, int co
     }
     if((fd = open(dictioanry->name_file, O_CREAT | O_WRONLY | O_TRUNC,0664)) == -1)
     {
-        ft_print_error(errno, strerror(errno), ' ', "");
-        ft_putstr("\n");
+        errno_print(strerror(errno));
+
         g_signal.exit_status = errno;
         return(g_signal.exit_status);
     }
@@ -62,9 +74,7 @@ int 			ft_double_write_file(struct	s_dict *dictioanry, char **envp, char **data,
 
     if((fd = open(dictioanry->name_file, O_CREAT |O_WRONLY | O_APPEND,0664)) == -1)
     {
-        ft_print_error(errno, strerror(errno), ' ', dictioanry->name_file);
-        ft_putstr_fd(strerror(errno),2);
-        ft_putchar('\n');
+        file_errno(strerror(errno), dictioanry->name_file);
         g_signal.exit_status = errno;
         return(SUCCESS);
     }

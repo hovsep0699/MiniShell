@@ -1,57 +1,76 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pipe.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/24 12:46:14 by vgaspary          #+#    #+#             */
+/*   Updated: 2021/10/24 15:18:31 by vgaspary         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void ft_pipe_close(int fd)
+void	ft_pipe_close(int fd)
 {
 	if (fd > 0)
 		close(fd);
 }
-char *ft_pipe(t_dict *command_shablon, char *data)
+
+char	*ft_child(char *pipe_l, t_pipe pips, t_dict *dict, char **str)
 {
-    char **str;
-    int len;
-    int i;
-    int fd[2];
-    char *pipe_line;
-    pid_t id;
+	dup2(pips.fd[0], STDIN_FILENO);
+	dict->change_fd_in = pips.fd[0];
+	ft_pipe_close(pips.fd[1]);
+	if (pips.i == pips.len - 1 )
+		dict->isparrent = 1;
+	else
+		dict->isparrent = 0;
+	pipe_l = ft_strdup(str[pips.i]);
+	ft_vecstrdel(&str);
+	return (pipe_l);
+}
 
-    i = 0;
-    str = ft_split_Vache(data, '|', CHAR_QUATES, CHAR_DQUATES);
-    len = ft_vecstrlen(str);
-    if(len <= 1)
-    {
-        pipe_line = ft_strdup(str[i]);
-        ft_vecstrdel(&str);
-        return(pipe_line);
-    }
-    i = len;
-    while (i > 1)
-    {
-        i--;
-        pipe(fd);
-        id = fork();
+void	ft_first(t_pipe pips, t_dict *dict)
+{
+	dup2(pips.fd[1], STDOUT_FILENO);
+	dict->change_fd_out = pips.fd[1];
+	ft_pipe_close(pips.fd[0]);
+	dict->isparrent = 0;
+}
 
-        if (id > 0)
-        {
-            dup2(fd[0], STDIN_FILENO);
-            command_shablon->change_fd_in = fd[0];
-            ft_pipe_close(fd[1]);
-            if (i == len - 1 )
-                command_shablon->isparrent = 1;
-            else
-                command_shablon->isparrent = 0;
-            pipe_line = ft_strdup(str[i]);
-            ft_vecstrdel(&str);
-            return(pipe_line);
-        }
-        if(i > 0)
-        {
-            dup2(fd[1], STDOUT_FILENO);
-            command_shablon->change_fd_out = fd[1];
-            ft_pipe_close(fd[0]);
-            command_shablon->isparrent = 0;
-        }
-    }
-    pipe_line = ft_strdup(str[0]);
-    ft_vecstrdel(&str);
-    return(pipe_line);
+char	*ft_retpipe(char **str, t_pipe pips, char *pipe_line)
+{
+	pipe_line = ft_strdup(str[pips.i]);
+	ft_vecstrdel(&str);
+	return (pipe_line);
+}
+
+char	*ft_pipe(t_dict *dict, char *data)
+{
+	char	**str;
+	t_pipe	pips;
+	char	*pipe_line;
+	pid_t	id;
+
+	pips.i = 0;
+	str = ft_split_Vache(data, '|', CHAR_QUATES, CHAR_DQUATES);
+	pips.len = ft_vecstrlen(str);
+	if (pips.len <= 1)
+		return (ft_retpipe(str, pips, pipe_line));
+	pips.i = pips.len;
+	while (pips.i > 1)
+	{
+		pips.i--;
+		pipe(pips.fd);
+		id = fork();
+		if (id > 0)
+			return (ft_child(pipe_line, pips, dict, str));
+		if (pips.i > 0)
+			ft_first(pips, dict);
+	}
+	pipe_line = ft_strdup(str[0]);
+	ft_vecstrdel(&str);
+	return (pipe_line);
 }

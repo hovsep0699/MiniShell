@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_utils_minishell_str.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/24 12:46:40 by vgaspary          #+#    #+#             */
+/*   Updated: 2021/10/24 12:46:43 by vgaspary         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int ft_strcmp_char(char *str,char c,int count)
@@ -24,8 +36,7 @@ char *ft_tolower_minishell(char *upper_str,int *len)
 	int dquoet_exist;
 	int j;
 
-	*len =ft_zero_byte_strlen(upper_str) - ft_count_quote(upper_str);
-	//ft_putnbr(*len);
+	*len = ft_zero_byte_strlen(upper_str) - ft_count_quote(upper_str);
 	lower_case = (char *)ft_calloc(sizeof(char),*len);
 	i = 0;
 	j = 0;
