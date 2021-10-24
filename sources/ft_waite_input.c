@@ -6,37 +6,11 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:46:50 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/24 12:46:51 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/10/24 21:30:45 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		ft_dis_strchr(const char *s, int c)
-{
-	int t;
-
-	t = 0;
-	while (s[t])
-	{
-		if (s[t] == c)
-			return (t);
-		t++;
-	}
-	if (s[t] == '\0' && !c)
-		return (t);
-	return (0);
-}
-
-char	*ft_strnull(void)
-{
-	char *str;
-
-	if ((str = (char *)malloc(sizeof(char) * (0 + 1))) == NULL)
-		return (NULL);
-	str[0] = '\0';
-	return (str);
-}
 
 char	*ft_single_join(char *c)
 {
@@ -50,7 +24,8 @@ char	*ft_single_join(char *c)
 		return (ft_strnull());
 	while (c && c[j] != '\n' && c[j] != '\0')
 		j++;
-	if ((str = (char *)malloc(sizeof(char) * j + 1)) == NULL)
+	str = (char *)malloc(sizeof(char) * (j + 1));
+	if (str == NULL)
 		return (NULL);
 	while (c[i] && i < j && c && c[i] != '\n')
 	{
@@ -90,9 +65,9 @@ char	*ft_clean(char *bf, int length)
 	return (c);
 }
 
-size_t		ft_joins(char const *s2, size_t i,int count, char *subjoin)
+size_t	ft_joins(char const *s2, size_t i, int count, char *subjoin)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (s2[j] && j < count)
@@ -105,94 +80,18 @@ size_t		ft_joins(char const *s2, size_t i,int count, char *subjoin)
 	return (i);
 }
 
-char		*ft_equal_strjoin(char *s1, t_dict *command_shablon, char *pars_str, int end_of_line)
+char	*ft_equal_strjoin(char *s1, t_dict *dict, char *pstr, int end)
 {
-	char	*subjoin;
-	int i;
-	int len_key;
-	int quate_exist;
-	int dquate_exist;
-	int end_index;
-	char *tmp_str;
-	int count;
+	t_eqstr	equ;
 
-	i = 0;
-	count = 0;
-	subjoin = NULL;
-	quate_exist = 1;
-	dquate_exist = 1;
-	end_index = ft_zero_byte_strlen(s1);
-	count = ft_count_quote(pars_str);
-	subjoin = (char *)ft_calloc(sizeof(char), (end_index + (ft_zero_byte_strlen(pars_str) - count) + 1 + end_of_line));
-	if(end_index > 0)
-		subjoin = ft_strcpy(subjoin, s1);
-	while (pars_str[i])
-	{
-		if(ft_count_quote_character(pars_str[i], &quate_exist, &dquate_exist))
-			++i;
-		else if(pars_str[i] == '\\' && (dquate_exist != 0 && quate_exist != 0))
-		{
-			++i;
-			subjoin[end_index++] = pars_str[i];
-			++i;
-		}
-		else if(pars_str[i] == '$' && pars_str[i + 1] == '?' && quate_exist != 0)
-		{
-			tmp_str = ft_itoa(g_signal.exit_status);
-			len_key = ft_zero_byte_strlen(tmp_str);
-			subjoin = ft_realloc_strjoin(subjoin, tmp_str);
-			end_index += len_key;
-			ft_strdel(&tmp_str);
-			i += 2;
-		}
-		else if(pars_str[i] == '$' && quate_exist != 0)
-		{
-			subjoin = ft_realloc_strjoin(subjoin, find_data((pars_str + i + 1),command_shablon->variable_dic));
-			end_index += ft_zero_byte_strlen(subjoin) - end_index;
-			ft_isalnum_str(pars_str + i + 1, &i);
-			i += 2;
-		}
-		else if(pars_str[i] == '~' && dquate_exist != 0 && quate_exist != 0 && i == 0 && (pars_str[i + 1] == '\0' || pars_str[i + 1] == '/'))
-		{
-			subjoin = ft_realloc_strjoin(subjoin, getenv("HOME"));
-			end_index = ft_zero_byte_strlen(subjoin);
-			i++;
-		}
-		else 
-			subjoin[end_index++] = pars_str[i++];
-	}
-	if(!end_of_line)
-		subjoin[end_index] = ' ';
+	equ.subjoin = (char *)ft_calloc(sizeof(char), (equ.end_index
+				+ (ft_zero_byte_strlen(pstr) - equ.count) + 1 + end));
+	if (equ.end_index > 0)
+		equ.subjoin = ft_strcpy(equ.subjoin, s1);
+	while (pstr[equ.i])
+		ft_join_util2(pstr, &equ, dict);
+	if (!end)
+		equ.subjoin[equ.end_index] = ' ';
 	ft_strdel(&s1);
-	return(subjoin);
-}
-char		*ft_dis_strjoin(char *s1, char *s2,int mod)
-{
-	char	*subjoin;
-	size_t	i;
-	int len_s1;
-	int len_s2;
-	int quoet_exist;
-	int dquoet_exist;
-
-	quoet_exist = 1;
-	dquoet_exist = 1;
-	len_s2 = ft_count_quote_character(*s2, &quoet_exist, &dquoet_exist);
-	len_s1 = ft_zero_byte_strlen(s1);
-	len_s2 = ft_zero_byte_strlen(s2) - len_s2;
-	i = 0;
-	subjoin = (char *)ft_calloc(sizeof(char), len_s1 + len_s2 + mod);
-	if (!subjoin)
-		return (NULL);
-	if (len_s1 > 0)
-		i = ft_joins(s1, i, len_s1, subjoin);
-	if(mod == 2 && len_s1 > 0)
-	{
-		subjoin[i] = ' ';
-		++i;
-	}
-	if(len_s2 > 0)
-		i = ft_joins(s2, i, len_s2, subjoin);
-	ft_strdel(&s1);
-	return (subjoin);
+	return (equ.subjoin);
 }

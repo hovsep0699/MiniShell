@@ -54,7 +54,7 @@ t_dict	ft_dict_constructor(void)
 	lcmd.side_functions[0] = (t_command_side_function){WRITE, ft_write_file};
 	lcmd.side_functions[1] = (t_command_side_function){READ, ft_read_file};
 	lcmd.side_functions[2]
-		= (t_command_side_function){DWRITE, ft_double_write_file};
+		= (t_command_side_function){DWRITE, ft_dwrite_file};
 	lcmd.side_functions[3] = (t_command_side_function){DREAD, ft_dwrite_file};
 	lcmd.side_functions[4] = (t_command_side_function){PIPE, NULL};
 	lcmd.side_functions[5] = (t_command_side_function){NONE, NULL};
