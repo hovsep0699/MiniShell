@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:46:50 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/24 21:30:45 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/10/25 18:49:53 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char	*ft_equal_strjoin(char *s1, t_dict *dict, char *pstr, int end)
 {
 	t_eqstr	equ;
 
+	equ = ft_eqdef(s1, pstr);
 	equ.subjoin = (char *)ft_calloc(sizeof(char), (equ.end_index
 				+ (ft_zero_byte_strlen(pstr) - equ.count) + 1 + end));
 	if (equ.end_index > 0)

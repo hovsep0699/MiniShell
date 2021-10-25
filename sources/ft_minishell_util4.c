@@ -16,13 +16,13 @@ int	ft_set_index(char *dict, int i)
 {
 	while (dict[i] && ft_isdigit(dict[i]))
 		++i;
-	--i;
 	return (i);
 }
 
-t_eqstr ft_eqdef(char *s1, char *pars_str)
+t_eqstr	ft_eqdef(char *s1, char *pars_str)
 {
-	t_eqstr equ;
+	t_eqstr	equ;
+
 	equ.i = 0;
 	equ.count = 0;
 	equ.subjoin = NULL;
@@ -33,9 +33,9 @@ t_eqstr ft_eqdef(char *s1, char *pars_str)
 	return (equ);
 }
 
-void ft_exitcod(t_eqstr *equ)
+void	ft_exitcod(t_eqstr *equ)
 {
-	char *tmp_str;
+	char	*tmp_str;
 
 	tmp_str = ft_itoa(g_signal.exit_status);
 	equ->len_key = ft_zero_byte_strlen(tmp_str);
@@ -45,14 +45,14 @@ void ft_exitcod(t_eqstr *equ)
 	equ->i += 2;
 }
 
-void ft_join_util(char *pars_str,t_eqstr *equ)
+void	ft_join_util(char *pars_str, t_eqstr *equ)
 {
 	equ->i++;
 	equ->subjoin[equ->end_index++] = pars_str[equ->i];
 	equ->i++;
 }
 
-void ft_exp_exist(t_eqstr *equ)
+void	ft_exp_exist(t_eqstr *equ)
 {
 	equ->subjoin = ft_realloc_strjoin(equ->subjoin, getenv("HOME"));
 	equ->end_index = ft_zero_byte_strlen(equ->subjoin);

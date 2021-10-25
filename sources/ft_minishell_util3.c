@@ -35,8 +35,7 @@ void	ft_command_dict(char *lower_case, char *upper_case, t_dict *dict)
 bool	ft_exit_status(t_dict *dict)
 {
 	dict->i = ft_set_index(dict->data, dict->i);
-	if (!dict->data[dict->i] || (!ft_isdigit(dict->data[dict->i])
-			&& !ft_isspace(dict->data[dict->i])))
+	if (dict->data[dict->i] || dict->i != ft_zero_byte_strlen(dict->data))
 	{
 		ft_putstr("exit\n");
 		return (true);

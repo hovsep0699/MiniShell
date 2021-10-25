@@ -142,13 +142,47 @@ struct s_unset
 {
 	int i;
     int len;
-    int contindex;
-    int endindex;
-	int end_inde_n;
-	int dict_key_len;
+    int cind;
+    int eind;
+	int esp;
+	int dklen;
     dictionary_t *tmp;
     dictionary_t *provide;
 };
+
+typedef struct s_dictone
+{
+	dictionary_t	*ptr;
+	int				index;
+	int				index_item;
+	int				len_items;
+} t_dictone;
+
+typedef struct s_pipe
+{
+	int len;
+	int i;
+	int fd[2];
+} t_pipe;
+
+typedef struct s_split
+{
+	int i;
+	int j;
+	int state;
+	int len;
+} t_split;
+typedef struct s_eqstr 
+{
+	char	*subjoin;
+	int i;
+	int len_key;
+	int quate_exist;
+	int dquate_exist;
+	int end_index;
+	int count;
+} t_eqstr;
+
 struct	s_dict
 {
 	int						change_fd_in;
@@ -182,12 +216,12 @@ t_command_function			ft_command_funcs_constructor(t_builtin_commands name, cmd_f
 
 extern t_signal				g_signal;
 
+void			ft_dwrite_child(char *check, int *p);
 void			ft_signal_handle(int signum);
 string_t		ft_get_put_terminal();
 int				ft_external(t_dict * dictioanry,char **envp, char **data, int count);
 t_dict	ft_dict_constructor(void);
 int				get_next_line(int fd, char **line);
-char			*ft_dis_strjoin(char *s1, char  *s2,int mod);
 size_t			ft_joins(char const *s2, size_t i,int count, char *subjoin);
 int				ft_dis_strchr(const char *s, int c);
 char			*ft_clean(char *bf, int length);
@@ -213,7 +247,6 @@ int 			ft_alloc_split_minishell(char const *s, char c, char exp, char exp2);
 char 			*find_data(char *key,dictionary_t *command);
 char 			*ft_tolower_minishell(char *upper_str,int *len);
 int 			ft_export(struct	s_dict * dictioanry,char **envp, char **data,int count);
-void 			ft_print_error(int exeption,char *str_exeption,char element_exeption,char *command_name);
 int 			find_data_int(char *key,dictionary_t *command);
 void 			change_item(char *new_item,int key_index,dictionary_t *dict);
 char			*ft_equal_strjoin(char *s1,t_dict *command_shablon,char *pars_str,int end_of_line);
@@ -226,7 +259,6 @@ int 			ft_count_quote(char *s);
 void			ft_char_pointer_erase(char *str, size_t it);
 int 			ft_isalnum_str(char *str,int *i);
 int 			ft_count_quote_character(char character,int *quoet_exist,int *dquoet_exist);
-int 			ft_Dwrite_file(struct	s_dict * dictioanry,char **envp, char **data,int count);
 int 			ft_put_env_export(struct	s_dict * dictionary,char **envp,char **data,int count);
 int				ft_exit(t_dict *command_shablon, char **envp_my, char **data, int count);
 int				ft_fd_open(t_dict *command);
@@ -239,10 +271,9 @@ t_dict	ft_dict_constructor();
 int				ft_cd(t_dict *command_shablon, char **envp_my, char **data, int count);
 int				ft_pwd(t_dict *command_shablon, char **envp_my, char **data, int count);
 int 			ft_read_file(t_dict *dictioanry, char **envp, char **data, int count);
-int 			ft_double_write_file(t_dict *dictioanry, char **envp, char **data, int count);
+int 			ft_dwrite_file(t_dict *dictioanry, char **envp, char **data, int count);
 dictionary_t 	*ft_env_copy(char **env);
 void			ft_dictionary_destructor(dictionary_t *dict);
-int 			ft_dwrite_file(t_dict *dictioanry, char **envp, char **data, int count);
 char 			*ft_pipe(t_dict *command_shablon, char *data);
 void			ft_pipe_close(int fd);
 void 			s_int(int signum);
@@ -257,4 +288,19 @@ void 			ft_putcommanderror(t_dict *dict);
 int				ft_dict_init(t_dict *dict, int end_index, char *str);
 int				ft_find_element(char *str);
 size_t			ft_joins_dict(char const *s2, size_t i, int count, char *subjoin);
+int 			ft_set_index(char *dict, int i);
+void			export_error(char *str_exeption);
+void			errno_print(char *ernno_str);
+void			file_errno(char *ernno_str,char *name_file);
+t_eqstr 		ft_eqdef(char *s1, char *pars_str);
+void 			ft_exitcod(t_eqstr *equ);
+void 			ft_join_util(char *pars_str,t_eqstr *equ);
+void			ft_exp_exist(t_eqstr *equ);
+void			ft_exp_util(t_eqstr *equ, t_dict *dict,char *pars_str);
+int				ft_dis_strchr(const char *s, int c);
+char			*ft_strnull(void);
+void			ft_join_util2(char *pstr, t_eqstr	*equ, t_dict *dict);
+int				only_create_file(char *file_name, struct s_dict *dict);
+void 			ft_dwrite_child(char *check, int *p);
+void			ft_dwrite_parent(int id, int *p);
 #endif

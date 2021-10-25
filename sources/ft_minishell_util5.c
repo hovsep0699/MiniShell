@@ -55,16 +55,16 @@ void	ft_join_util2(char *pstr, t_eqstr	*equ, t_dict *dict)
 		equ->i++;
 	else if (pstr[equ->i] == '\\'
 		&& (equ->dquate_exist != 0 && equ->quate_exist != 0))
-		ft_join_util(pstr, &equ);
+		ft_join_util(pstr, equ);
 	else if (pstr[equ->i] == '$'
 		&& pstr[equ->i + 1] == '?' && equ->quate_exist != 0)
-		ft_exitcod(&equ);
+		ft_exitcod(equ);
 	else if (pstr[equ->i] == '$' && equ->quate_exist != 0)
-		ft_exp_util(&equ, dict, pstr);
+		ft_exp_util(equ, dict, pstr);
 	else if (pstr[equ->i] == '~' && equ->dquate_exist != 0
 		&& equ->quate_exist != 0
 		&& equ->i == 0 && (pstr[equ->i + 1] == '\0' || pstr[equ->i + 1] == '/'))
-		ft_exp_exist(&equ);
+		ft_exp_exist(equ);
 	else
 		equ->subjoin[equ->end_index++] = pstr[equ->i++];
 }

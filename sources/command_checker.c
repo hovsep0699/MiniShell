@@ -108,7 +108,7 @@ int	exec_in_function(char **arg, t_dict *dict, int count, char **envp_my)
 		else if (ft_strcmp(arg[dict->icom], "-n") == 0)
 			dict->echo_option = 1;
 		dict->data = ft_equal_strjoin(dict->data, dict, arg[dict->icom],
-				(end_of_line == dict->i || count - 1 == dict->icom));
+				(end_of_line == dict->icom || count - 1 == dict->icom));
 		dict->icom++;
 	}
 	ft_search_side_func(dict)(dict, envp_my, arg, count);

@@ -25,7 +25,7 @@ char	**get_path(t_dict *dictioanry)
 	while (ind < dictioanry->i)
 	{
 		split_path[ind] = ft_realloc_strjoin(split_path[ind], "/");
-		dictioanry->i++;
+		ind++;
 	}
 	return (split_path);
 }
