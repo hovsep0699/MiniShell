@@ -22,25 +22,10 @@ typedef struct file
 	char	**content;
 }			file_t;
 
-
-
-file_t				*ft_file_constructor(void);
-
 int					ft_getline(int fd, char **line);
 
-void				ft_get_file(file_t *file);
 
 void				ft_file_destructor(file_t *file);
-
-void				ft_set_file(file_t *in, file_t *out, char *filepath, char *mode);
-
-void				ft_set_file2(char **content, file_t *out, char *filepath, char *mode);
-
-void				ft_filecpy(char *input_file, char *output_file, char *mode);
-
-file_t				*ft_fopen(char *filepath, char *mode);
-
-int					ft_fclose(file_t *file);
 
 char				*gnl_get_line(char *buffer);
 
@@ -49,8 +34,5 @@ char				*gnl_get_buffer(char *buffer);
 char				*get_gnl_line(char *memory);
 
 char				*get_gnl_buffer(char *s);
-
-int					ft_file_rowslen(int fd);
-
 
 #endif

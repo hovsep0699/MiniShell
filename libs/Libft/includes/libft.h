@@ -21,6 +21,5 @@
 # include "ctypes.h"
 # include "cfstream.h"
 # include "clist.h"
-# include "cmath.h"
 
 #endif

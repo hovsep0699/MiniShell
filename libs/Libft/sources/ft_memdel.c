@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-void  ft_memdel(void **mem)
+void	ft_memdel(void **mem)
 {
 	if (!mem || !*mem)
 		return ;

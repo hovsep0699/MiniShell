@@ -14,7 +14,7 @@
 
 static int	ft_atoi_number(const char *str, int sign)
 {
-	int number;
+	int	number;
 
 	number = 0;
 	while (*str && *str >= '0' && *str <= '9')
@@ -29,11 +29,11 @@ static int	ft_atoi_number(const char *str, int sign)
 
 static int	ft_atoi_is_spaces(const char c)
 {
-	return (c == '\t' || c == '\n' ||
-c == '\v' || c == '\f' || c == '\r' || c == ' ');
+	return (c == '\t' || c == '\n' || c == '\v'
+		|| c == '\f' || c == '\r' || c == ' ');
 }
 
-int			ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	int	sign;
 
@@ -42,7 +42,10 @@ int			ft_atoi(const char *str)
 		++str;
 	if (*str == '-' || *str == '+')
 	{
-		sign = (*str == '-') ? -1 : 1;
+		if (*str == '-')
+			sign = -1;
+		else
+			sign = 1;
 		++str;
 	}
 	return (ft_atoi_number(str, sign));

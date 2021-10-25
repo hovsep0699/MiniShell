@@ -14,9 +14,10 @@
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	void *obj;
+	void	*obj;
 
-	if (!(obj = (void *)malloc(count * size)))
+	obj = (void *)malloc(count * size);
+	if (obj == NULL)
 		return (NULL);
 	ft_memset(obj, 0, count * size);
 	return (obj);

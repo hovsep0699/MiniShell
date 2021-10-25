@@ -12,9 +12,9 @@
 
 #include "libft.h"
 
-static	int		starting_point(const char *str)
+static	int	starting_point(const char *str)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	while (str[index] == '\n' || str[index] == '\t' || str[index] == '\f' || \
@@ -23,7 +23,7 @@ static	int		starting_point(const char *str)
 	return (index);
 }
 
-static	int		check_sign(const char *str, int *index, int *sign)
+static	int	check_sign(const char *str, int *index, int *sign)
 {
 	if (str[*index] == '-' || str[*index] == '+')
 	{
@@ -34,7 +34,7 @@ static	int		check_sign(const char *str, int *index, int *sign)
 	return (str[*index]);
 }
 
-int				ft_atoi_error(const char *str)
+int	ft_atoi_error(const char *str)
 {
 	long	res;
 	int		sign;
