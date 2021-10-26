@@ -12,14 +12,14 @@
 
 #include "libft.h"
 
-char *ft_vecstr_search(char **vecstr, char *search)
+char	*ft_vecstr_search(char **vecstr, char *search)
 {
 	int		index;
 	size_t	search_len;
 
 	index = -1;
 	if (!vecstr || !*vecstr || !search)
-		return NULL;
+		return (NULL);
 	search_len = ft_strlen(search);
 	while (vecstr[++index])
 		if (!ft_strncmp(vecstr[index], search, search_len))
@@ -27,14 +27,14 @@ char *ft_vecstr_search(char **vecstr, char *search)
 	return (NULL);
 }
 
-int ft_vecstr_search1(char **vecstr, char *search)
+int	ft_vecstr_search1(char **vecstr, char *search)
 {
 	int		index;
 	size_t	search_len;
 
 	index = -1;
 	if (!vecstr || !*vecstr || !search)
-		return -1;
+		return (-1);
 	search_len = ft_strlen(search);
 	while (vecstr[++index])
 		if (!ft_strncmp(vecstr[index], search, search_len))
@@ -42,14 +42,14 @@ int ft_vecstr_search1(char **vecstr, char *search)
 	return (-1);
 }
 
-int ft_vecstr_search2(char **vecstr, char *search, int start_index)
+int	ft_vecstr_search2(char **vecstr, char *search, int start_index)
 {
 	int		index;
 	size_t	search_len;
 
 	index = start_index;
 	if (!vecstr || !*vecstr || !search)
-		return -1;
+		return (-1);
 	search_len = ft_strlen(search);
 	while (vecstr[++index])
 		if (!ft_strncmp(vecstr[index], search, search_len))

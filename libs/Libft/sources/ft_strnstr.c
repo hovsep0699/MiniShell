@@ -21,7 +21,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	h_index = 0;
 	n_size = ft_strlen(needle);
 	if (needle[0] == '\0')
-		return (char *)haystack;
+		return ((char *)haystack);
 	while (haystack[h_index] != '\0' && len > n_size - 1)
 	{
 		n_index = 0;

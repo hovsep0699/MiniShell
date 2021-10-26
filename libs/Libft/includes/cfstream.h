@@ -22,17 +22,6 @@ typedef struct file
 	char	**content;
 }			file_t;
 
-int					ft_getline(int fd, char **line);
-
-
 void				ft_file_destructor(file_t *file);
-
-char				*gnl_get_line(char *buffer);
-
-char				*gnl_get_buffer(char *buffer);
-
-char				*get_gnl_line(char *memory);
-
-char				*get_gnl_buffer(char *s);
 
 #endif

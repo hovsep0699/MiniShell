@@ -12,9 +12,9 @@
 
 #include "libft.h"
 
-int		ft_strcmp(const char *str1, const char *str2)
+int	ft_strcmp(const char *str1, const char *str2)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	while (str1[index] == str2[index] && str1[index] && str2[index])

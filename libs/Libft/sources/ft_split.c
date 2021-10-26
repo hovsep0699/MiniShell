@@ -15,8 +15,8 @@
 
 static size_t	ft_splited_count(char const *s, char c)
 {
-	size_t w_count;
-	size_t w_len;
+	size_t	w_count;
+	size_t	w_len;
 
 	w_count = 0;
 	while (*s)
@@ -37,9 +37,9 @@ static size_t	ft_splited_count(char const *s, char c)
 	return (w_count);
 }
 
-static char		**ft_split_mem_error(char **strings)
+static char	**ft_split_mem_error(char **strings)
 {
-	size_t index;
+	size_t	index;
 
 	index = 0;
 	while (strings[index])
@@ -51,9 +51,9 @@ static char		**ft_split_mem_error(char **strings)
 	return (NULL);
 }
 
-static void		ft_splited_next_size(const char **s, size_t *next, char c)
+static void	ft_splited_next_size(const char **s, size_t *next, char c)
 {
-	size_t index;
+	size_t	index;
 
 	*s += *next;
 	*next = 0;
@@ -69,7 +69,7 @@ static void		ft_splited_next_size(const char **s, size_t *next, char c)
 	}
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**sp_str;
 	size_t	index;
@@ -79,14 +79,16 @@ char			**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	tot_size = ft_splited_count(s, c);
-	if (!(sp_str = (char **)malloc((tot_size + 1) * sizeof(char *))))
+	sp_str = (char **)malloc((tot_size + 1) * sizeof(char *));
+	if (sp_str == NULL)
 		return (NULL);
 	index = 0;
 	next = 0;
 	while (index < tot_size)
 	{
 		ft_splited_next_size(&s, &next, c);
-		if (!(sp_str[index] = malloc(sizeof(char) * (next + 1))))
+		sp_str[index] = malloc(sizeof(char) * (next + 1));
+		if (sp_str == NULL)
 			return (ft_split_mem_error(sp_str));
 		ft_strlcpy(sp_str[index], s, next + 1);
 		++index;

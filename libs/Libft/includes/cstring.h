@@ -8,81 +8,89 @@
 # include "cstdlib.h"
 
 #define DIFF_ALPHA_CASES 32
-typedef struct string string_t;
+typedef struct string t_string;
+typedef struct s_sph t_sph;
+
+struct s_sph
+{
+    int		si;
+	int		in;
+	char	**spa;
+};
 
 struct string
 {
 
     char                *data;
     size_t              size;
-    void                (*resize)(string_t *str, size_t size);
-    void                (*erase)(string_t *str, size_t it);
-    void                (*erase2)(string_t *str, size_t it, size_t len);
-    void                (*erase_between)(string_t *str, size_t start, size_t end);
-    void                (*join)(string_t *str1, string_t *str2);
-    void                (*join2)(string_t *str1, char *str2);
-    void                (*substr)(string_t *str, string_t *new, size_t start, size_t len);
-    void                (*insert2)(string_t *str, size_t index, char *str2);
-    void                (*insert)(string_t *str, size_t index, string_t *str2);
-    int                 (*find)(string_t *str, char c);
-    int                 (*find2)(string_t *str, char *needle);
-    int                 (*find3)(string_t *str, string_t *needle);
-    int                 (*rfind)(string_t *str, char c);
-    int                 (*rfind2)(string_t *str, char *needle);
-    int                 (*rfind3)(string_t *str, string_t *needle);
-    int                 (*rfind4)(string_t *str, char c, int index);
-    void                (*reverse)(string_t *str);
-    void                (*tolower)(string_t *str);
-    void                (*toupper)(string_t *str);
-    bool                (*compare)(string_t *str1, string_t *str2);
-    bool                (*compare2)(string_t *str1, char *str2);
+    void                (*resize)(t_string *str, size_t size);
+    void                (*erase)(t_string *str, size_t it);
+    void                (*erase2)(t_string *str, size_t it, size_t len);
+    void                (*erase_between)(t_string *str, size_t start, size_t end);
+    void                (*join)(t_string *str1, t_string *str2);
+    void                (*join2)(t_string *str1, char *str2);
+    void                (*substr)(t_string *str, t_string *new, size_t start, size_t len);
+    void                (*insert2)(t_string *str, size_t index, char *str2);
+    void                (*insert)(t_string *str, size_t index, t_string *str2);
+    int                 (*find)(t_string *str, char c);
+    int                 (*find2)(t_string *str, char *needle);
+    int                 (*find3)(t_string *str, t_string *needle);
+    int                 (*rfind)(t_string *str, char c);
+    int                 (*rfind2)(t_string *str, char *needle);
+    int                 (*rfind3)(t_string *str, t_string *needle);
+    int                 (*rfind4)(t_string *str, char c, int index);
+    void                (*reverse)(t_string *str);
+    void                (*tolower)(t_string *str);
+    void                (*toupper)(t_string *str);
+    bool                (*compare)(t_string *str1, t_string *str2);
+    bool                (*compare2)(t_string *str1, char *str2);
 };
 
-void                ft_string_tolower(string_t *str);
+void                ft_t_stringolower(t_string *str);
 
-bool                ft_string_compare(string_t *str1, string_t *str2);
+bool                ft_string_compare(t_string *str1, t_string *str2);
 
-bool                ft_string_compare2(string_t *str1, char *str2);
+bool                ft_string_compare2(t_string *str1, char *str2);
 
-void                ft_string_toupper(string_t *str);
+void                ft_t_stringoupper(t_string *str);
 
-void                ft_string_insert(string_t *str, size_t index, string_t *str2);
+void                ft_string_insert(t_string *str, size_t index, t_string *str2);
 
-void                ft_string_join(string_t *str, string_t *str2);
+void                ft_string_join(t_string *str, t_string *str2);
 
-void                ft_string_insert2(string_t *str, size_t index, char *str2);
+void                ft_string_insert2(t_string *str, size_t index, char *str2);
 
-void                ft_string_join2(string_t *str, char *str2);
+void                ft_string_join2(t_string *str, char *str2);
 
-int                 ft_string_find(string_t *str, char c);
+int                 ft_string_find(t_string *str, char c);
 
-int                 ft_string_find2(string_t *str, char *needle);
+int                 ft_string_find2(t_string *str, char *needle);
 
-int                 ft_string_find3(string_t *str, string_t *needle);
+int                 ft_string_find3(t_string *str, t_string *needle);
 
-int                 ft_string_rfind(string_t *str, char c);
+int                 ft_string_rfind(t_string *str, char c);
 
-int                 ft_string_rfind2(string_t *str, char *needle);
+int                 ft_string_rfind2(t_string *str, char *needle);
 
-int                 ft_string_rfind3(string_t *str, string_t *needle);
+int                 ft_string_rfind3(t_string *str, t_string *needle);
 
-void                ft_string_substr(string_t *str, string_t *new, size_t start, size_t len);
+void                ft_string_substr(t_string *str, t_string *new, size_t start, size_t len);
 
-string_t            ft_string_default_constructor(void);
+t_string            ft_string_default_constructor(void);
 
-string_t            ft_string_copy_constructor(string_t *str);
+t_string            ft_string_copy_constructor(t_string *str);
 
-void                ft_string_resize(string_t *str, size_t size);
+void                ft_string_resize(t_string *str, size_t size);
 
-void                ft_string_erase(string_t *str, size_t it);
+void                ft_string_erase(t_string *str, size_t it);
 
-void                ft_string_erase2(string_t *str, size_t it, size_t len);
+void                ft_string_erase2(t_string *str, size_t it, size_t len);
 
-void                ft_string_erase_between(string_t *str, size_t start, size_t end);
+void                ft_string_erase_between(t_string *str, size_t start, size_t end);
 
-string_t            ft_string_constructor(char *str);
+t_string            ft_string_constructor(char *str);
 
-void                ft_string_destructor(string_t *str);
+void                ft_string_destructor(t_string *str);
 
 bool				ft_findchr(const char *s, int c);
 
@@ -195,7 +203,7 @@ bool                ft_isnum_str(char *str);
 
 char                **ft_vecstrinit(int size);
 
-int                 ft_string_rfind4(string_t *str, char c, int start);
+int                 ft_string_rfind4(t_string *str, char c, int start);
 
 
 

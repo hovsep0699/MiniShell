@@ -12,15 +12,15 @@
 
 #include "libft.h"
 
-void ft_vecstrdel(char ***vecstrptr)
+void	ft_vecstrdel(char ***vecstrptr)
 {
-	int index; 
+	int	index;
 
 	if (!vecstrptr || !*vecstrptr)
 		return ;
 	index = -1;
 	while ((*vecstrptr)[++index])
-		ft_strdel(*vecstrptr + index );
+		ft_strdel(*vecstrptr + index);
 	free(*vecstrptr);
 	*vecstrptr = NULL;
 }

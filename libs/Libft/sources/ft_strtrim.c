@@ -28,7 +28,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 		++st_index;
 	while (e_index > st_index && ft_strchr(set, *(s1 + e_index)))
 		--e_index;
-	if (!(trim_str = malloc((e_index - st_index + 2) * sizeof(char))))
+	trim_str = malloc((e_index - st_index + 2) * sizeof(char));
+	if (trim_str == NULL)
 		return (NULL);
 	ft_strlcpy(trim_str, s1 + st_index, e_index - st_index + 2);
 	return (trim_str);

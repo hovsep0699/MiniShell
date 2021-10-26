@@ -218,7 +218,7 @@ extern t_signal				g_signal;
 
 void			ft_dwrite_child(char *check, int *p);
 void			ft_signal_handle(int signum);
-string_t		ft_get_put_terminal();
+t_string		ft_get_put_terminal();
 int				ft_external(t_dict * dictioanry,char **envp, char **data, int count);
 t_dict	ft_dict_constructor(void);
 int				get_next_line(int fd, char **line);

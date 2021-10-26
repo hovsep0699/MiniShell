@@ -86,8 +86,8 @@ int	quote_check(char *s, char exp, char exp2)
 
 void	ft_setenv(char **envp, char *key, char *value)
 {
-	string_t	str;
-	string_t	env_key;
+	t_string	str;
+	t_string	env_key;
 	int			key_index;
 
 	env_key = ft_string_constructor(key);

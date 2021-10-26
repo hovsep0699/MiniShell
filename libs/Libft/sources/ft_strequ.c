@@ -12,10 +12,9 @@
 
 #include "libft.h"
 
-bool ft_strequ(char const *str1, char const *str2)
+bool	ft_strequ(char const *str1, char const *str2)
 {
 	if (!ft_strcmp(str1, str2))
 		return (1);
 	return (0);
 }
-

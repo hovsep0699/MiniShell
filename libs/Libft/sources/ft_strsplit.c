@@ -12,9 +12,9 @@
 
 #include "libft.h"
 
-static int		ft_count_words(const char *str, char c)
+static int	ft_count_words(const char *str, char c)
 {
-	int words;
+	int	words;
 
 	words = 0;
 	if (*str != c && *str)
@@ -32,9 +32,9 @@ static int		ft_count_words(const char *str, char c)
 	return (words);
 }
 
-static int		ft_letters(const char *str, char c)
+static int	ft_let(const char *str, char c)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	while (*str != c && *str)
@@ -45,45 +45,50 @@ static int		ft_letters(const char *str, char c)
 	return (len);
 }
 
-static char		**arr_allocate(char const *s, char c)
+static char	**arr_allocate(char const *s, char c)
 {
 	char	**arr;
 
-	if (!s || (!(arr = (char **)malloc(sizeof(char *) * \
-						(ft_count_words(s, c) + 1)))))
+	arr = (char **)ft_calloc((ft_count_words(s, c) + 1), sizeof(char *));
+	if (!s || arr == NULL)
 		return (NULL);
 	return (arr);
 }
 
-char			**ft_strsplit(char const *s, char c)
+t_sph	ft_def_set(void)
 {
-	int		s_index;
-	int		index;
-	char	**split_arr;
+	t_sph	sp;
 
-	s_index = 0;
-	index = 0;
-	split_arr = arr_allocate(s, c);
+	sp.si = 0;
+	sp.in = 0;
+	return (sp);
+}
+
+char	**ft_strsplit(char const *s, char c)
+{
+	t_sph	sp;
+
+	sp = ft_def_set();
+	sp.spa = arr_allocate(s, c);
 	while (*s)
 	{
 		while (*s == c && *s)
 			s++;
 		if (*s != c && *s)
 		{
-			if (!(split_arr[s_index] = (char *)malloc(sizeof(char) * (ft_letters(s, c) + 1))))
+			sp.spa[sp.si] = (char *)ft_calloc((ft_let(s, c) + 1), sizeof(char));
+			if (sp.spa == NULL)
 				return (NULL);
 			while (*s && *s != c)
-            {
-				split_arr[s_index][index] = (char)*s;
-                ++index;
-                ++s;
-            }
-
-			split_arr[s_index][index] = '\0';
-			++s_index;
-			index = 0;
+			{
+				sp.spa[sp.si][sp.in] = (char)*s;
+				sp.in++;
+				++s;
+			}
+			++sp.si;
+			sp.in = 0;
 		}
 	}
-	split_arr[s_index] = NULL;
-	return (split_arr);
+	sp.spa[sp.si] = NULL;
+	return (sp.spa);
 }
