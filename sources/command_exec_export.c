@@ -15,7 +15,7 @@
 int	ft_put_env_export(t_dict *dictionary, char **envp, char **data, int count)
 {
 	int				i;
-	dictionary_t	*tmp;
+	t_dictionary	*tmp;
 
 	i = 0;
 	tmp = dictionary->variable_dic;
@@ -45,7 +45,7 @@ int	ft_export(t_dict *dict, char **envp, char **data, int count)
 		ft_put_env_export(dict, envp, data, count);
 		return (SUCCESS);
 	}
-	str = ft_split_Vache(dict->data, ' ', '\'', '\"');
+	str = ft_split_vache(dict->data, ' ');
 	start_index = ft_vecstrlen(str);
 	end_index = 0;
 	while (end_index < start_index)

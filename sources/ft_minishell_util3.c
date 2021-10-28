@@ -57,7 +57,7 @@ void	ft_putcommanderror(t_dict *dict)
 
 int	ft_dict_init(t_dict *dict, int end_index, char *str)
 {
-	dictionary_t	*tmp;
+	t_dictionary	*tmp;
 
 	dict->i = find_data_int(str, dict->variable_dic);
 	if (dict->i == -1)

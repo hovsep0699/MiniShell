@@ -18,27 +18,30 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include "cstring.h"
-# include "cfstream.h"
 
+# define CHAR_QUATES 39
+# define CHAR_DQUATES 34
 
-typedef struct	s_form_next_line
+typedef struct s_form_next_line
 {
 	int			r;
 	char		*bf;
 }				t_form_next_line;
 
-typedef struct	s_next_lit
+typedef struct s_next_lit
 {
 	size_t	start;
 	size_t	length;
+	size_t	i;
+	int		exp_state;
+	int		exp_state2;
 }				t_split_next;
 
-typedef struct	s_list
+typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }				t_list;
-
 
 int				ft_strchr_gnl(const char *s, int c);
 
@@ -48,11 +51,11 @@ size_t			ft_joins_gnl(char const *s2, size_t i, char *subjoin);
 
 char			*ft_clean(char *bf, int length);
 
-char			*ft_single_join();
+char			*ft_single_join(void);
 
 char			*ft_strnull(void);
 
-char			**ft_split_Vache(char const *s, char c, char exp, char exp2);
+char			**ft_split_vache(char const *s, char c);
 
 t_list			*ft_lstnew(void *content);
 
@@ -70,4 +73,7 @@ void			ft_lstclear(t_list **lst, void (*del)(void*));
 
 void			ft_lstiter(t_list *lst, void (*f)(void*));
 
+void			quote_check_sp(int *exp_state, int *exp_state2, char s);
+
+t_split_next	def(void);
 #endif

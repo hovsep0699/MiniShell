@@ -19,7 +19,6 @@
 # include <stdbool.h>
 # include "cstring.h"
 # include "ctypes.h"
-# include "cfstream.h"
 # include "clist.h"
 
 #endif

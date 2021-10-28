@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	find_data_int(char *key, dictionary_t *command)
+int	find_data_int(char *key, t_dictionary *command)
 {
 	int	key_len;
 	int	dict_len;
@@ -37,7 +37,7 @@ int	find_data_int(char *key, dictionary_t *command)
 	return (-1);
 }
 
-void	change_item(char *new_item, int key_index, dictionary_t *dict)
+void	change_item(char *new_item, int key_index, t_dictionary *dict)
 {
 	int	len_new_item;
 	int	j;
@@ -59,9 +59,9 @@ void	change_item(char *new_item, int key_index, dictionary_t *dict)
 	dict->item = ft_strdup(new_item + j);
 }
 
-void	ft_dictionaryadd_back(dictionary_t **lst, dictionary_t *new)
+void	ft_dictionaryadd_back(t_dictionary **lst, t_dictionary *new)
 {
-	dictionary_t	*ptr;
+	t_dictionary	*ptr;
 
 	if (lst == NULL || new == NULL)
 		return ;
@@ -75,7 +75,7 @@ void	ft_dictionaryadd_back(dictionary_t **lst, dictionary_t *new)
 	ptr->next = new;
 }
 
-void	ft_dictionary_del_key(dictionary_t *del_stack)
+void	ft_dictionary_del_key(t_dictionary *del_stack)
 {
 	ft_memdel((void **)&del_stack->key);
 	ft_memdel((void **)&del_stack->item);

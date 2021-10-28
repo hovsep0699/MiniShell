@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*ft_single_join(char *c)
+char	*ftsinglejoin(char *c)
 {
 	int		i;
 	char	*str;

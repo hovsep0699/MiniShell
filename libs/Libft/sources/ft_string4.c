@@ -36,7 +36,7 @@ void	ft_string_join2(t_string *str, char *str2)
 	str->size = ft_zero_byte_strlen(str->data);
 }
 
-void	ft_string_substr(t_string *str, t_string *new, size_t start, size_t len)
+void	ft_ssubstr(t_string *str, t_string *new, size_t start, size_t len)
 {
 	ft_strdel(&new->data);
 	new->data = ft_substr(str->data, start, len);

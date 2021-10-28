@@ -24,7 +24,7 @@ t_string	ft_string_default_constructor(void)
 	str.erase_between = ft_string_erase_between;
 	str.join = ft_string_join;
 	str.join2 = ft_string_join2;
-	str.substr = ft_string_substr;
+	str.substr = ft_ssubstr;
 	str.insert = ft_string_insert;
 	str.insert2 = ft_string_insert2;
 	str.find = ft_string_find;

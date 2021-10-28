@@ -12,11 +12,11 @@
 
 #include "minishell.h"
 
-dictionary_t	*ft_dict_mem(int index_item, int index)
+t_dictionary	*ft_dict_mem(int index_item, int index)
 {
-	dictionary_t	*ptr;
+	t_dictionary	*ptr;
 
-	ptr = (dictionary_t *)ft_memalloc(sizeof(dictionary_t));
+	ptr = (t_dictionary *)ft_memalloc(sizeof(t_dictionary));
 	if (ptr == NULL)
 		return (NULL);
 	ptr->key = (char *)ft_calloc(index, sizeof(char));
@@ -35,7 +35,7 @@ dictionary_t	*ft_dict_mem(int index_item, int index)
 	return (ptr);
 }
 
-dictionary_t	*ft_dictionary_create(char *items)
+t_dictionary	*ft_dictionary_create(char *items)
 {
 	t_dictone	dict;
 
@@ -64,9 +64,9 @@ dictionary_t	*ft_dictionary_create(char *items)
 	return (dict.ptr);
 }
 
-dictionary_t	*ft_dictionarylast(dictionary_t *lst)
+t_dictionary	*ft_dictionarylast(t_dictionary *lst)
 {
-	dictionary_t	*ptr;
+	t_dictionary	*ptr;
 
 	ptr = lst;
 	if (lst == NULL)
@@ -90,7 +90,7 @@ int	find_equal_part(char *str)
 	return (-1);
 }
 
-char	*find_data(char *key, dictionary_t *command)
+char	*find_data(char *key, t_dictionary *command)
 {
 	int	klen;
 	int	dlen;

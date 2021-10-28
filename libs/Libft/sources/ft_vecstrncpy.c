@@ -42,7 +42,6 @@ char	**ft_vecstrcpy(char **vecstr)
 
 	index = -1;
 	len = ft_vecstrlen(vecstr);
-	printf("%lu\n", len);
 	vecstrcpy = (char **)malloc(sizeof(char *) * len + 1);
 	while (vecstr[++index])
 		vecstrcpy[index] = ft_strdup(vecstr[index]);

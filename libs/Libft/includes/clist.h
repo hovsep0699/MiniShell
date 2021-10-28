@@ -1,61 +1,63 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clist.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/28 20:19:01 by vgaspary          #+#    #+#             */
+/*   Updated: 2021/10/28 20:19:31 by vgaspary         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CLIST_H
 # define CLIST_H
 
 # include <stdlib.h>
 # include <unistd.h>
 # include "cstring.h"
-	
-// #define getlistItem(node, type) *(type *)node->data
 
-// #define list(lst) lst = ft_list_default_constructor()
+typedef struct s_list	t_list;
 
-typedef struct list list_t;
+typedef struct s_node	t_node;
 
-typedef struct node node_t;
-
-typedef struct element	element_t;
-
-struct node
+struct s_node
 {
 	void		*data;
-	node_t		*next;
-	node_t		*previous;
+	t_node		*next;
+	t_node		*previous;
 	int			size;
-	void		(*insert_before)(node_t *self, node_t *node);
-	void		(*insert_after)(node_t *self, node_t *node);
-	void		(*swap)(node_t *self, node_t *node);
-	void		(*reverse)(node_t *self);
-	void		(*disconnect)(node_t *node);
-};;
-
-
-struct		list
-{
-	node_t		*begin;
-	node_t		*end;
-	int			size;
-	void		(*push_back)(list_t *lst, void *data, int size);
-	void		(*push_front)(list_t *lst, void *data, int size);
-	void		(*pop_front)(list_t *lst);
-	void		(*pop_back)(list_t *lst);
-	node_t		*(*advance)(node_t *it, int dist);
-	node_t		*(*erase)(list_t *lst, node_t *it);
-	node_t		*(*erase_between)(list_t *lst, node_t *start, node_t *end);
-	
+	void		(*insert_before)(t_node *self, t_node *node);
+	void		(*insert_after)(t_node *self, t_node *node);
+	void		(*swap)(t_node *self, t_node *node);
+	void		(*reverse)(t_node *self);
+	void		(*disconnect)(t_node *node);
 };
 
-void				ft_node_disconnect(node_t *node);
+struct		s_list
+{
+	t_node		*begin;
+	t_node		*end;
+	int			size;
+	void		(*push_back)(t_list *lst, void *data, int size);
+	void		(*push_front)(t_list *lst, void *data, int size);
+	void		(*pop_front)(t_list *lst);
+	void		(*pop_back)(t_list *lst);
+	t_node		*(*advance)(t_node *it, int dist);
+	t_node		*(*erase)(t_list *lst, t_node *it);
+	t_node		*(*erase_between)(t_list *lst, t_node *start, t_node *end);	
+};
 
-node_t				*ft_list_iterator_advance(node_t *it, int dist);
+void				ft_node_disconnect(t_node *node);
 
-int					ft_list_size(list_t *self);
+t_node				*ft_list_iterator_advance(t_node *it, int dist);
 
-list_t				ft_list_default_constructor();
+int					ft_list_size(t_list *self);
 
-list_t				ft_list_copy_constructor(const list_t *list);
+t_list				ft_list_default_constructor(void);
+
+t_list				ft_list_copy_constructor(const t_list *list);
 
 void				ft_swap(void *a, void *b, size_t size);
 
 #endif
-
-

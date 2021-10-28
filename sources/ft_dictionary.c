@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-void	ft_dictionary_destructor(dictionary_t *dict)
+void	ft_dictionary_destructor(t_dictionary *dict)
 {
-	dictionary_t	*tmp;
+	t_dictionary	*tmp;
 
 	while (dict != NULL)
 	{
@@ -24,12 +24,12 @@ void	ft_dictionary_destructor(dictionary_t *dict)
 	}
 }
 
-dictionary_t	*ft_env_copy(char **env)
+t_dictionary	*ft_env_copy(char **env)
 {
 	int				envp_count;
 	int				i;
-	dictionary_t	*tmp;
-	dictionary_t	*dict;
+	t_dictionary	*tmp;
+	t_dictionary	*dict;
 
 	dict = NULL;
 	envp_count = ft_vecstrlen(env);
@@ -48,9 +48,9 @@ dictionary_t	*ft_env_copy(char **env)
 	return (dict);
 }
 
-int	ft_dictionarysize(dictionary_t *stack)
+int	ft_dictionarysize(t_dictionary *stack)
 {
-	dictionary_t	*ptr;
+	t_dictionary	*ptr;
 	int				q;
 
 	q = 0;

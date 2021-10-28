@@ -55,7 +55,7 @@ char	*ft_pipe(t_dict *dict, char *data)
 	pid_t	id;
 
 	pips.i = 0;
-	str = ft_split_Vache(data, '|', CHAR_QUATES, CHAR_DQUATES);
+	str = ft_split_vache(data, '|');
 	pips.len = ft_vecstrlen(str);
 	if (pips.len <= 1)
 		return (ft_retpipe(str, pips, pipe_line));
