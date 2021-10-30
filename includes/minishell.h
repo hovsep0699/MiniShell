@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 22:30:20 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/28 22:34:21 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/10/30 18:02:06 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_quote_check			t_quote_check;
 typedef struct s_unset					t_unset;
 typedef int								(*t_cmd_func)\
 (t_dict *, char **, char **, int);
-
+extern t_signal							g_signal;
 enum e_builtin_commands
 {
 	ECHO,
@@ -296,20 +296,20 @@ void						s_int(int signum);
 void						s_quit(int signum);
 int							\
 ft_qch(int state, int state2, char now_character, char quote);
-void 						set_default_gloabl();
-int 						runfileutil(char **argum, t_dict *dict, int i);
-int 						\
+void						set_default_gloabl(void);
+int							runfileutil(char **argum, t_dict *dict, int i);
+int							\
 ft_execendline(char **arg, t_dict *dict, int count, char **envp_my);
-void 						\
-ft_command_dict(char *lower_case, char *upper_case, t_dict *dict);
-bool 						ft_exit_status(t_dict *dict);
-void 						ft_putcommanderror(t_dict *dict);
+void						ft_command_dict(char *lower_case, \
+char *upper_case, t_dict *dict);
+bool						ft_exit_status(t_dict *dict);
+void						ft_putcommanderror(t_dict *dict);
 int							\
 ft_dict_init(t_dict *dict, int end_index, char *str);
 int							ft_find_element(char *str);
 size_t						\
 ft_joins_dict(char const *s2, size_t i, int count, char *subjoin);
-int 						ft_set_index(char *dict, int i);
+int							ft_set_index(char *dict, int i);
 void						export_error(char *str_exeption);
 void						errno_print(char *ernno_str);
 void						file_errno(char *ernno_str, char *name_file);
@@ -327,6 +327,4 @@ int							\
 only_create_file(char *file_name, struct s_dict *dict);
 void						ft_dwrite_child(char *check, int *p);
 void						ft_dwrite_parent(int id, int *p);
-
-extern t_signal						g_signal;
 #endif
