@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:46:40 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/24 19:20:08 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/10/30 20:21:22 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,6 @@ int	ft_default_set(t_dict *command)
 	command->isparrent = 1;
 	command->name_file = NULL;
 	g_signal.heredoc = 0;
+	command->name_file = NULL;
 	return (1);
 }

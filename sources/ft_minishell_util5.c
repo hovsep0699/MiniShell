@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 21:36:25 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/24 21:46:07 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/10/31 22:17:40 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,17 @@ void	ft_join_util2(char *pstr, t_eqstr	*equ, t_dict *dict)
 		ft_exp_exist(equ);
 	else
 		equ->subjoin[equ->end_index++] = pstr[equ->i++];
+}
+
+int	ft_isnull(t_dict	*lcmd)
+{
+	if (lcmd->line == NULL)
+	{
+		rl_replace_line("\b\b\b\b\b\b\b\b\b\b\bexit",1);
+		rl_redisplay();
+		exit(0);	
+	}
+	if (lcmd->line[0] == 0)
+		return (1);
+	return (0);
 }

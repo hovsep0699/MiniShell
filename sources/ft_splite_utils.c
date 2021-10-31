@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:46:30 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/24 16:25:06 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/10/31 21:37:31 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ char	*enter_split_sapce(char **not_splite)
 	splvar.state = 0;
 	splvar.j = 0;
 	str = ft_strdup(*(not_splite));
+	if (!str)
+		return (NULL);
 	splvar.len = ft_len_array(str);
 	splite_array = ft_calloc(splvar.len + 1, sizeof(char));
 	while (str[splvar.i])

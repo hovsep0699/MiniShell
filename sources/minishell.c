@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 21:03:42 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/24 12:47:09 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/10/31 21:47:21 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ int	main(int argv, char **args, char **envp)
 		ft_process_signal(&lcmd);
 		set_default_gloabl();
 		lcmd.line = readline("Minishell$> ");
+		if (ft_isnull(&lcmd))
+			continue ;
 		add_history(lcmd.line);
 		if (quote_check(lcmd.line, CHAR_QUATES, CHAR_DQUATES))
 		{

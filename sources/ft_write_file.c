@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:46:59 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/25 18:51:47 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/10/30 21:27:04 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_read_file(struct	s_dict *dict, char **envp, char **data, int count)
 {
 	int	fd;
 
-	if (dict->data == NULL)
+	if (dict->name_file == NULL)
 	{
 		ft_putstr_fd("syntax error\n", 2);
 		g_signal.exit_status = 258;
@@ -66,11 +66,11 @@ int	ft_read_file(struct	s_dict *dict, char **envp, char **data, int count)
 	return (1);
 }
 
-int	ft_dread_file(struct s_dict *dict, char **envp, char **data, int count)
+int	ft_dwrite_file(struct s_dict *dict, char **envp, char **data, int count)
 {
 	int	fd;
 
-	fd = open(dict->name_file, O_WRONLY | O_APPEND);
+	fd = open(dict->name_file, O_CREAT | O_WRONLY | O_APPEND, 0664);
 	if (fd == -1)
 	{
 		ft_putstr_fd(strerror(errno), 2);
@@ -87,7 +87,7 @@ int	ft_dread_file(struct s_dict *dict, char **envp, char **data, int count)
 	return (1);
 }
 
-int	ft_dwrite_file(struct s_dict *dict, char **envp, char **data, int count)
+int	ft_dread_file(struct s_dict *dict, char **envp, char **data, int count)
 {
 	char	*check_str;
 	int		p[2];
@@ -95,8 +95,6 @@ int	ft_dwrite_file(struct s_dict *dict, char **envp, char **data, int count)
 
 	check_str = NULL;
 	check_str = ft_strdup(dict->data);
-	ft_strdel(&dict->data);
-	dict->data = NULL;
 	pipe(p);
 	id = fork();
 	signal(SIGQUIT, SIG_IGN);

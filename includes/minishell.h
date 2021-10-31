@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 22:30:20 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/30 18:02:06 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/10/31 21:46:23 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ struct	s_dict
 	t_builtin_commands		type_command;
 	t_side_commands			util_commant;
 	int						icom;
+	int						j;
 	int						last_command;
 	int						nerar_exeption;
 	char					*data;
@@ -263,8 +264,7 @@ void						\
 ft_dictionary_del_key(t_dictionary *del_stack);
 int							\
 ft_write_file(struct s_dict *dict, char **envp, char **data, int count);
-int							\
-only_create_file(char *file_name, struct s_dict *dict);
+int							only_create_file(struct s_dict *dict);
 int							ft_count_quote(char *s);
 void						ft_char_pointer_erase(char *str, size_t it);
 int							ft_isalnum_str(char *str, int *i);
@@ -323,8 +323,9 @@ int							ft_dis_strchr(const char *s, int c);
 char						*ft_strnull(void);
 void						\
 ft_join_util2(char *pstr, t_eqstr *equ, t_dict *dict);
-int							\
-only_create_file(char *file_name, struct s_dict *dict);
 void						ft_dwrite_child(char *check, int *p);
 void						ft_dwrite_parent(int id, int *p);
+int							ft_dread_file(struct s_dict *dict, \
+char **envp, char **data, int count);
+int							ft_isnull(t_dict	*lcmd);
 #endif

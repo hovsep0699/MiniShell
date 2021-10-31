@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:46:50 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/25 18:49:53 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/10/31 19:21:13 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,10 @@ char	*ft_equal_strjoin(char *s1, t_dict *dict, char *pstr, int end)
 		equ.subjoin = ft_strcpy(equ.subjoin, s1);
 	while (pstr[equ.i])
 		ft_join_util2(pstr, &equ, dict);
-	if (!end)
+	if (!end && dict->type_command != UNDEFINED)
 		equ.subjoin[equ.end_index] = ' ';
+	if (!end && dict->type_command == UNDEFINED)
+		equ.subjoin[equ.end_index] = '\'';
 	ft_strdel(&s1);
 	return (equ.subjoin);
 }

@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:48 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/24 12:45:50 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/10/30 21:13:35 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	set_default_gloabl(void)
 
 int	runfileutil(char **argum, t_dict *dict, int i)
 {
+	if (dict->name_file != NULL)
+		only_create_file(dict);
 	if (ft_strcmp(argum[i], ">>") == 0)
 		dict->util_commant = DWRITE;
 	else if (ft_strcmp(argum[i], "<<") == 0)
@@ -38,13 +40,12 @@ int	runfileutil(char **argum, t_dict *dict, int i)
 	else if (argum[i][0] == '<')
 		dict->util_commant = READ;
 	if (dict->util_commant != DREAD)
-		i++;
-	else
-	{
 		dict->name_file
 			= ft_equal_strjoin(dict->name_file, dict, argum[i + 1], 1);
-		i += 2;
-	}
+	else
+		dict->data
+			= ft_equal_strjoin(dict->data, dict, argum[i + 1], 1);
+	i += 2;
 	return (i);
 }
 

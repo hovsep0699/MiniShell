@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:35 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/24 12:45:36 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/10/30 19:56:00 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_dict	ft_dict_constructor(void)
 	lcmd.side_functions[1] = (t_command_side_function){READ, ft_read_file};
 	lcmd.side_functions[2]
 		= (t_command_side_function){DWRITE, ft_dwrite_file};
-	lcmd.side_functions[3] = (t_command_side_function){DREAD, ft_dwrite_file};
+	lcmd.side_functions[3] = (t_command_side_function){DREAD, ft_dread_file};
 	lcmd.side_functions[4] = (t_command_side_function){PIPE, NULL};
 	lcmd.side_functions[5] = (t_command_side_function){NONE, NULL};
 	return (lcmd);

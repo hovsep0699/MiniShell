@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 22:24:54 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/20 22:51:41 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/10/30 20:12:48 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ int	exec_in_function(char **arg, t_dict *dict, int count, char **envp_my)
 			end_of_line = ft_vecstr_search2(arg, ";", dict->icom);
 		if (arg[dict->icom][0] == ';')
 			return (ft_execendline(arg, dict, count, envp_my));
-		else if (!(ft_strcmp(arg[dict->icom], ">>")
-				|| ft_strcmp(arg[dict->icom], "<<")
-				|| arg[dict->icom][0] != '>' || arg[dict->icom][0] != '<'))
+		else if ((!ft_strcmp(arg[dict->icom], ">>")
+				|| !ft_strcmp(arg[dict->icom], "<<")
+				|| arg[dict->icom][0] == '>' || arg[dict->icom][0] == '<'))
 		{
 			dict->icom = runfileutil(arg, dict, dict->icom);
 			continue ;

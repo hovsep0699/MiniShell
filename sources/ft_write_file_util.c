@@ -6,19 +6,24 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 18:51:30 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/25 19:24:13 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/10/30 21:29:49 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	only_create_file(char *file_name, struct s_dict *dict)
+int	only_create_file(struct s_dict *dict)
 {
 	int	fd;
-	int	len;
 
-	dict->name_file = ft_equal_strjoin("", dict, file_name, 1);
-	fd = open("", O_CREAT, 0777);
+	if (dict->util_commant == DWRITE)
+		fd = open(dict->name_file, O_CREAT, 0664);
+	if (dict->util_commant == WRITE)
+	{
+		fd = open(dict->name_file, O_CREAT | O_WRONLY | O_TRUNC, 0664);
+		write(fd, "\0", 1);
+	}
+	ft_strdel(&dict->name_file);
 	close(fd);
 	return (fd);
 }
@@ -40,7 +45,7 @@ void	ft_dwrite_child(char *check, int *p)
 	ft_strdel(&check);
 	ft_strdel(&line);
 	ft_pipe_close(p[1]);
-	exit(1);
+	exit(0);
 }
 
 void	ft_dwrite_parent(int id, int *p)

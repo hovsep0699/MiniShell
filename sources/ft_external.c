@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:07 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/24 13:45:31 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/10/31 21:11:59 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,26 @@ char	**get_path(t_dict *dictioanry)
 	return (split_path);
 }
 
-void	ft_ext_child(t_dict *dictioanry, char **envp, char **data)
+void	ft_ext_child(t_dict *dic, char **envp, char **data)
 {
-	int		j;
 	char	**av;
 	char	*tmp_path;
 	char	**sp_p;
+	char	**data_sp;
 
-	j = 0;
-	sp_p = get_path(dictioanry);
-	av = ft_vecstrinit(3);
-	while (j < dictioanry->i)
+	dic->j = 0;
+	sp_p = get_path(dic);
+	av = ft_vecstrinit(1);
+	data_sp = ft_split(dic->data, '\'');
+	while (dic->j < dic->i)
 	{
-		tmp_path = ft_strdup(sp_p[j]);
-		tmp_path = ft_realloc_strjoin(tmp_path, data[dictioanry->last_command]);
-		ft_strdel(&av[0]);
-		ft_strdel(&av[1]);
-		av[0] = ft_strdup(tmp_path);
-		av[1] = ft_strdup(dictioanry->data);
+		tmp_path = ft_strdup(sp_p[dic->j]);
+		tmp_path = ft_realloc_strjoin(tmp_path, data[dic->last_command]);
+		ft_vecstrdel(&av);
+		av = ft_fvecstrcpy(&tmp_path, data_sp);
 		execve(tmp_path, av, envp);
-		j++;
+		ft_strdel(&tmp_path);
+		dic->j++;
 	}
 	ft_putstr_fd("asd: command not found\n", 2);
 	g_signal.exit_status = COMMAND_NOT_FOUND;
