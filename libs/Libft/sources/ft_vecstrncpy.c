@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 20:41:27 by hohayrap          #+#    #+#             */
-/*   Updated: 2021/10/31 20:39:05 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/01 19:53:21 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	**ft_fvecstrcpy(char **vecstr1, char **vecstr2)
 		index++;
 	}
 	index = 0;
-	while (vecstr2[index])
+	while (vecstr2 != NULL && vecstr2[index])
 	{
 		vecstrcpy[len++] = ft_strdup(vecstr2[index]);
 		index++;

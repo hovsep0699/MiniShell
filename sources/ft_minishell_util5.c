@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 21:36:25 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/31 22:17:40 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/01 20:35:34 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,8 @@ int	ft_isnull(t_dict	*lcmd)
 {
 	if (lcmd->line == NULL)
 	{
-		rl_replace_line("\b\b\b\b\b\b\b\b\b\b\bexit",1);
-		rl_redisplay();
-		exit(0);	
+		ft_putstr_fd("\033[1AMinishell$> exit\n", 2);
+		exit(0);
 	}
 	if (lcmd->line[0] == 0)
 		return (1);

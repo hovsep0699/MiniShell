@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:07 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/31 21:11:59 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/01 20:39:14 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,17 @@ char	**get_path(t_dict *dictioanry)
 	return (split_path);
 }
 
+char	**ft_ret_data(char *data)
+{
+	char	**data_sp;
+
+	if (data != NULL)
+		data_sp = ft_split(data, '\'');
+	else
+		data_sp = ft_vecstrinit(1);
+	return (data_sp);
+}
+
 void	ft_ext_child(t_dict *dic, char **envp, char **data)
 {
 	char	**av;
@@ -40,7 +51,7 @@ void	ft_ext_child(t_dict *dic, char **envp, char **data)
 	dic->j = 0;
 	sp_p = get_path(dic);
 	av = ft_vecstrinit(1);
-	data_sp = ft_split(dic->data, '\'');
+	data_sp = ft_ret_data(dic->data);
 	while (dic->j < dic->i)
 	{
 		tmp_path = ft_strdup(sp_p[dic->j]);
