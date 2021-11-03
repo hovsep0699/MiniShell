@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 22:24:54 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/30 20:12:48 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/03 22:39:08 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ int	exec_in_function(char **arg, t_dict *dict, int count, char **envp_my)
 			dict->icom = runfileutil(arg, dict, dict->icom);
 			continue ;
 		}
-		else if (ft_strcmp(arg[dict->icom], "-n") == 0)
-			dict->echo_option = 1;
+		else if (ft_strcmp(arg[dict->icom], "-n") == 0 && ft_setechoopt(dict))
+			continue ;
 		dict->data = ft_equal_strjoin(dict->data, dict, arg[dict->icom],
 				(end_of_line == dict->icom || count - 1 == dict->icom));
 		dict->icom++;

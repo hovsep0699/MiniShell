@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 22:30:20 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/31 21:46:23 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/03 22:35:30 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,4 +328,6 @@ void						ft_dwrite_parent(int id, int *p);
 int							ft_dread_file(struct s_dict *dict, \
 char **envp, char **data, int count);
 int							ft_isnull(t_dict	*lcmd);
+char						**av_ret(char *tmp_path, char **data_sp);
+int							ft_setechoopt(t_dict *dict);
 #endif

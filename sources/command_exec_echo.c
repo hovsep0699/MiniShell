@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 21:16:26 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/01 19:43:07 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/03 20:36:02 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,15 @@ int	ft_go_home(t_dict *command_shablon)
 
 	if (find_data("HOME", command_shablon->variable_dic) == NULL)
 	{
-		ft_putstr("Home not found\n");
+		ft_putstr_fd("Home not found\n", 2);
 		g_signal.exit_status = 1;
 		return (1);
 	}
-	ft_putendl(find_data("HOME", command_shablon->variable_dic));
 	err = chdir(find_data("HOME", command_shablon->variable_dic));
 	if (err == -1)
 	{
 		g_signal.exit_status = err;
-		printf("%s\n", strerror(errno));
+		ft_putendl_fd(strerror(errno), 2);
 		return (errno);
 	}
 	change_item(find_data("PWD", command_shablon->variable_dic),
@@ -90,7 +89,7 @@ int	ft_cd(t_dict *command_shablon, char **envp, char **data, int count)
 	if (err == -1)
 	{
 		g_signal.exit_status = err;
-		printf("%s\n", strerror(errno));
+		ft_putendl_fd(strerror(errno) , 2);
 		return (errno);
 	}
 	getcwd(new_path, PATH_MAX);

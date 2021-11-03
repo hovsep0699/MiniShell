@@ -28,6 +28,8 @@
     "history.h": "c",
     "readline.h": "c",
     "cstack.h": "c",
-    "cvector.h": "c"
+    "cvector.h": "c",
+    "libft_vache.h": "c",
+    "cstdlib.h": "c"
   }
 }

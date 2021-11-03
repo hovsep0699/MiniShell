@@ -6,22 +6,19 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 20:09:39 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/28 20:10:06 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/03 19:59:13 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Libft_Vache.h"
 
-void	quote_check_sp(int *exp_state, int *exp_state2, char s)
+int	quote_check_sp(int exp_state, int exp_state2, char s)
 {
-	if ((s == CHAR_QUATES && *exp_state2 == 1) && *exp_state == 1)
-		*exp_state = 0;
-	else if ((s == CHAR_QUATES && *exp_state2 == 1) && *exp_state == 0)
-		*exp_state = 1;
-	if ((s == CHAR_DQUATES && *exp_state == 1) && *exp_state2 == 1)
-		*exp_state2 = 0;
-	else if ((s == CHAR_DQUATES && *exp_state == 1) && *exp_state2 == 0)
-		*exp_state2 = 1;
+	if ((s == CHAR_QUATES && exp_state2 == 1) && exp_state == 1)
+		exp_state = 0;
+	else if ((s == CHAR_QUATES && exp_state2 == 1) && exp_state == 0)
+		exp_state = 1;
+	return (exp_state);
 }
 
 t_split_next	def(void)

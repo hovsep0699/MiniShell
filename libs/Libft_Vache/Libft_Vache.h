@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   Libft_Vache.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 21:45:41 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/01/31 20:16:05 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/03 19:54:55 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void			ft_lstclear(t_list **lst, void (*del)(void*));
 
 void			ft_lstiter(t_list *lst, void (*f)(void*));
 
-void			quote_check_sp(int *exp_state, int *exp_state2, char s);
+int				quote_check_sp(int exp_state, int exp_state2, char s);
 
 t_split_next	def(void);
 #endif

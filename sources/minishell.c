@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 21:03:42 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/01 19:41:56 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/03 19:59:54 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,11 @@ int	main(int argv, char **args, char **envp)
 
 	lcmd = ft_dict_constructor();
 	lcmd.variable_dic = ft_env_copy(envp);
+	set_default_gloabl();
 	while (true)
 	{
 		ft_fd_open(&lcmd);
 		ft_process_signal(&lcmd);
-		set_default_gloabl();
 		lcmd.line = readline("Minishell$> ");
 		if (ft_isnull(&lcmd))
 			continue ;

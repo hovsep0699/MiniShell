@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:07 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/01 20:39:14 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/03 22:30:17 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,18 @@ char	**ft_ret_data(char *data)
 	return (data_sp);
 }
 
+void	ft_exec_abs(t_dict *dic, char **envp, char **data, char **data_sp)
+{
+	char	**av;
+	char	*tmp_path;
+
+	tmp_path = ft_strdup(data[dic->last_command]);
+	av = av_ret(tmp_path, data_sp);
+	execve(tmp_path, av, envp);
+	ft_vecstrdel(&av);
+	ft_strdel(&tmp_path);
+}
+
 void	ft_ext_child(t_dict *dic, char **envp, char **data)
 {
 	char	**av;
@@ -50,15 +62,15 @@ void	ft_ext_child(t_dict *dic, char **envp, char **data)
 
 	dic->j = 0;
 	sp_p = get_path(dic);
-	av = ft_vecstrinit(1);
 	data_sp = ft_ret_data(dic->data);
+	ft_exec_abs(dic, envp, data, data_sp);
 	while (dic->j < dic->i)
 	{
 		tmp_path = ft_strdup(sp_p[dic->j]);
 		tmp_path = ft_realloc_strjoin(tmp_path, data[dic->last_command]);
-		ft_vecstrdel(&av);
-		av = ft_fvecstrcpy(&tmp_path, data_sp);
+		av = av_ret(tmp_path, data_sp);
 		execve(tmp_path, av, envp);
+		ft_vecstrdel(&av);
 		ft_strdel(&tmp_path);
 		dic->j++;
 	}
@@ -82,9 +94,6 @@ int	ft_external(t_dict *dictioanry, char **envp, char **data, int count)
 	if (ret_fork == CHILD_PROC)
 		ft_ext_child(dictioanry, envp, data);
 	else
-	{
 		waitpid(ret_fork, NULL, 0);
-		g_signal.exit_status = errno;
-	}
 	return (g_signal.exit_status);
 }

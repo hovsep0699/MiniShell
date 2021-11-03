@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:46:59 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/30 21:27:04 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/03 20:29:08 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ int	ft_read_file(struct	s_dict *dict, char **envp, char **data, int count)
 	fd = open(dict->name_file, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putstr(strerror(errno));
-		ft_putstr("\n");
+		ft_putendl_fd(strerror(errno), 2);
 		g_signal.exit_status = errno;
 		return (g_signal.exit_status);
 	}
@@ -73,8 +72,7 @@ int	ft_dwrite_file(struct s_dict *dict, char **envp, char **data, int count)
 	fd = open(dict->name_file, O_CREAT | O_WRONLY | O_APPEND, 0664);
 	if (fd == -1)
 	{
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putchar('\n');
+		ft_putendl_fd(strerror(errno), 2);
 		g_signal.exit_status = errno;
 		return (g_signal.exit_status);
 	}
@@ -95,6 +93,7 @@ int	ft_dread_file(struct s_dict *dict, char **envp, char **data, int count)
 
 	check_str = NULL;
 	check_str = ft_strdup(dict->data);
+	ft_strdel(&dict->data);
 	pipe(p);
 	id = fork();
 	signal(SIGQUIT, SIG_IGN);
