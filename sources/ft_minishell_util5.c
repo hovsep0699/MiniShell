@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 21:36:25 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/02 20:14:38 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/04 19:51:18 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,17 @@ void	ft_join_util2(char *pstr, t_eqstr	*equ, t_dict *dict)
 		equ->subjoin[equ->end_index++] = pstr[equ->i++];
 }
 
-int	ft_isnull(t_dict	*lcmd)
+int	ft_isnull(char	*line, int mod)
 {
-	if (lcmd->line == NULL)
+	if (line == NULL)
 	{
-		ft_putstr_fd("\033[1AMinishell$> exit\n", 2);
+		if (mod == 0)
+			ft_putstr_fd("\033[1AMinishell$> exit\n", 2);
+		else
+			ft_putstr_fd("\033[1A> ", 2);
 		exit(0);
 	}
-	if (lcmd->line[0] == 0)
+	if (line[0] == 0)
 		return (1);
 	return (0);
 }

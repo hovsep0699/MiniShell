@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:47:15 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/02 20:14:51 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/04 20:46:49 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	s_int(int signum)
 	}
 	if (g_signal.pid == -1)
 	{
-		write(1, "\n", 1);
+		ft_putstr_fd("\b\b\n", 2);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();

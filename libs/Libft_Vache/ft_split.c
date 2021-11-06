@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 21:12:39 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/03 20:00:07 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/04 22:01:15 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ static char	**ft_alloc_split(char const *s, char c)
 
 	i = 0;
 	total = 0;
-	ex.exp_state = 1;
-	ex.exp_state2 = 1;
+	ex.exs = 1;
+	ex.exs2 = 1;
 	while (s[i])
 	{
-		ex.exp_state = quote_check_sp(ex.exp_state, ex.exp_state2, s[i]);
-		ex.exp_state2 = quote_check_sp(ex.exp_state2, ex.exp_state, s[i]);
-		if (s[i] == c && ex.exp_state && ex.exp_state2)
+		ex.exs = quote_check_sp(ex.exs, ex.exs2, s[i], CHAR_QUATES);
+		ex.exs2 = quote_check_sp(ex.exs2, ex.exs, s[i], CHAR_DQUATES);
+		if (s[i] == c && ex.exs && ex.exs2)
 			total++;
 		i++;
 	}
@@ -69,9 +69,9 @@ static void	*ft_split_by_char(char **split, char const *s, char c)
 	lt = def();
 	while (s[lt.i])
 	{
-		lt.exp_state = quote_check_sp(lt.exp_state, lt.exp_state2, s[lt.i]);
-		lt.exp_state2 = quote_check_sp(lt.exp_state2, lt.exp_state, s[lt.i]);
-		if (s[lt.i] == c && lt.exp_state && lt.exp_state2)
+		lt.exs = quote_check_sp(lt.exs, lt.exs2, s[lt.i], CHAR_QUATES);
+		lt.exs2 = quote_check_sp(lt.exs2, lt.exs, s[lt.i], CHAR_DQUATES);
+		if (s[lt.i] == c && lt.exs && lt.exs2)
 		{
 			st.start = lt.start;
 			st.length = (lt.i - lt.start);

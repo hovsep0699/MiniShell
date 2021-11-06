@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 18:51:30 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/01 19:42:19 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/04 19:50:00 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	ft_dwrite_child(char *check, int *p)
 	while (true)
 	{
 		line = readline(">");
+		if (ft_isnull(line, 1))
+			continue ;
 		if (ft_strcmp(check, line) == 0)
 			break ;
 		write(p[1], line, ft_zero_byte_strlen(line));

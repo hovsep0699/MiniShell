@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:16 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/03 22:41:07 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/04 20:59:06 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	**av_ret(char *tmp_path, char **data_sp)
 	av[0] = ft_strdup(tmp_path);
 	av[1] = NULL;
 	if (data_sp[0] != NULL)
-		av = ft_fvecstrcpy(av, data_sp);	
+		av = ft_fvecstrcpy(av, data_sp);
 	return (av);
 }
 

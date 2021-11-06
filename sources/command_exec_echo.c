@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 21:16:26 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/03 20:36:02 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/04 20:56:51 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	ft_cd(t_dict *command_shablon, char **envp, char **data, int count)
 	if (err == -1)
 	{
 		g_signal.exit_status = err;
-		ft_putendl_fd(strerror(errno) , 2);
+		ft_putendl_fd(strerror(errno), 2);
 		return (errno);
 	}
 	getcwd(new_path, PATH_MAX);

@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 22:30:20 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/03 22:35:30 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/04 20:06:39 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <limits.h>
+# include <sys/ioctl.h>
 
 # define START 0
 # define PARSER_ERROR -1
@@ -211,7 +212,6 @@ t_command_side_function		ft_side_funcs_default_constructor(void);
 t_command_side_function		ft_scon(t_side_commands name, t_cmd_func cmd);
 t_command_function			func_condef(void);
 t_command_function			func_con(t_builtin_commands name, t_cmd_func cmd);
-void						ft_dwrite_child(char *check, int *p);
 void						ft_signal_handle(int signum);
 t_string					ft_get_put_terminal(void);
 int							\
@@ -327,7 +327,7 @@ void						ft_dwrite_child(char *check, int *p);
 void						ft_dwrite_parent(int id, int *p);
 int							ft_dread_file(struct s_dict *dict, \
 char **envp, char **data, int count);
-int							ft_isnull(t_dict	*lcmd);
+int							ft_isnull(char	*line, int mod);
 char						**av_ret(char *tmp_path, char **data_sp);
 int							ft_setechoopt(t_dict *dict);
 #endif

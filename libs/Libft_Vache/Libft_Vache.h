@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 21:45:41 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/03 19:54:55 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/04 22:01:53 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ typedef struct s_next_lit
 	size_t	start;
 	size_t	length;
 	size_t	i;
-	int		exp_state;
-	int		exp_state2;
+	int		exs;
+	int		exs2;
 }				t_split_next;
 
 typedef struct s_list
@@ -73,7 +73,8 @@ void			ft_lstclear(t_list **lst, void (*del)(void*));
 
 void			ft_lstiter(t_list *lst, void (*f)(void*));
 
-int				quote_check_sp(int exp_state, int exp_state2, char s);
+int				quote_check_sp(int exp_state, \
+int exp_state2, char s, char quote);
 
 t_split_next	def(void);
 #endif

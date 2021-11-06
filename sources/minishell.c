@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 21:03:42 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/03 19:59:54 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/04 22:11:21 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ int	quote_check(char *s, char exp, char exp2)
 	}
 	if (!(exp_state && exp_state2))
 		ft_putendl("quote ERROR");
-	else if (ft_strlen(s) > 1 && s[quote_check.i - 2] == '|')
+	else if (ft_strlen(s) > 1 && s[quote_check.i - 1] == '|')
 		ft_putendl("Pipe Error");
 	return ((exp_state && exp_state2) && (ft_strlen(s) > 1
-			&& s[quote_check.i - 2] == '|'));
+			&& s[quote_check.i - 1] != '|'));
 }
 
 void	ft_setenv(char **envp, char *key, char *value)
@@ -114,10 +114,10 @@ int	main(int argv, char **args, char **envp)
 		ft_fd_open(&lcmd);
 		ft_process_signal(&lcmd);
 		lcmd.line = readline("Minishell$> ");
-		if (ft_isnull(&lcmd))
+		if (ft_isnull(lcmd.line, 0))
 			continue ;
 		add_history(lcmd.line);
-		if (quote_check(lcmd.line, CHAR_QUATES, CHAR_DQUATES))
+		if (quote_check(lcmd.line, CHAR_QUATES, CHAR_DQUATES) == 0)
 		{
 			ft_strdel(&lcmd.line);
 			continue ;

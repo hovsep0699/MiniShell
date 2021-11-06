@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:48 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/02 20:07:01 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/06 11:22:50 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	ft_isalnum_str(char *str, int *i)
 int	ft_execendline(char **arg, t_dict *dict, int count, char **envp_my)
 {
 	ft_search_side_func(dict)(dict, envp_my, arg, count);
-	dict->icom = dict->i + 1;
+	dict->icom = dict->icom + 1;
 	ft_strdel(&dict->data);
 	return (SUCCESS);
 }
