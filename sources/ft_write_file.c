@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:46:59 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 17:06:21 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/06 22:37:31 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_write_file(struct s_dict *dict, char **envp, char **data, int count)
 		return (g_signal.exit_status);
 	}
 	if ((dup2(fd, STDOUT_FILENO)) < 0)
-		strerror(errno);
+		errno_print(strerror(errno));
 	ft_search_builtin_func(dict)(dict, envp, data, count);
 	close(fd);
 	ft_fd_open(dict);

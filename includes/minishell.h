@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 22:30:20 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 21:45:58 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/06 22:05:56 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@
 # define STDIN_FILE 0
 # define STDOUT_FILE 1
 # define STDERR_FILE 2
-# define MAX_BUILTIN_FUNCS 8
+# define MAX_BUILTIN_FUNCS 12
 # define MAX_SIDE_FUNCS 6
 
 typedef struct s_dictionary				t_dictionary;
@@ -91,6 +91,10 @@ enum e_builtin_commands
 	ENV,
 	CD,
 	PWD,
+	WWRITE,
+	RREAD,
+	DDWRITE,
+	DDREAD,
 	UNDEFINED
 };
 

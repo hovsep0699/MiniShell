@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:56 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 21:31:36 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/06 22:11:19 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ void	ft_command_dict(char *lower_case, char *upper_case, t_dict *dict)
 		dict->type_command = UNSET;
 	else if (ft_strcmp(lower_case, "cd") == 0)
 		dict->type_command = CD;
+	else if (ft_strcmp(lower_case, "<<") == 0)
+		dict->type_command = DDREAD;
+	else if (ft_strcmp(lower_case, ">>") == 0)
+		dict->type_command = DDWRITE;
+	else if (ft_strcmp(lower_case, ">") == 0)
+		dict->type_command = WWRITE;
+	else if (ft_strcmp(lower_case, "<") == 0)
+		dict->type_command = RREAD;
 	else
 		dict->type_command = UNDEFINED;
 }
