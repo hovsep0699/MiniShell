@@ -30,6 +30,8 @@
     "cstack.h": "c",
     "cvector.h": "c",
     "libft_vache.h": "c",
-    "cstdlib.h": "c"
+    "cstdlib.h": "c",
+    "unistd.h": "c",
+    "fcntl.h": "c"
   }
 }

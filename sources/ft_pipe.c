@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:46:14 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/02 20:25:47 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/06 16:46:15 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@ char	*ft_child(char *pipe_l, t_pipe pips, t_dict *dict, char **str)
 	dup2(pips.fd[0], STDIN_FILENO);
 	dict->change_fd_in = pips.fd[0];
 	ft_pipe_close(pips.fd[1]);
-	if (pips.i == pips.len - 1 )
+	if (pips.i == pips.len - 1)
 		dict->isparrent = 1;
 	else
 		dict->isparrent = 0;
 	pipe_l = ft_strdup(str[pips.i]);
 	ft_vecstrdel(&str);
+	ft_pipe_close(pips.fd[0]);
 	return (pipe_l);
 }
 
@@ -38,6 +39,7 @@ void	ft_first(t_pipe pips, t_dict *dict)
 	dict->change_fd_out = pips.fd[1];
 	ft_pipe_close(pips.fd[0]);
 	dict->isparrent = 0;
+	ft_pipe_close(pips.fd[1]);
 }
 
 char	*ft_retpipe(char **str, t_pipe pips, char *pipe_line)
@@ -63,8 +65,9 @@ char	*ft_pipe(t_dict *dict, char *data)
 	while (pips.i > 1)
 	{
 		pips.i--;
-		pipe(pips.fd);
-		id = fork();
+		id = ft_print_error(errno, &pips, str);
+		if (id < 0)
+			return (NULL);
 		if (id > 0)
 			return (ft_child(pipe_line, pips, dict, str));
 		if (pips.i > 0)

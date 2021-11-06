@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:44:07 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/24 12:44:09 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/06 13:40:47 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_dictionary	*ft_env_copy(char **env)
 		i++;
 		ft_dictionaryadd_back(&dict, tmp);
 	}
+	change_item(NULL, find_data_int("OLDPWD=", dict), dict);
 	return (dict);
 }
 

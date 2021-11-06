@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_vecsearch.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hohayrap <hohayrap@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/24 16:45:17 by hohayrap          #+#    #+#             */
-/*   Updated: 2021/09/26 22:33:20 by hohayrap         ###   ########.fr       */
+/*   Updated: 2021/11/06 19:18:35 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,20 @@ int	ft_vecstr_search2(char **vecstr, char *search, int start_index)
 	while (vecstr[++index])
 		if (!ft_strncmp(vecstr[index], search, search_len))
 			return (index);
+	return (index - 1);
+}
+
+int	ft_vecstr_search3(char **vecstr, char *search, int start_index)
+{
+	int		index;
+	size_t	search_len;
+
+	index = start_index;
+	if (!vecstr || !*vecstr || !search)
+		return (-1);
+	search_len = ft_strlen(search);
+	while (vecstr[++index])
+		if (!ft_strncmp(vecstr[index], search, search_len))
+			return (index - 1);
 	return (index - 1);
 }

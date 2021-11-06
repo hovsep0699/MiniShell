@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 21:08:48 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/03 22:15:35 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/06 19:18:54 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,5 +219,7 @@ int			ft_string_rfind4(t_string *str, char c, int start);
 char		**ft_vecstrlcpy(char **vecstr, int start, int n);
 
 char		**ft_fvecstrcpy(char **vecstr1, char **vecstr2);
+
+int			ft_vecstr_search3(char **vecstr, char *search, int start_index);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:47:15 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/04 20:46:49 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/06 20:06:39 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,29 @@ int	ft_process_signal(t_dict *lcmd)
 	signal(SIGINT, s_int);
 	signal(SIGQUIT, SIG_IGN);
 	return (0);
+}
+
+int	ft_print_error(int errnum, t_pipe *pips, char **str)
+{
+	int	id;
+	int	pip_ret;
+
+	pip_ret = pipe(pips->fd);
+	id = fork();
+	if (id < 0 || pip_ret < 0)
+	{
+		ft_putendl_fd(strerror(errno), 2);
+		g_signal.exit_status = errno;
+		ft_vecstrdel(&str);
+		return (-1);
+	}
+	return (id);
+}
+
+int	ft_iszero(int end, int count)
+{
+	if (end == 0)
+		return (count);
+	else
+		return (end);
 }

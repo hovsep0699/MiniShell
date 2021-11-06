@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 22:30:20 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/04 20:06:39 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/06 21:45:58 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,4 +330,10 @@ char **envp, char **data, int count);
 int							ft_isnull(char	*line, int mod);
 char						**av_ret(char *tmp_path, char **data_sp);
 int							ft_setechoopt(t_dict *dict);
+int							ft_ret_end(t_dict *command);
+int							ft_print_error(int errnum, \
+				t_pipe *pips, char **str);
+int							ft_iszero(int end, int count);
+int							export_check(char *str, int len);
+int							ft_ich(char ch);
 #endif

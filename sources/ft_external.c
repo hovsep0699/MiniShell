@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:07 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 11:21:20 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/06 16:54:39 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ft_ext_child(t_dict *dic, char **envp, char **data)
 		ft_strdel(&tmp_path);
 		dic->j++;
 	}
-	ft_putstr_fd("asd: command not found\n", 2);
+	ft_putstr_fd("command not found\n", 2);
 	g_signal.exit_status = COMMAND_NOT_FOUND;
 	ft_vecstrdel(&sp_p);
 	ft_vecstrdel(&av);
@@ -90,6 +90,12 @@ int	ft_external(t_dict *dictioanry, char **envp, char **data, int count)
 	signal(SIGQUIT, s_quit);
 	ret_fork = fork();
 	g_signal.pid = ret_fork;
+	if (ret_fork < 0)
+	{
+		ft_putendl_fd(strerror(errno), 2);
+		g_signal.exit_status = errno;
+		return (errno);
+	}
 	dictioanry->is_parent = ret_fork;
 	if (ret_fork == CHILD_PROC)
 		ft_ext_child(dictioanry, envp, data);

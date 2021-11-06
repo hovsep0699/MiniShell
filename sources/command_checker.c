@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 22:24:54 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/03 22:39:08 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/06 21:46:32 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	ft_count_quote(char *s)
 			total += 1;
 		else if (s[i] == '$' && s[i + 1] == '?' && quoet_exist != 0)
 			total += 2;
-		else if (s[i] == '$' && quoet_exist != 0)
+		else if (s[i] == '$' && quoet_exist != 0 && ft_ich(s[i + 1]))
 			total += ft_isalnum_str(s + i + 1, &i) + 1;
 		else if (s[i] == '~' && quoet_exist != 0 && dquoet_exist != 0
 			&& i == 0 && (s[i + 1] == '\0' || s[i + 1] == '/'))
@@ -94,8 +94,9 @@ int	exec_in_function(char **arg, t_dict *dict, int count, char **envp_my)
 	end_of_line = 0;
 	while (dict->icom < count)
 	{
-		if (end_of_line >= dict->icom)
-			end_of_line = ft_vecstr_search2(arg, ";", dict->icom);
+		if (end_of_line + 1 >= dict->icom)
+			end_of_line = ft_vecstr_search3(arg, ";", dict->icom);
+		end_of_line = ft_iszero(end_of_line, count);
 		if (arg[dict->icom][0] == ';')
 			return (ft_execendline(arg, dict, count, envp_my));
 		else if ((!ft_strcmp(arg[dict->icom], ">>")

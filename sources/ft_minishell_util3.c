@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:56 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/30 21:22:47 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/06 21:31:36 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ int	ft_dict_init(t_dict *dict, int end_index, char *str)
 {
 	t_dictionary	*tmp;
 
+	if (export_check(str, ft_strlen(str)) || str[0] == '=')
+	{
+		ft_putstr_fd("Not a valid identifier\n", 2);
+		return (++end_index);
+	}
 	dict->i = find_data_int(str, dict->variable_dic);
 	if (dict->i == -1)
 	{

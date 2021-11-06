@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 21:16:26 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/04 20:56:51 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/06 15:51:39 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,34 +77,36 @@ int	ft_go_home(t_dict *command_shablon)
 	return (g_signal.exit_status);
 }
 
-int	ft_cd(t_dict *command_shablon, char **envp, char **data, int count)
+int	ft_cd(t_dict *dict, char **envp, char **data, int count)
 {
 	int		err;
 	int		end;
 	char	new_path[PATH_MAX];
 
-	if (!command_shablon->data)
-		return (ft_go_home(command_shablon));
-	err = chdir(command_shablon->data);
-	if (err == -1)
+	if (!dict->data)
+		return (ft_go_home(dict));
+	if (dict->data[0] == '-' && ft_ret_end(dict) == 0)
+		return (1);
+	err = chdir(dict->data);
+	if (err < 0)
 	{
 		g_signal.exit_status = err;
 		ft_putendl_fd(strerror(errno), 2);
 		return (errno);
 	}
 	getcwd(new_path, PATH_MAX);
-	change_item(find_data("PWD", command_shablon->variable_dic),
-		find_data_int("OLDPWD=", command_shablon->variable_dic),
-		command_shablon->variable_dic);
-	change_item(new_path, find_data_int("PWD=", command_shablon->variable_dic),
-		command_shablon->variable_dic);
+	change_item(find_data("PWD", dict->variable_dic),
+		find_data_int("OLDPWD=", dict->variable_dic),
+		dict->variable_dic);
+	change_item(new_path, find_data_int("PWD=", dict->variable_dic),
+		dict->variable_dic);
 	g_signal.exit_status = 0;
 	return (g_signal.exit_status);
 }
 
-int	ft_pwd(t_dict *command_shablon, char **envp_my, char **data, int count)
+int	ft_pwd(t_dict *dict, char **envp_my, char **data, int count)
 {
-	ft_putstr_fd(find_data("PWD", command_shablon->variable_dic), 1);
+	ft_putstr_fd(find_data("PWD", dict->variable_dic), 1);
 	ft_putchar('\n');
 	return (0);
 }

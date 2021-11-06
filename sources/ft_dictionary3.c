@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:44:40 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/24 12:44:42 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/06 20:24:50 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,26 @@ void	change_item(char *new_item, int key_index, t_dictionary *dict)
 	int	j;
 
 	j = 0;
-	while (new_item[j] && new_item[j] != '=')
-		j++;
-	len_new_item = ft_zero_byte_strlen(new_item);
-	if (j == len_new_item)
-		j = 0;
-	else
-		j++;
+	if (new_item)
+	{
+		while (new_item[j] && new_item[j] != '=')
+			j++;
+		len_new_item = ft_zero_byte_strlen(new_item);
+		if (j == len_new_item)
+			j = 0;
+		else
+			j++;
+	}
 	while (key_index != 0)
 	{
 		dict = dict->next;
 		key_index--;
 	}
 	ft_strdel(&dict->item);
-	dict->item = ft_strdup(new_item + j);
+	if (new_item)
+		dict->item = ft_strdup(new_item + j);
+	else
+		dict->item = NULL;
 }
 
 void	ft_dictionaryadd_back(t_dictionary **lst, t_dictionary *new)

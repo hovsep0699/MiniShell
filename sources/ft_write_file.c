@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:46:59 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/04 19:46:26 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/06 17:06:21 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ int	ft_write_file(struct s_dict *dict, char **envp, char **data, int count)
 	int		fd;
 	char	*name_file;
 
+	fd = open(dict->name_file, O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	if (dict->data == NULL)
 	{
 		ft_putstr_fd("syntax error\n", 2);
 		g_signal.exit_status = 258;
 		return (g_signal.exit_status);
 	}
-	fd = open(dict->name_file, O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	if (fd == -1)
 	{
 		errno_print(strerror(errno));
@@ -43,13 +43,13 @@ int	ft_read_file(struct	s_dict *dict, char **envp, char **data, int count)
 {
 	int	fd;
 
+	fd = open(dict->name_file, O_RDONLY);
 	if (dict->name_file == NULL)
 	{
 		ft_putstr_fd("syntax error\n", 2);
 		g_signal.exit_status = 258;
 		return (g_signal.exit_status);
 	}
-	fd = open(dict->name_file, O_RDONLY);
 	if (fd == -1)
 	{
 		ft_putendl_fd(strerror(errno), 2);
@@ -77,7 +77,7 @@ int	ft_dwrite_file(struct s_dict *dict, char **envp, char **data, int count)
 		return (g_signal.exit_status);
 	}
 	if ((dup2(fd, STDOUT_FILENO)) < 0)
-		strerror(errno);
+		ft_putendl_fd(strerror(errno), 2);
 	ft_search_builtin_func(dict)(dict, envp, data, count);
 	close(fd);
 	ft_fd_open(dict);

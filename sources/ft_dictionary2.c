@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:44:26 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/24 12:44:30 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/06 13:52:16 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	find_equal_part(char *str)
 	return (-1);
 }
 
-char	*find_data(char *key, t_dictionary *command)
+char	*find_data(char *key, t_dictionary *dict)
 {
 	int	klen;
 	int	dlen;
@@ -98,17 +98,17 @@ char	*find_data(char *key, t_dictionary *command)
 	klen = 0;
 	while (ft_isalnum(*(key + klen)))
 		klen++;
-	while (command != NULL)
+	while (dict != NULL)
 	{
-		dlen = ft_zero_byte_strlen(command->key);
-		if (klen == dlen && ft_strncmp(key, command->key, dlen) == 0 )
+		dlen = ft_zero_byte_strlen(dict->key);
+		if (klen == dlen && !ft_strncmp(key, dict->key, dlen))
 		{
-			if (command->item[0] == '\0')
+			if (!dict->item || dict->item[0] == '\0')
 				return (NULL);
 			else
-				return (command->item);
+				return (dict->item);
 		}
-		command = command->next;
+		dict = dict->next;
 	}
 	return (NULL);
 }

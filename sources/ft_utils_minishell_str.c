@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:46:40 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/30 20:21:22 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/06 14:22:49 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_tolower_minishell(char *upper_str, int *len)
 	t_split		stru;
 
 	*len = ft_zero_byte_strlen(upper_str) - ft_count_quote(upper_str);
-	lower_case = (char *)ft_calloc(sizeof(char),*len);
+	lower_case = (char *)ft_calloc(sizeof(char),*len + 1);
 	stru.i = 0;
 	stru.j = 0;
 	qex = 1;
