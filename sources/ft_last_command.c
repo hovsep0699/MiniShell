@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:35 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 22:08:44 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/07 12:28:31 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ t_dict	ft_dict_constructor(void)
 	lcmd.functions[4] = (t_command_function){ENV, ft_put_env_export};
 	lcmd.functions[5] = (t_command_function){CD, ft_cd};
 	lcmd.functions[6] = (t_command_function){PWD, ft_pwd};
-	lcmd.functions[7] = (t_command_function){WWRITE, ft_write_file};
-	lcmd.functions[8] = (t_command_function){RREAD, ft_read_file};
-	lcmd.functions[9] = (t_command_function){DDWRITE, ft_dwrite_file};
-	lcmd.functions[10] = (t_command_function){DDREAD, ft_dread_file};
+	lcmd.functions[7] = (t_command_function){WWRITE, ft_write_bu};
+	lcmd.functions[8] = (t_command_function){RREAD, ft_read_bu};
+	lcmd.functions[9] = (t_command_function){DDWRITE, ft_dwrite_bu};
+	lcmd.functions[10] = (t_command_function){DDREAD, ft_dread_bu};
 	lcmd.functions[11] = (t_command_function){UNDEFINED, ft_external};
 	lcmd.side_functions[0] = (t_command_side_function){WRITE, ft_write_file};
 	lcmd.side_functions[1] = (t_command_side_function){READ, ft_read_file};

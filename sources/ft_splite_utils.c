@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:46:30 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 16:45:46 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/07 12:37:03 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_len_array(char *splite_array)
 
 void	change_splitem(char *splite_array, t_split *splvar, char *str)
 {
-	if (str[splvar->i - 1] != ' ')
+	if (splvar->i != 0 && str[splvar->i - 1] != ' ')
 		splite_array[splvar->j++] = ' ';
 	if ((ft_strncmp(str + splvar->i, "<<", 2) == 0)
 		|| (ft_strncmp(str + splvar->i, ">>", 2) == 0))
@@ -103,8 +103,7 @@ char	*enter_split_sapce(char **not_splite)
 	while (str[splvar.i])
 	{
 		if ((str[splvar.i] == '|' || str[splvar.i] == '>'
-				|| str[splvar.i] == '<' || str[splvar.i] == ';')
-			&& splvar.i != 0)
+				|| str[splvar.i] == '<' || str[splvar.i] == ';'))
 			change_splitem(splite_array, &splvar, str);
 		else
 			splite_array[splvar.j++] = str[splvar.i++];

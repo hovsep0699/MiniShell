@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 22:24:54 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/07 11:23:55 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/07 11:50:22 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,17 +120,14 @@ int	system_command(char **list, t_dict *dict, char **env_my, int count)
 {
 	int		len;
 	char	*lower_case;
-	int		i;
 	int		exeption;
 
-	i = 0;
 	while (dict->icom < count)
 	{
-		lower_case = ft_tolower_minishell(list[i], &len);
-		ft_command_dict(lower_case, list[i], dict, list);
+		lower_case = ft_tolower_minishell(list[dict->icom], &len);
+		ft_command_dict(lower_case, list[dict->icom], dict, list);
 		dict->icom = dict->icom + 1;
 		exec_in_function(list, dict, count, env_my);
-		i = dict->icom;
 		dict->last_command = dict->icom;
 		ft_strdel(&lower_case);
 	}

@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 22:30:20 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/07 11:25:42 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/07 13:00:53 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,4 +341,14 @@ int							ft_iszero(int end, int count);
 int							export_check(char *str, int len);
 int							ft_ich(char ch);
 int							runfileutil_bu(char **argum, t_dict *dict, int i);
+int							write_ernno(char *str_errno, int errno_cod, int fd);
+int							\
+ft_write_bu(t_dict *dict, char **envp, char **data, int count);
+int							\
+ft_read_bu(t_dict *dict, char **envp, char **data, int count);
+int							\
+ft_dwrite_bu(t_dict *dict, char **envp, char **data, int count);
+int							\
+ft_dread_bu(t_dict *dict, char **envp, char **data, int count);
+void						ft_dbu_child(char *check);
 #endif
