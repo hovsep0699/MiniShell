@@ -6,36 +6,32 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:56 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 22:11:19 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/07 11:24:07 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_command_dict(char *lower_case, char *upper_case, t_dict *dict)
+void	ft_command_dict(char *lcase, char *ucase, t_dict *dict, char **list)
 {
-	if (ft_strcmp(lower_case, "echo") == 0)
+	if (ft_strcmp(lcase, "echo") == 0)
 		dict->type_command = ECHO;
-	else if (ft_strcmp(lower_case, "pwd") == 0)
+	else if (ft_strcmp(lcase, "pwd") == 0)
 		dict->type_command = PWD;
-	else if (ft_strcmp(lower_case, "env") == 0)
+	else if (ft_strcmp(lcase, "env") == 0)
 		dict->type_command = ENV;
-	else if (ft_strcmp(upper_case, "exit") == 0)
+	else if (ft_strcmp(ucase, "exit") == 0)
 		dict->type_command = EXIT;
-	else if (ft_strcmp(lower_case, "export") == 0)
+	else if (ft_strcmp(lcase, "export") == 0)
 		dict->type_command = EXPORT;
-	else if (ft_strcmp(lower_case, "unset") == 0)
+	else if (ft_strcmp(lcase, "unset") == 0)
 		dict->type_command = UNSET;
-	else if (ft_strcmp(lower_case, "cd") == 0)
+	else if (ft_strcmp(lcase, "cd") == 0)
 		dict->type_command = CD;
-	else if (ft_strcmp(lower_case, "<<") == 0)
-		dict->type_command = DDREAD;
-	else if (ft_strcmp(lower_case, ">>") == 0)
-		dict->type_command = DDWRITE;
-	else if (ft_strcmp(lower_case, ">") == 0)
-		dict->type_command = WWRITE;
-	else if (ft_strcmp(lower_case, "<") == 0)
-		dict->type_command = RREAD;
+	else if ((!ft_strcmp(lcase, ">>")
+			|| !ft_strcmp(lcase, "<<")
+			|| !ft_strcmp(lcase, ">") || !ft_strcmp(lcase, "<")))
+		dict->icom = runfileutil_bu(list, dict, dict->icom);
 	else
 		dict->type_command = UNDEFINED;
 }

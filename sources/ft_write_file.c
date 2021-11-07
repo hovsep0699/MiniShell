@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:46:59 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 22:37:31 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/07 11:30:27 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	ft_write_file(struct s_dict *dict, char **envp, char **data, int count)
 	fd = open(dict->name_file, O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	if (dict->data == NULL)
 	{
-		ft_putstr_fd("syntax error\n", 2);
 		g_signal.exit_status = 258;
+		close(fd);
 		return (g_signal.exit_status);
 	}
 	if (fd == -1)
@@ -46,8 +46,8 @@ int	ft_read_file(struct	s_dict *dict, char **envp, char **data, int count)
 	fd = open(dict->name_file, O_RDONLY);
 	if (dict->name_file == NULL)
 	{
-		ft_putstr_fd("syntax error\n", 2);
 		g_signal.exit_status = 258;
+		close(fd);
 		return (g_signal.exit_status);
 	}
 	if (fd == -1)

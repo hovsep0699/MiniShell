@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 22:24:54 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 22:42:41 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/07 11:23:55 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int	system_command(char **list, t_dict *dict, char **env_my, int count)
 	while (dict->icom < count)
 	{
 		lower_case = ft_tolower_minishell(list[i], &len);
-		ft_command_dict(lower_case, list[i], dict);
+		ft_command_dict(lower_case, list[i], dict, list);
 		dict->icom = dict->icom + 1;
 		exec_in_function(list, dict, count, env_my);
 		i = dict->icom;

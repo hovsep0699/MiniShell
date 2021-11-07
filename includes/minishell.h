@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 22:30:20 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 22:05:56 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/11/07 11:25:42 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,7 +305,7 @@ int							runfileutil(char **argum, t_dict *dict, int i);
 int							\
 ft_execendline(char **arg, t_dict *dict, int count, char **envp_my);
 void						ft_command_dict(char *lower_case, \
-char *upper_case, t_dict *dict);
+char *upper_case, t_dict *dict, char **list);
 bool						ft_exit_status(t_dict *dict);
 void						ft_putcommanderror(t_dict *dict);
 int							\
@@ -340,4 +340,5 @@ int							ft_print_error(int errnum, \
 int							ft_iszero(int end, int count);
 int							export_check(char *str, int len);
 int							ft_ich(char ch);
+int							runfileutil_bu(char **argum, t_dict *dict, int i);
 #endif
