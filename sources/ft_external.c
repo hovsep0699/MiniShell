@@ -55,6 +55,7 @@ void	ft_exec_abs(t_dict *dic, char **envp, char **data, char **data_sp)
 
 void	ft_ext_child(t_dict *dic, char **envp, char **data)
 {
+	// printf("dicdata: %s\n", dic->data);
 	char	**av;
 	char	*tmp_path;
 	char	**sp_p;
@@ -86,7 +87,7 @@ int	ft_external(t_dict *dictioanry, char **envp, char **data, int count)
 	int		fd[2];
 	pid_t	ret_fork;
 	int		i;
-
+	// printf("test bigdata: %s\n", dictioanry->data);
 	signal(SIGQUIT, s_quit);
 	ret_fork = fork();
 	g_signal.pid = ret_fork;

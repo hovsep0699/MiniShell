@@ -31,6 +31,8 @@
 # include <limits.h>
 # include <sys/ioctl.h>
 
+
+# define MAX_EXIT_STATUS 255
 # define START 0
 # define PARSER_ERROR -1
 # define WRONG_INPUT -2
@@ -306,8 +308,8 @@ int							\
 ft_execendline(char **arg, t_dict *dict, int count, char **envp_my);
 void						ft_command_dict(char *lower_case, \
 char *upper_case, t_dict *dict, char **list);
-bool						ft_exit_status(t_dict *dict);
-void						ft_putcommanderror(t_dict *dict);
+int						ft_exit_status(t_dict *dict);
+void						ft_putcommanderror(t_dict *dict, int errnum);
 int							\
 ft_dict_init(t_dict *dict, int end_index, char *str);
 int							ft_find_element(char *str);

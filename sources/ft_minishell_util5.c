@@ -75,9 +75,10 @@ int	ft_isnull(char	*line, int mod)
 	if (line == NULL)
 	{
 		if (mod == 0)
-			ft_putstr_fd("\033[1AMinishell$> exit\n", 2);
-		else
-			ft_putstr_fd("\033[1A> ", 2);
+			printf("\033[1A%s%s%s %s\n", TEXT_GREEN, "Minishell$>", TEXT_WHITE, "exit");
+			// ft_putstr_fd("\033[1A>Minishell$> exit\n", 2);
+		// else
+		// 	ft_putstr_fd("\033[1A> ", 2);
 		exit(0);
 	}
 	if (line[0] == 0)

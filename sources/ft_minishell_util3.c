@@ -36,26 +36,32 @@ void	ft_command_dict(char *lcase, char *ucase, t_dict *dict, char **list)
 		dict->type_command = UNDEFINED;
 }
 
-bool	ft_exit_status(t_dict *dict)
+int	ft_exit_status(t_dict *dict)
 {
 	dict->i = ft_set_index(dict->data, dict->i);
+	// printf("test i %c\n",dict->data[dict->i]);
+	// printf("hello\n");
+	printf("exit\n");
+	if (!ft_isdigit(dict->data[dict->i - 1]))
+		return 1;
 	if (dict->data[dict->i] || dict->i != ft_zero_byte_strlen(dict->data))
-	{
-		ft_putstr("exit\n");
-		return (true);
-	}
-	else
-		while (dict->data[++dict->i])
-			if (ft_isspace(dict->data[dict->i]))
-				break ;
-	return (false);
+		return (2);
+	while (dict->data[++dict->i])
+		if (ft_isspace(dict->data[dict->i]))
+			break ;
+	return (0);
 }
 
-void	ft_putcommanderror(t_dict *dict)
+void	ft_putcommanderror(t_dict *dict, int errnum)
 {
-	ft_putstr_fd("minishell: exit:", 2);
-	ft_putstr_fd(dict->data, 2);
-	ft_putstr_fd("numeric argument required\n", 2);
+	ft_putstr_fd("minishell: exit: ", 2);
+	if (errnum == 1)
+	{
+		ft_putstr_fd(dict->data, 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
+	}
+	else
+		ft_putstr_fd("too many arguments\n", 2);
 	g_signal.exit_status = COMMAND_NOT_FOUND;
 }
 

@@ -24,30 +24,42 @@ int	ft_print_echo(t_dict *dict, char **envp, char **data, int count)
 int	ft_exit(t_dict *dict, char **envp_my, char **data, int count)
 {
 	int		exit_status;
-	bool	is_error;
+	int		errnum;
 
 	dict->i = 0;
-	is_error = false;
+	errnum = 0;
 	if (!dict->data)
 		g_signal.exit_status = 0;
 	else
 	{
 		while (dict->data[dict->i] && ft_isspace(dict->data[dict->i]))
 			++dict->i;
-		if (!dict->data[dict->i])
-			is_error = true;
-		else
-			is_error = ft_exit_status(dict);
-		if (dict->data[dict->i] && !is_error)
-			is_error = true;
-		if (is_error)
-			ft_putcommanderror(dict);
+		// if (!dict->data[dict->i])
+		// 	errnum = true;
+		// else
+			errnum = ft_exit_status(dict);
+		if (dict->data[dict->i] && !errnum)
+			errnum = 1;
+		if (errnum)
+			ft_putcommanderror(dict, errnum);
 		else
 			g_signal.exit_status = ft_atoi(dict->data);
 	}
-	ft_vecstrdel(&data);
-	ft_dict_destructor(dict);
-	exit(g_signal.exit_status);
+	if (errnum < 2)
+	{
+		ft_vecstrdel(&data);
+		ft_dict_destructor(dict);
+		while (ft_range(g_signal.exit_status, 0, 255))
+		{
+			if (g_signal.exit_status < 0)
+				g_signal.exit_status += 256;
+			else
+				g_signal.exit_status -= 256;
+		}
+		exit (g_signal.exit_status);
+	}
+	g_signal.exit_status = 1;
+	return (1);
 }
 
 int	ft_go_home(t_dict *command_shablon)

@@ -17,7 +17,8 @@ void	s_quit(int signum)
 	(void)signum;
 	if (g_signal.pid > 0 && !g_signal.heredoc)
 	{
-		ft_putstr_fd("Quit (core dumped)\n", 1);
+		printf("Quit (core dumped)\n");
+		// ft_putstr_fd("Quit (core dumped)\n", 1);
 		kill(g_signal.pid, SIGINT);
 		g_signal.exit_status = 131;
 	}
@@ -28,13 +29,17 @@ void	s_int(int signum)
 	(void)signum;
 	if (g_signal.heredoc && g_signal.pid == 0)
 	{
-		ft_putstr_fd("\b\b^C\b\b", 1);
+		printf(TEXT_GREEN);
+		printf("\b\b^C\b\b");
+		// ft_putstr_fd("\b\b^C\b\b", 1);
 		g_signal.exit_status = 1;
 		exit(g_signal.exit_status);
 	}
 	if (g_signal.pid == -1)
 	{
-		ft_putstr_fd("\b\b\n", 2);
+		printf(TEXT_GREEN);
+		printf("\b\b\n");
+		// ft_putstr_fd("\b\b\n", 2);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
@@ -42,7 +47,9 @@ void	s_int(int signum)
 	}
 	else
 	{
-		ft_putstr_fd("\b\n", 2);
+		printf(TEXT_GREEN);
+		printf("\b\n");
+		// ft_putstr_fd("\b\n", 2);
 		rl_replace_line("", 0);
 		if (g_signal.pid == -1)
 			rl_on_new_line();

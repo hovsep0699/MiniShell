@@ -32,6 +32,10 @@
     "libft_vache.h": "c",
     "cstdlib.h": "c",
     "unistd.h": "c",
-    "fcntl.h": "c"
+    "fcntl.h": "c",
+    "array": "c",
+    "string": "c",
+    "string_view": "c",
+    "vector": "c"
   }
 }

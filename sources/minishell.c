@@ -77,11 +77,10 @@ int	quote_check(char *s, char exp, char exp2)
 			quote_check.pipe_problem++;
 	}
 	if (!(exp_state && exp_state2))
-		ft_putendl("quote ERROR");
-	else if (ft_strlen(s) > 1 && s[quote_check.i - 1] == '|')
-		ft_putendl("Pipe Error");
-	return ((exp_state && exp_state2) && (ft_strlen(s) > 1
-			&& s[quote_check.i - 1] != '|'));
+		printf("quote ERROR\n");
+	else if ((ft_strlen(s) > 0 && s[quote_check.i - 1] == '|') || s[0] == '|')
+		printf("Pipe Error\n");
+	return (exp_state2 && exp_state && !((ft_strlen(s) > 0 && s[quote_check.i - 1] == '|') || s[0] == '|'));
 }
 
 void	ft_setenv(char **envp, char *key, char *value)
@@ -111,9 +110,11 @@ int	main(int argv, char **args, char **envp)
 	set_default_gloabl();
 	while (true)
 	{
+		printf(TEXT_GREEN);
 		ft_fd_open(&lcmd);
 		ft_process_signal(&lcmd);
-		lcmd.line = readline("Minishell$> ");
+		lcmd.line = readline("Minishell$> \033[0m");
+		// printf(TEXT_WHITE);
 		if (ft_isnull(lcmd.line, 0))
 			continue ;
 		add_history(lcmd.line);
@@ -122,6 +123,7 @@ int	main(int argv, char **args, char **envp)
 			ft_strdel(&lcmd.line);
 			continue ;
 		}
+		
 		exec_inout(lcmd.line, envp, &lcmd);
 		ft_pipe_close(lcmd.change_fd_in);
 		ft_pipe_close(lcmd.change_fd_out);
