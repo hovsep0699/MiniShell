@@ -117,7 +117,8 @@ int	main(int argv, char **args, char **envp)
 		// printf(TEXT_WHITE);
 		if (ft_isnull(lcmd.line, 0))
 			continue ;
-		add_history(lcmd.line);
+		// if (ft_zero_byte_strlen(lcmd.line) > 0)
+			add_history(lcmd.line);
 		if (quote_check(lcmd.line, CHAR_QUATES, CHAR_DQUATES) == 0)
 		{
 			ft_strdel(&lcmd.line);
