@@ -47,7 +47,7 @@ t_cmd_func	ft_search_front_func(t_dict *lcmd)
 	while (++index < MAX_FRONT_FUNCS)
 	{
 		if (lcmd->fr_command == lcmd->front_function[index].name
-			&& lcmd->fr_command != NONE)
+			&& lcmd->fr_command != FNONE)
 				return (lcmd->front_function[index].function);
 	}
 	return (ft_search_side_func(lcmd));

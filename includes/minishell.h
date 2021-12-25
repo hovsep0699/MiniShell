@@ -71,7 +71,7 @@
 # define STDERR_FILE 2
 # define MAX_BUILTIN_FUNCS 10
 # define MAX_SIDE_FUNCS 6
-# define MAX_FRONT_FUNCS 2
+# define MAX_FRONT_FUNCS 3
 
 typedef struct s_dictionary				t_dictionary;
 typedef struct s_front_function			t_front_function;

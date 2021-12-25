@@ -43,7 +43,8 @@ t_dictionary	*ft_dictionary_create(char *items)
 	dict.len_items = ft_strlen(items);
 	dict.index = ft_find_element(items);
 	if (dict.index == -1)
-		return (NULL);
+		dict.ptr->item = NULL;
+		printf("start -%i %s	\n",dict.index, items);
 	if (ft_isdigit(items[0]) == 1)
 	{
 		export_error(items);
@@ -59,7 +60,7 @@ t_dictionary	*ft_dictionary_create(char *items)
 	dict.ptr->next = NULL;
 	ft_joins_dict(items, 0, dict.index, dict.ptr->key);
 	dict.ptr->key[dict.index] = '\0';
-	if (dict.len_items != dict.index)
+	if (dict.len_items != dict.index && dict.index != -1)
 		ft_joins_dict(items, dict.index + 1, ft_strlen(items), dict.ptr->item);
 	return (dict.ptr);
 }

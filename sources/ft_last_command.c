@@ -56,7 +56,6 @@ t_dict	ft_dict_constructor(void)
 	lcmd.functions[9] = (t_command_function){UNDEFINED, ft_external};
 	lcmd.front_function[0] = (t_front_function){FFREAD, ft_read_bu};
 	lcmd.front_function[1] = (t_front_function){FDREAD, ft_dread_bu};
-	lcmd.front_function[2] = (t_front_function){FNONE, NULL};
 	lcmd.side_functions[0] = (t_command_side_function){WRITE, ft_write_file};
 	lcmd.side_functions[1] = (t_command_side_function){READ, ft_read_file};
 	lcmd.side_functions[2]

@@ -47,6 +47,7 @@ t_dictionary	*ft_env_copy(char **env)
 		}
 		i++;
 		ft_dictionaryadd_back(&dict, tmp);
+		printf("end - %s	\n",env[i]);
 	}
 	return (dict);
 }
@@ -86,7 +87,7 @@ int	ft_find_element(char *str)
 	int	i;
 
 	i = 0;
-	if (str == NULL || ft_strlen(str) < 2)
+	if (str == NULL)
 		return (-1);
 	while (str[i])
 	{
