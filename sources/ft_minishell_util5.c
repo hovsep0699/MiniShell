@@ -48,9 +48,9 @@ char	*ft_strnull(void)
 	return (str);
 }
 
-void	ft_join_util2(char *pstr, t_eqstr	*equ, t_dict *dict)
+void	ft_join_util2(char *pstr, t_eqstr	*equ, t_dict *dict, int mod)
 {
-	if (ft_count_quote_character(pstr[equ->i],
+	if (mod == 1 && ft_count_quote_character(pstr[equ->i],
 			&equ->quate_exist, &equ->dquate_exist))
 		equ->i++;
 	else if (pstr[equ->i] == '\\'
@@ -64,7 +64,7 @@ void	ft_join_util2(char *pstr, t_eqstr	*equ, t_dict *dict)
 		ft_exp_util(equ, dict, pstr);
 	else if (pstr[equ->i] == '~' && equ->dquate_exist != 0
 		&& equ->quate_exist != 0
-		&& equ->i == 0 && (pstr[equ->i + 1] == '\0' || pstr[equ->i + 1] == '/'))
+		&& equ->i == 0 && (pstr[equ->i + 1] == '\0' || pstr[equ->i + 1] == '/') && mod == 1)
 		ft_exp_exist(equ);
 	else
 		equ->subjoin[equ->end_index++] = pstr[equ->i++];

@@ -21,7 +21,6 @@ int	ft_put_env_export(t_dict *dictionary, char **envp, char **data, int count)
 	tmp = dictionary->variable_dic;
 	while (tmp != NULL)
 	{
-		printf("%s\n",tmp->item);
 		if(tmp->item == NULL)
 		{
 			tmp = tmp->next;

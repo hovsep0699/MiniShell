@@ -58,7 +58,6 @@ void	s_int(int signum)
 		}
 		// printf("Minishell$> ");
 		// printf("hi\n");
-		ft_strdel(&copy);
 		g_signal.exit_status = 1;
 	}
 	else
@@ -72,6 +71,7 @@ void	s_int(int signum)
 		rl_redisplay();
 		g_signal.exit_status = 130;
 	}
+	ft_strdel(&copy);
 }
 
 int	ft_process_signal(t_dict *lcmd)

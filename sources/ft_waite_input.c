@@ -90,7 +90,7 @@ char	*ft_equal_strjoin(char *s1, t_dict *dict, char *pstr, int end)
 	if (equ.end_index > 0)
 		equ.subjoin = ft_strcpy(equ.subjoin, s1);
 	while (pstr[equ.i])
-		ft_join_util2(pstr, &equ, dict);
+		ft_join_util2(pstr, &equ, dict, 1);
 	if (!end && dict->type_command != UNDEFINED)
 		equ.subjoin[equ.end_index] = ' ';
 	if (!end && dict->type_command == UNDEFINED)

@@ -12,6 +12,29 @@
 
 #include "minishell.h"
 
+// for expand macros
+
+/*
+static int w_int(int status)
+{
+	return (*(int *)&(status));
+}
+
+static int w_status(int status)
+{
+	return (w_int(status) & 0177);
+}
+static bool if_exited(int status)
+{
+	return (w_status(status) == 0);
+}
+
+static int get_exit_status(int status)
+{
+	return ((w_int(status) >> 8) & 0x000000ff);
+}
+*/
+
 char	**get_path(t_dict *dictioanry)
 {
 	char	**split_path;
@@ -87,6 +110,7 @@ int	ft_external(t_dict *dictioanry, char **envp, char **data, int count)
 	int		fd[2];
 	pid_t	ret_fork;
 	int		i;
+	int		status;
 	// printf("test bigdata: %s\n", dictioanry->data);
 	signal(SIGQUIT, s_quit);
 	ret_fork = fork();
@@ -101,6 +125,8 @@ int	ft_external(t_dict *dictioanry, char **envp, char **data, int count)
 	if (ret_fork == CHILD_PROC)
 		ft_ext_child(dictioanry, envp, data);
 	else
-		waitpid(ret_fork, NULL, 0);
+		waitpid(ret_fork, &status, 0);
+	if (WIFEXITED(status))
+		g_signal.exit_status = WEXITSTATUS(status);
 	return (g_signal.exit_status);
 }

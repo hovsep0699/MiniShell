@@ -47,7 +47,6 @@ t_dictionary	*ft_env_copy(char **env)
 		}
 		i++;
 		ft_dictionaryadd_back(&dict, tmp);
-		printf("end - %s	\n",env[i]);
 	}
 	return (dict);
 }

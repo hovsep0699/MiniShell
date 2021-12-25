@@ -62,7 +62,7 @@ void	ft_putcommanderror(t_dict *dict, int errnum)
 	}
 	else
 		ft_putstr_fd("too many arguments\n", 2);
-	g_signal.exit_status = COMMAND_NOT_FOUND;
+	g_signal.exit_status = MAX_EXIT_STATUS;
 }
 
 int	ft_dict_init(t_dict *dict, int end_index, char *str)

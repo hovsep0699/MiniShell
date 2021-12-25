@@ -21,7 +21,7 @@ char	*ft_here_strjoin(char *s1, t_dict *dict)
 	equ = ft_eqdef2(s1);
 	equ.subjoin = (char *)ft_calloc(sizeof(char), (ft_zero_byte_strlen(s1) + 1));
 	while (s1[equ.i])
-		ft_join_util2(s1, &equ, dict);
+		ft_join_util2(s1, &equ, dict, 0);
 	ft_strdel(&s1);
 	return (equ.subjoin);
 }
@@ -46,14 +46,10 @@ int	ft_put_enxport_env(t_dict *dictionary, char **envp, char **data, int count)
 	tmp = dictionary->variable_dic;
 	while (tmp != NULL)
 	{
-		ft_putstr("declare -x ");
-		ft_putstr_fd(tmp->key, 1);
-		ft_putstr_fd("=", 1);
-		ft_putchar('\"');
+		printf("declare -x %s", tmp->key);
 		if (tmp->item != NULL && tmp->item[0] != '\0')
-			ft_putstr_fd(tmp->item, 1);
-		ft_putchar('\"');
-		ft_putchar_fd('\n', 1);
+			printf("=\"%s\"",tmp->item);
+		printf("\n");
 		tmp = tmp->next;
 	}
 	g_signal.exit_status = 0;

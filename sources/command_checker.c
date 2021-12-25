@@ -128,7 +128,6 @@ int	system_command(char **list, t_dict *dict, char **env_my, int count)
 		lower_case = ft_tolower_minishell(list[dict->icom], &len);
 		ft_command_dict(lower_case, list[dict->icom], dict, list);
 		dict->icom = dict->icom + 1;
-		
 		if (dict->fr_command != FNONE && front_check && dict->icom < count)
 		{
 			front_check = 0;

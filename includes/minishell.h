@@ -346,7 +346,7 @@ ft_exp_util(t_eqstr *equ, t_dict *dict, char *pars_str);
 int							ft_dis_strchr(const char *s, int c);
 char						*ft_strnull(void);
 void						\
-ft_join_util2(char *pstr, t_eqstr *equ, t_dict *dict);
+ft_join_util2(char *pstr, t_eqstr *equ, t_dict *dict, int mod);
 void						ft_dwrite_child(char *check, int *p, t_dict *dict);
 void						ft_dwrite_parent(int id, int *p);
 int							ft_dread_file(struct s_dict *dict, \

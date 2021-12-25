@@ -35,7 +35,6 @@ int	ft_exit(t_dict *dict, char **envp_my, char **data, int count)
 		while (dict->data[dict->i] && ft_isspace(dict->data[dict->i]))
 			++dict->i;
 		errnum = ft_exit_status(dict);
-		printf("%i\n",errnum);
 		if (dict->data[dict->i] && !errnum)
 			errnum = 1;
 		if (errnum)
