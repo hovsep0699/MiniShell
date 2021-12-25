@@ -31,6 +31,8 @@
 # include <limits.h>
 # include <sys/ioctl.h>
 
+
+# define MAX_EXIT_STATUS 255
 # define START 0
 # define PARSER_ERROR -1
 # define WRONG_INPUT -2
