@@ -21,6 +21,12 @@ int	ft_put_env_export(t_dict *dictionary, char **envp, char **data, int count)
 	tmp = dictionary->variable_dic;
 	while (tmp != NULL)
 	{
+		printf("%s\n",tmp->item);
+		if(tmp->item == NULL)
+		{
+			tmp = tmp->next;
+			continue;
+		}
 		ft_putstr_fd(tmp->key, 1);
 		ft_putstr_fd("=", 1);
 		if (tmp->item != NULL && tmp->item[0] != '\0')
