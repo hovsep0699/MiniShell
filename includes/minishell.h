@@ -67,13 +67,16 @@
 # define STDIN_FILE 0
 # define STDOUT_FILE 1
 # define STDERR_FILE 2
-# define MAX_BUILTIN_FUNCS 12
+# define MAX_BUILTIN_FUNCS 10
 # define MAX_SIDE_FUNCS 6
+# define MAX_FRONT_FUNCS 2
 
 typedef struct s_dictionary				t_dictionary;
+typedef struct s_front_function			t_front_function;
 typedef struct s_signal					t_signal;
 typedef enum e_builtin_commands			t_builtin_commands;
 typedef enum e_side_commands			t_side_commands;
+typedef enum e_front_commands			t_front_commands;
 typedef struct s_dict					t_dict;
 typedef struct s_command_function		t_command_function;
 typedef struct s_command_side_function	t_command_side_function;
@@ -92,10 +95,15 @@ enum e_builtin_commands
 	CD,
 	PWD,
 	WWRITE,
-	RREAD,
 	DDWRITE,
-	DDREAD,
 	UNDEFINED
+};
+
+enum e_front_commands
+{
+	FFREAD,
+	FDREAD,
+	FNONE
 };
 
 enum e_side_commands
@@ -119,9 +127,16 @@ struct s_command_function
 	t_cmd_func			function;
 };
 
+struct s_front_function
+{
+	t_front_commands	name;
+	t_cmd_func			function;
+};
+
 struct s_signal
 {
 	int			exit_status;
+	int			is_read;
 	pid_t		pid;
 	int			heredoc;
 };
@@ -195,12 +210,14 @@ struct	s_dict
 	int						isparrent;
 	t_builtin_commands		type_command;
 	t_side_commands			util_commant;
+	t_front_commands		fr_command;
 	int						icom;
 	int						j;
 	int						last_command;
 	int						nerar_exeption;
 	char					*data;
 	char					*output_data;
+	char					*fname_file;
 	char					*name_file;
 	int						fd[2];
 	bool					is_parent;
@@ -208,6 +225,7 @@ struct	s_dict
 	t_dictionary			*variable_dic;
 	t_command_function		functions[MAX_BUILTIN_FUNCS];
 	t_command_side_function	side_functions[MAX_SIDE_FUNCS];
+	t_front_function 		front_function[MAX_FRONT_FUNCS];
 	int						i;
 };
 
@@ -306,8 +324,8 @@ int							\
 ft_execendline(char **arg, t_dict *dict, int count, char **envp_my);
 void						ft_command_dict(char *lower_case, \
 char *upper_case, t_dict *dict, char **list);
-bool						ft_exit_status(t_dict *dict);
-void						ft_putcommanderror(t_dict *dict);
+int						ft_exit_status(t_dict *dict);
+void						ft_putcommanderror(t_dict *dict, int errnum);
 int							\
 ft_dict_init(t_dict *dict, int end_index, char *str);
 int							ft_find_element(char *str);
@@ -327,7 +345,7 @@ int							ft_dis_strchr(const char *s, int c);
 char						*ft_strnull(void);
 void						\
 ft_join_util2(char *pstr, t_eqstr *equ, t_dict *dict);
-void						ft_dwrite_child(char *check, int *p);
+void						ft_dwrite_child(char *check, int *p, t_dict *dict);
 void						ft_dwrite_parent(int id, int *p);
 int							ft_dread_file(struct s_dict *dict, \
 char **envp, char **data, int count);
@@ -351,4 +369,8 @@ ft_dwrite_bu(t_dict *dict, char **envp, char **data, int count);
 int							\
 ft_dread_bu(t_dict *dict, char **envp, char **data, int count);
 void						ft_dbu_child(char *check);
+char	*ft_here_strjoin(char *s1, t_dict *dict);
+int		syntax_error(char *str);
+t_cmd_func	ft_search_front_func(t_dict *lcmd);
+int	ft_put_enxport_env(t_dict *dictionary, char **envp, char **data, int count);
 #endif

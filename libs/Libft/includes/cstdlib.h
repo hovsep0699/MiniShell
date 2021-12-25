@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 /*
 # define FT_MAX(x,y)(x > y ? x : y)
@@ -28,5 +29,7 @@ void	*ft_memalloc(size_t size);
 void	*ft_calloc(size_t count, size_t size);
 
 void	ft_memdel(void **mem);
+
+bool    ft_range(int number, int min, int max);
 
 #endif

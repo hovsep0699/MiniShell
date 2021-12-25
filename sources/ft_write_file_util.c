@@ -28,7 +28,7 @@ int	only_create_file(struct s_dict *dict)
 	return (fd);
 }
 
-void	ft_dwrite_child(char *check, int *p)
+void	ft_dwrite_child(char *check, int *p, t_dict *dict)
 {
 	char	*line;
 
@@ -38,6 +38,7 @@ void	ft_dwrite_child(char *check, int *p)
 		line = readline(">");
 		if (ft_isnull(line, 1))
 			continue ;
+		line = ft_here_strjoin(line, dict);
 		if (ft_strcmp(check, line) == 0)
 			break ;
 		write(p[1], line, ft_zero_byte_strlen(line));

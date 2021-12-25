@@ -42,7 +42,7 @@ int	ft_export(t_dict *dict, char **envp, char **data, int count)
 
 	if (ft_zero_byte_strlen(dict->data) == 0)
 	{
-		ft_put_env_export(dict, envp, data, count);
+		ft_put_enxport_env(dict, envp, data, count);
 		return (SUCCESS);
 	}
 	str = ft_split_vache(dict->data, ' ');

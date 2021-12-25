@@ -14,6 +14,8 @@
 
 int	ft_set_index(char *dict, int i)
 {
+	if (dict[i] == '-')
+		++i;
 	while (dict[i] && ft_isdigit(dict[i]))
 		++i;
 	return (i);

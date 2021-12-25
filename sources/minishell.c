@@ -80,8 +80,7 @@ int	quote_check(char *s, char exp, char exp2)
 		ft_putendl("quote ERROR");
 	else if (ft_strlen(s) > 1 && s[quote_check.i - 1] == '|')
 		ft_putendl("Pipe Error");
-	return ((exp_state && exp_state2) && (ft_strlen(s) > 1
-			&& s[quote_check.i - 1] != '|'));
+	return ((exp_state && exp_state2));
 }
 
 void	ft_setenv(char **envp, char *key, char *value)

@@ -112,7 +112,7 @@ int	exec_in_function(char **arg, t_dict *dict, int count, char **envp_my)
 				(end_of_line == dict->icom || count - 1 == dict->icom));
 		dict->icom++;
 	}
-	ft_search_side_func(dict)(dict, envp_my, arg, count);
+	ft_search_front_func(dict)(dict, envp_my, arg, count);
 	return (1);
 }
 
@@ -120,13 +120,22 @@ int	system_command(char **list, t_dict *dict, char **env_my, int count)
 {
 	int		len;
 	char	*lower_case;
-	int		exeption;
+	int		front_check;
 
+	front_check = 1;
 	while (dict->icom < count)
 	{
 		lower_case = ft_tolower_minishell(list[dict->icom], &len);
 		ft_command_dict(lower_case, list[dict->icom], dict, list);
 		dict->icom = dict->icom + 1;
+		
+		if (dict->fr_command != FNONE && front_check && dict->icom < count)
+		{
+			front_check = 0;
+			dict->last_command = dict->icom;
+			continue ;
+		}
+		front_check = 1;
 		exec_in_function(list, dict, count, env_my);
 		dict->last_command = dict->icom;
 		ft_strdel(&lower_case);

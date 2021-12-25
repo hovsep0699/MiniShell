@@ -17,19 +17,19 @@ int	ft_write_file(struct s_dict *dict, char **envp, char **data, int count)
 	int		fd;
 	char	*name_file;
 
+	dict->util_commant = NONE;
+	if(syntax_error(dict->name_file) == 0)
+		return (2);
+	if (g_signal.is_read == 1)
+		return (0);
 	fd = open(dict->name_file, O_CREAT | O_WRONLY | O_TRUNC, 0664);
-	if (dict->data == NULL)
-	{
-		g_signal.exit_status = 258;
-		close(fd);
-		return (g_signal.exit_status);
-	}
 	if (fd == -1)
 	{
 		errno_print(strerror(errno));
 		g_signal.exit_status = errno;
 		return (g_signal.exit_status);
 	}
+	
 	if ((dup2(fd, STDOUT_FILENO)) < 0)
 		errno_print(strerror(errno));
 	ft_search_builtin_func(dict)(dict, envp, data, count);
@@ -43,6 +43,9 @@ int	ft_read_file(struct	s_dict *dict, char **envp, char **data, int count)
 {
 	int	fd;
 
+	dict->util_commant = NONE;
+	if(syntax_error(dict->name_file) == 0)
+		return (2);
 	fd = open(dict->name_file, O_RDONLY);
 	if (dict->name_file == NULL)
 	{
@@ -69,6 +72,9 @@ int	ft_dwrite_file(struct s_dict *dict, char **envp, char **data, int count)
 {
 	int	fd;
 
+	dict->util_commant = NONE;
+	if(syntax_error(dict->name_file) == 0)
+		return (2);
 	fd = open(dict->name_file, O_CREAT | O_WRONLY | O_APPEND, 0664);
 	if (fd == -1)
 	{
@@ -91,6 +97,9 @@ int	ft_dread_file(struct s_dict *dict, char **envp, char **data, int count)
 	int		p[2];
 	int		id;
 
+	dict->util_commant = NONE;
+	if(syntax_error(dict->data) == 0)
+		return (2);
 	check_str = NULL;
 	check_str = ft_strdup(dict->data);
 	ft_strdel(&dict->data);
@@ -100,7 +109,7 @@ int	ft_dread_file(struct s_dict *dict, char **envp, char **data, int count)
 	g_signal.heredoc = 1;
 	g_signal.pid = id;
 	if (id == 0)
-		ft_dwrite_child(check_str, p);
+		ft_dwrite_child(check_str, p, dict);
 	else
 		ft_dwrite_parent(id, p);
 	g_signal.heredoc = 0;

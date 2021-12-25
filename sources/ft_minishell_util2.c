@@ -29,6 +29,9 @@ void	set_default_gloabl(void)
 
 int	runfileutil(char **argum, t_dict *dict, int i)
 {
+	int count;
+
+	count = ft_vecstrlen(argum);
 	if (dict->name_file != NULL)
 		only_create_file(dict);
 	if (ft_strcmp(argum[i], ">>") == 0)
@@ -39,11 +42,11 @@ int	runfileutil(char **argum, t_dict *dict, int i)
 		dict->util_commant = WRITE;
 	else if (argum[i][0] == '<')
 		dict->util_commant = READ;
-	if (dict->util_commant != DREAD)
+	if (count > dict->icom + 1 && dict->util_commant != DREAD)
 		dict->name_file
 			= ft_equal_strjoin(dict->name_file, dict, argum[i + 1], 1);
-	else if (dict->util_commant != DWRITE || \
-	dict->util_commant != WRITE || dict->util_commant != READ)
+	else if (count > dict->icom + 1 && (dict->util_commant != DWRITE || \
+	dict->util_commant != WRITE || dict->util_commant != READ))
 		dict->data
 			= ft_equal_strjoin(dict->data, dict, argum[i + 1], 1);
 	i += 2;
@@ -67,7 +70,7 @@ int	ft_isalnum_str(char *str, int *i)
 
 int	ft_execendline(char **arg, t_dict *dict, int count, char **envp_my)
 {
-	ft_search_side_func(dict)(dict, envp_my, arg, count);
+	ft_search_front_func(dict)(dict, envp_my, arg, count);
 	dict->icom = dict->icom + 1;
 	ft_strdel(&dict->data);
 	return (SUCCESS);
