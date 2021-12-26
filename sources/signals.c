@@ -42,14 +42,11 @@ void	s_int(int signum)
 		printf(TEXT_GREEN);
 		if (*rl_line_buffer)
 			printf("\b\b\n");
-		// ft_putstr_fd("\b\b\n", 2);
-		// printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 		if (!*copy)
 		{
-			// printf("here\n");
 			printf("  \b\b");
 			printf("\n");
 			printf(TEXT_GREEN);

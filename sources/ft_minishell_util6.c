@@ -15,7 +15,6 @@
 int	runfileutil_bu(char **argum, t_dict *dict, int i)
 {
 	int count;
-
 	count = ft_vecstrlen(argum);
 	if (ft_strcmp(argum[i], ">>") == 0)
 		dict->type_command = DDWRITE;
@@ -24,7 +23,7 @@ int	runfileutil_bu(char **argum, t_dict *dict, int i)
 	else if (argum[i][0] == '>')
 		dict->type_command = WWRITE;
 	else if (argum[i][0] == '<')
-		dict->fr_command = FREAD;
+		dict->fr_command = FFREAD;
 	if (count > dict->icom + 1 && dict->fr_command != FDREAD)
 		dict->fname_file
 			= ft_equal_strjoin(dict->fname_file, dict, argum[i + 1], 1);
@@ -59,25 +58,30 @@ int	ft_read_bu(struct	s_dict *dict, char **envp, char **data, int count)
 {
 	int	fd;
 
-	dict->fr_command = FNONE;
 	if(syntax_error(dict->fname_file) == 0)
 		return (2);
 	fd = open(dict->fname_file, O_RDONLY);
 	if (dict->fname_file == NULL)
 	{
+		dict->fr_command = FNONE;
 		g_signal.exit_status = 258;
 		close(fd);
 		return (g_signal.exit_status);
 	}
 	if (fd == -1)
 	{
+		dict->fr_command = FNONE;
 		ft_putendl_fd(strerror(errno), 2);
 		g_signal.exit_status = errno;
 		return (g_signal.exit_status);
 	}
 	if ((dup2(fd, STDIN_FILE)) < 0)
 		strerror(errno);
-	ft_search_side_func(dict)(dict, envp, data, count);
+//printf("\n%i %i %i %i\n",dict->icom - dict->last_command, dict->icom, dict->last_command,dict->fr_command);
+
+if((dict->icom) - dict->last_command != 2)
+		ft_search_side_func(dict)(dict, envp, data, count);
+	dict->fr_command = FNONE;
 	close(fd);
 	ft_fd_open(dict);
 	g_signal.exit_status = 0;
@@ -124,6 +128,7 @@ int	ft_dread_bu(struct s_dict *dict, char **envp, char **data, int count)
 	else
 		ft_dwrite_parent(id, p);
 	g_signal.heredoc = 0;
+	dict->last_command += 2;
 	if (g_signal.exit_status != 130)
 		ft_search_side_func(dict)(dict, envp, data, count);
 	ft_fd_open(dict);

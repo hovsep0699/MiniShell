@@ -94,6 +94,7 @@ int	exec_in_function(char **arg, t_dict *dict, int count, char **envp_my)
 	end_of_line = 0;
 	while (dict->icom < count)
 	{
+		
 		if (end_of_line + 1 >= dict->icom)
 			end_of_line = ft_vecstr_search3(arg, ";", dict->icom);
 		end_of_line = ft_iszero(end_of_line, count);
@@ -136,6 +137,7 @@ int	system_command(char **list, t_dict *dict, char **env_my, int count)
 		}
 		front_check = 1;
 		exec_in_function(list, dict, count, env_my);
+		ft_def_flag(dict);
 		dict->last_command = dict->icom;
 		ft_strdel(&lower_case);
 	}

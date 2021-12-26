@@ -31,20 +31,34 @@ int	only_create_file(struct s_dict *dict)
 void	ft_dwrite_child(char *check, int *p, t_dict *dict)
 {
 	char	*line;
+	char 	**chek_str;
+	int 	count;
+	int		i;
 
+	i = 0;
 	ft_pipe_close(p[0]);
-	while (true)
+	chek_str = ft_split(check,'\n');
+	count = ft_vecstrlen(chek_str);
+	while(i < count)
 	{
-		line = readline(">");
-		if (ft_isnull(line, 1))
-			continue ;
-		line = ft_here_strjoin(line, dict);
-		if (ft_strcmp(check, line) == 0)
-			break ;
-		write(p[1], line, ft_zero_byte_strlen(line));
-		write(p[1], "\n", 1);
-		ft_strdel(&line);
+		while (true)
+		{
+			line = readline(">");
+			if (ft_isnull(line, 1))
+				continue ;
+			line = ft_here_strjoin(line, dict);
+			if (ft_strcmp(chek_str[i], line) == 0)
+				break ;
+			if(i + 1 == count)
+			{
+				write(p[1], line, ft_zero_byte_strlen(line));
+				write(p[1], "\n", 1);
+			}
+			ft_strdel(&line);
+		}
+		i++;
 	}
+	ft_vecstrdel(&chek_str);
 	ft_strdel(&check);
 	ft_strdel(&line);
 	ft_pipe_close(p[1]);

@@ -91,10 +91,14 @@ char	*enter_split_sapce(char **not_splite)
 	char	*splite_array;
 	char	*str;
 	t_split	splvar;
+	int quoet_exist;
+	int dquoet_exist;
 
 	splvar.i = 0;
 	splvar.state = 0;
 	splvar.j = 0;
+	quoet_exist = 1;
+	dquoet_exist = 1;
 	str = ft_strdup(*(not_splite));
 	if (!str)
 		return (NULL);
@@ -102,8 +106,11 @@ char	*enter_split_sapce(char **not_splite)
 	splite_array = ft_calloc(splvar.len + 1, sizeof(char));
 	while (str[splvar.i])
 	{
+		quoet_exist = quote_check_sp(quoet_exist, dquoet_exist,str[splvar.i], CHAR_QUATES);
+		dquoet_exist = quote_check_sp(dquoet_exist, quoet_exist,str[splvar.i], CHAR_DQUATES);
+	//	printf("\narajin = %i erkrord %i\n",quoet_exist, dquoet_exist);
 		if ((str[splvar.i] == '|' || str[splvar.i] == '>'
-				|| str[splvar.i] == '<' || str[splvar.i] == ';'))
+				|| str[splvar.i] == '<' || str[splvar.i] == ';') && quoet_exist == 1 && dquoet_exist == 1)
 			change_splitem(splite_array, &splvar, str);
 		else
 			splite_array[splvar.j++] = str[splvar.i++];

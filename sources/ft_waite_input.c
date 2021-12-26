@@ -85,12 +85,16 @@ char	*ft_equal_strjoin(char *s1, t_dict *dict, char *pstr, int end)
 	t_eqstr	equ;
 
 	equ = ft_eqdef(s1, pstr);
+	if(dict->util_commant == DREAD)
+		end++;
 	equ.subjoin = (char *)ft_calloc(sizeof(char), (equ.end_index
 				+ (ft_zero_byte_strlen(pstr) - equ.count) + 1 + end));
 	if (equ.end_index > 0)
 		equ.subjoin = ft_strcpy(equ.subjoin, s1);
 	while (pstr[equ.i])
 		ft_join_util2(pstr, &equ, dict, 1);
+	if(dict->util_commant == DREAD)
+		equ.subjoin[ft_zero_byte_strlen(equ.subjoin)] = '\n';
 	if (!end && dict->type_command != UNDEFINED)
 		equ.subjoin[equ.end_index] = ' ';
 	if (!end && dict->type_command == UNDEFINED)

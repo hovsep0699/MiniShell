@@ -123,7 +123,6 @@ int	main(int argv, char **args, char **envp)
 			ft_strdel(&lcmd.line);
 			continue ;
 		}
-		
 		exec_inout(lcmd.line, envp, &lcmd);
 		ft_pipe_close(lcmd.change_fd_in);
 		ft_pipe_close(lcmd.change_fd_out);

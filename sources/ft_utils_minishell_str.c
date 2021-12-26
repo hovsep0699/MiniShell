@@ -102,8 +102,8 @@ int	ft_default_set(t_dict *command)
 	command->change_fd_out = -1;
 	command->type_command = UNDEFINED;
 	command->icom = 0;
-	command->util_commant = NONE;
 	command->fr_command = FNONE;
+	command->util_commant = NONE;
 	command->last_command = 0;
 	command->isparrent = 1;
 	command->name_file = NULL;

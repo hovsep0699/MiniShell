@@ -15,7 +15,6 @@
 t_cmd_func	ft_search_builtin_func(t_dict *lcmd)
 {
 	int	index;
-
 	index = -1;
 	while (++index < MAX_BUILTIN_FUNCS)
 	{
