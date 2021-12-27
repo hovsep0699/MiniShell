@@ -64,5 +64,5 @@ int							ft_ich(char ch);
 int							runfileutil_bu(char **argum, t_dict *dict, int i);
 char						*ft_here_strjoin(char *s1, t_dict *dict);
 void                        ft_def_flag(t_dict *dict);
-
+int                         back_space_exist(char *pstr, t_eqstr	*equ);
 #endif

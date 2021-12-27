@@ -14,9 +14,10 @@
 
 int	ft_print_echo(t_dict *dict, char **envp, char **data, int count)
 {
-	write(1, dict->data, ft_zero_byte_strlen(dict->data));
+	// printf("%s", dict->data);
+	ft_putstr(dict->data);
 	if (dict->echo_option != 1)
-		write(1, "\n", 1);
+		printf("\n");
 	g_signal.exit_status = 0;
 	return (g_signal.exit_status);
 }
@@ -26,24 +27,20 @@ int	ft_exit(t_dict *dict, char **envp_my, char **data, int count)
 	int		exit_status;
 	int		errnum;
 
+	// dup2(STDIN_FILENO, dict->fd[0]);
+	// close(dict->fd[0]);
+	// dup2(STDOUT_FILENO, dict->fd[1]);
+	// close(dict->fd[1]);
+	printf("exit\n");
 	dict->i = 0;
 	errnum = 0;
 	if (!dict->data)
 		g_signal.exit_status = 0;
 	else
 	{
-		printf("\nasd\n");
 		while (dict->data[dict->i] && ft_isspace(dict->data[dict->i]))
 			++dict->i;
-
-		// if (!dict->data[dict->i])
-		// 	errnum = true;
-		// else
-			errnum = ft_exit_status(dict);
-		printf("\n%i\n",errnum);
-
 		errnum = ft_exit_status(dict);
-
 		if (dict->data[dict->i] && !errnum)
 			errnum = 1;
 		if (errnum)
@@ -100,11 +97,23 @@ int	ft_cd(t_dict *dict, char **envp, char **data, int count)
 	int		err;
 	int		end;
 	char	new_path[PATH_MAX];
+	DIR		*current_directory;
+	struct dirent *dp;
 
 	if (!dict->data)
 		return (ft_go_home(dict));
 	if (dict->data[0] == '-' && ft_ret_end(dict) == 0)
 		return (1);
+	dict->data = ft_strtrim(dict->data, " ");
+	dict->data = ft_realloc_strjoin(dict->data, "/");
+	current_directory = opendir(dict->data);
+	dp = readdir(current_directory);
+	if (dp == NULL)
+	{
+		g_signal.exit_status = 1;
+		ft_putendl_fd("No such file or directory", 2);
+		return (1);
+	}
 	err = chdir(dict->data);
 	if (err < 0)
 	{

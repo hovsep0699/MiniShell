@@ -75,11 +75,9 @@ int	ft_read_bu(struct	s_dict *dict, char **envp, char **data, int count)
 		g_signal.exit_status = errno;
 		return (g_signal.exit_status);
 	}
-	if ((dup2(fd, STDIN_FILE)) < 0)
+	if ((dup2(fd, STDIN_FILENO)) < 0)
 		strerror(errno);
-//printf("\n%i %i %i %i\n",dict->icom - dict->last_command, dict->icom, dict->last_command,dict->fr_command);
-
-if((dict->icom) - dict->last_command != 2)
+	if ((dict->icom) - dict->last_command != 2)
 		ft_search_side_func(dict)(dict, envp, data, count);
 	dict->fr_command = FNONE;
 	close(fd);

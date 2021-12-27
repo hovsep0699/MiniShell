@@ -39,12 +39,6 @@ void	ft_command_dict(char *lcase, char *ucase, t_dict *dict, char **list)
 int	ft_exit_status(t_dict *dict)
 {
 	dict->i = ft_set_index(dict->data, dict->i);
-
-	// printf("test i %c\n",dict->data[dict->i]);
-	// printf("hello\n");
-	printf("%iexit\n",dict->i);
-
-	printf("exit\n");
 	if (!ft_isdigit(dict->data[dict->i - 1]))
 		return 1;
 	if (dict->data[dict->i] || dict->i != ft_zero_byte_strlen(dict->data))

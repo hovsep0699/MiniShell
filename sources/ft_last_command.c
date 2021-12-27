@@ -42,8 +42,8 @@ t_dict	ft_dict_constructor(void)
 	t_dict	lcmd;
 
 	lcmd = ft_dict_constructor2();
-	lcmd.fd[0] = dup(STDIN_FILE);
-	lcmd.fd[1] = dup(STDIN_FILE);
+	lcmd.fd[0] = dup(STDIN_FILENO);
+	lcmd.fd[1] = dup(STDOUT_FILENO);
 	lcmd.functions[0] = (t_command_function){ECHO, ft_print_echo};
 	lcmd.functions[1] = (t_command_function){EXPORT, ft_export};
 	lcmd.functions[2] = (t_command_function){UNSET, ft_unset};

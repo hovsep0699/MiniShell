@@ -24,7 +24,7 @@ int	exec_inout(char *line, char **envp, t_dict *last_command)
 	ft_default_set(last_command);
 	pipe_line = ft_pipe(last_command, line);
 	tmp_line = enter_split_sapce(&pipe_line);
-	command = ft_split(tmp_line, ' ');
+	command = ft_split_vache(tmp_line, ' ');
 	count = ft_vecstrlen(command);
 	system_command(command, last_command, envp, count);
 	ft_pipe_close(last_command->change_fd_in);
@@ -71,6 +71,8 @@ int	quote_check(char *s, char exp, char exp2)
 	quote_check.i = 0;
 	while (s[quote_check.i])
 	{
+		if(s[quote_check.i] == '\\')
+			quote_check.i += 2;
 		exp_state = ft_qch(exp_state, exp_state2, s[quote_check.i], exp);
 		exp_state2 = ft_qch(exp_state2, exp_state, s[quote_check.i], exp2);
 		if (s[quote_check.i++] == '|' && exp_state2 && exp_state)
@@ -101,6 +103,8 @@ void	ft_setenv(char **envp, char *key, char *value)
 	ft_string_destructor(&env_key);
 }
 
+
+
 int	main(int argv, char **args, char **envp)
 {
 	t_dict	lcmd;
@@ -110,14 +114,12 @@ int	main(int argv, char **args, char **envp)
 	set_default_gloabl();
 	while (true)
 	{
-		printf(TEXT_GREEN);
 		ft_fd_open(&lcmd);
 		ft_process_signal(&lcmd);
-		lcmd.line = readline("Minishell$> \033[0m");
+		lcmd.line = readline(SHELL_PROMPT);
 		if (ft_isnull(lcmd.line, 0))
 			continue ;
-		// if (ft_zero_byte_strlen(lcmd.line) > 0)
-			add_history(lcmd.line);
+		add_history(lcmd.line);
 		if (quote_check(lcmd.line, CHAR_QUATES, CHAR_DQUATES) == 0)
 		{
 			ft_strdel(&lcmd.line);

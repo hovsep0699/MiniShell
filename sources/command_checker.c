@@ -111,6 +111,7 @@ int	exec_in_function(char **arg, t_dict *dict, int count, char **envp_my)
 			continue ;
 		dict->data = ft_equal_strjoin(dict->data, dict, arg[dict->icom],
 				(end_of_line == dict->icom || count - 1 == dict->icom));
+			//%s\n",dict->data);
 		dict->icom++;
 	}
 	ft_search_front_func(dict)(dict, envp_my, arg, count);

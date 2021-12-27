@@ -59,7 +59,7 @@ int	ft_read_file(struct	s_dict *dict, char **envp, char **data, int count)
 		g_signal.exit_status = errno;
 		return (g_signal.exit_status);
 	}
-	if ((dup2(fd, STDIN_FILE)) < 0)
+	if ((dup2(fd, STDIN_FILENO)) < 0)
 		strerror(errno);
 	ft_search_builtin_func(dict)(dict, envp, data, count);
 	close(fd);
@@ -98,7 +98,7 @@ int	ft_dread_file(struct s_dict *dict, char **envp, char **data, int count)
 	int		id;
 
 	dict->util_commant = NONE;
-	if(syntax_error(dict->data) == 0)
+	if (syntax_error(dict->data) == 0)
 		return (2);
 	check_str = NULL;
 	check_str = ft_strdup(dict->data);

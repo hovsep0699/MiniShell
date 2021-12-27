@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "cstring.h"
 
 size_t	ft_zero_byte_strlen(const char *s)
 {
