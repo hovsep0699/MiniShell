@@ -13,11 +13,13 @@
 #include "minishell.h"
 
 int	ft_set_index(char *dict, int i)
-{
+{printf("\nset =  %s\n",dict);
 	if (dict[i] == '-')
 		++i;
+	printf("\nset =  %i\n",i);
 	while (dict[i] && ft_isdigit(dict[i]))
 		++i;
+		printf("\nset2 =  %i\n",i);
 	return (i);
 }
 

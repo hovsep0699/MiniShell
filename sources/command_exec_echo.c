@@ -31,13 +31,14 @@ int	ft_exit(t_dict *dict, char **envp_my, char **data, int count)
 	if (!dict->data)
 		g_signal.exit_status = 0;
 	else
-	{
+	{printf("\nasd\n");
 		while (dict->data[dict->i] && ft_isspace(dict->data[dict->i]))
 			++dict->i;
 		// if (!dict->data[dict->i])
 		// 	errnum = true;
 		// else
 			errnum = ft_exit_status(dict);
+		printf("\n%i\n",errnum);
 		if (dict->data[dict->i] && !errnum)
 			errnum = 1;
 		if (errnum)
