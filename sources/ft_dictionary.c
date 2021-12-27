@@ -36,7 +36,10 @@ t_dictionary	*ft_env_copy(char **env)
 	i = 0;
 	while (i < envp_count)
 	{
-		tmp = ft_dictionary_create(env[i]);
+		if(ft_strncmp("OLDPWD", env[i], 6) == 0)
+			tmp = ft_dictionary_create("OLDPWD");
+		else
+			tmp = ft_dictionary_create(env[i]);
 		if (tmp == NULL)
 		{
 			tmp = NULL;
@@ -45,7 +48,6 @@ t_dictionary	*ft_env_copy(char **env)
 		i++;
 		ft_dictionaryadd_back(&dict, tmp);
 	}
-	change_item(NULL, find_data_int("OLDPWD=", dict), dict);
 	return (dict);
 }
 
@@ -84,7 +86,7 @@ int	ft_find_element(char *str)
 	int	i;
 
 	i = 0;
-	if (str == NULL || ft_strlen(str) < 2)
+	if (str == NULL)
 		return (-1);
 	while (str[i])
 	{

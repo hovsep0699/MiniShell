@@ -25,6 +25,8 @@ t_dictionary	*ft_dict_mem(int index_item, int index)
 		ft_memdel((void **)&ptr);
 		return (NULL);
 	}
+	if(index_item == 0)
+		return(ptr);
 	ptr->item = (char *)ft_calloc(index_item, sizeof(char));
 	if (ptr == NULL)
 	{
@@ -39,11 +41,9 @@ t_dictionary	*ft_dictionary_create(char *items)
 {
 	t_dictone	dict;
 
-	dict.index_item = 1;
+	dict.index_item = 0;
 	dict.len_items = ft_strlen(items);
 	dict.index = ft_find_element(items);
-	if (dict.index == -1)
-		return (NULL);
 	if (ft_isdigit(items[0]) == 1)
 	{
 		export_error(items);
@@ -59,8 +59,10 @@ t_dictionary	*ft_dictionary_create(char *items)
 	dict.ptr->next = NULL;
 	ft_joins_dict(items, 0, dict.index, dict.ptr->key);
 	dict.ptr->key[dict.index] = '\0';
-	if (dict.len_items != dict.index)
+	if (dict.len_items != dict.index && dict.index != -1)
 		ft_joins_dict(items, dict.index + 1, ft_strlen(items), dict.ptr->item);
+	else
+		dict.ptr->item = NULL; 
 	return (dict.ptr);
 }
 

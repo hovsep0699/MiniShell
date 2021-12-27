@@ -14,21 +14,23 @@
 
 int	runfileutil_bu(char **argum, t_dict *dict, int i)
 {
+	int count;
+	count = ft_vecstrlen(argum);
 	if (ft_strcmp(argum[i], ">>") == 0)
 		dict->type_command = DDWRITE;
 	else if (ft_strcmp(argum[i], "<<") == 0)
-		dict->type_command = DDREAD;
+		dict->fr_command = FDREAD;
 	else if (argum[i][0] == '>')
 		dict->type_command = WWRITE;
 	else if (argum[i][0] == '<')
-		dict->type_command = RREAD;
-	if (dict->type_command != DDREAD)
-		dict->name_file
-			= ft_equal_strjoin(dict->name_file, dict, argum[i + 1], 1);
-	else if (dict->type_command != DDWRITE || \
-	dict->type_command != WWRITE || dict->type_command != RREAD)
-		dict->data
-			= ft_equal_strjoin(dict->data, dict, argum[i + 1], 1);
+		dict->fr_command = FFREAD;
+	if (count > dict->icom + 1 && dict->fr_command != FDREAD)
+		dict->fname_file
+			= ft_equal_strjoin(dict->fname_file, dict, argum[i + 1], 1);
+	else if (count > dict->icom + 1 && (dict->type_command != DDWRITE || \
+	dict->type_command != WWRITE || dict->fr_command != FFREAD))
+		dict->fname_file
+			= ft_equal_strjoin(dict->fname_file, dict, argum[i + 1], 1);
 	i += 2;
 	return (i);
 }
@@ -38,7 +40,9 @@ int	ft_write_bu(struct s_dict *dict, char **envp, char **data, int count)
 	int		fd;
 	char	*name_file;
 
-	fd = open(dict->name_file, O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	if(syntax_error(dict->fname_file) == 0)
+		return (2);
+	fd = open(dict->fname_file, O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	if (fd == -1)
 	{
 		errno_print(strerror(errno));
@@ -52,28 +56,34 @@ int	ft_write_bu(struct s_dict *dict, char **envp, char **data, int count)
 
 int	ft_read_bu(struct	s_dict *dict, char **envp, char **data, int count)
 {
-	int		fd;
-	char	c;
-	int		ret_int;
+	int	fd;
 
-	fd = open(dict->name_file, O_RDONLY);
+	if(syntax_error(dict->fname_file) == 0)
+		return (2);
+	fd = open(dict->fname_file, O_RDONLY);
+	if (dict->fname_file == NULL)
+	{
+		dict->fr_command = FNONE;
+		g_signal.exit_status = 258;
+		close(fd);
+		return (g_signal.exit_status);
+	}
 	if (fd == -1)
 	{
+		dict->fr_command = FNONE;
 		ft_putendl_fd(strerror(errno), 2);
 		g_signal.exit_status = errno;
 		return (g_signal.exit_status);
 	}
-	while (true)
-	{
-		ret_int = read(fd, &c, 1);
-		if (ret_int == -1)
-			return (write_ernno(strerror(errno), errno, fd));
-		if (ret_int == 0)
-			break ;
-		write(1, &c, 1);
-	}
-	ft_putchar('\n');
+	if ((dup2(fd, STDIN_FILE)) < 0)
+		strerror(errno);
+//printf("\n%i %i %i %i\n",dict->icom - dict->last_command, dict->icom, dict->last_command,dict->fr_command);
+
+if((dict->icom) - dict->last_command != 2)
+		ft_search_side_func(dict)(dict, envp, data, count);
+	dict->fr_command = FNONE;
 	close(fd);
+	ft_fd_open(dict);
 	g_signal.exit_status = 0;
 	return (1);
 }
@@ -82,7 +92,9 @@ int	ft_dwrite_bu(struct s_dict *dict, char **envp, char **data, int count)
 {
 	int	fd;
 
-	fd = open(dict->name_file, O_CREAT | O_WRONLY | O_APPEND, 0664);
+	if(syntax_error(dict->fname_file) == 0)
+		return (2);
+	fd = open(dict->fname_file, O_CREAT | O_WRONLY | O_APPEND, 0664);
 	if (fd == -1)
 	{
 		ft_putendl_fd(strerror(errno), 2);
@@ -97,19 +109,28 @@ int	ft_dwrite_bu(struct s_dict *dict, char **envp, char **data, int count)
 int	ft_dread_bu(struct s_dict *dict, char **envp, char **data, int count)
 {
 	char	*check_str;
+	int		p[2];
 	int		id;
 
+	dict->fr_command = FNONE;
+	if(syntax_error(dict->fname_file) == 0)
+		return (2);
 	check_str = NULL;
-	check_str = ft_strdup(dict->data);
-	ft_strdel(&dict->data);
+	check_str = ft_strdup(dict->fname_file);
+	ft_strdel(&dict->fname_file);
+	pipe(p);
 	id = fork();
 	signal(SIGQUIT, SIG_IGN);
 	g_signal.heredoc = 1;
 	g_signal.pid = id;
 	if (id == 0)
-		ft_dbu_child(check_str);
+		ft_dwrite_child(check_str, p, dict);
 	else
-		waitpid(id, NULL, 0);
+		ft_dwrite_parent(id, p);
 	g_signal.heredoc = 0;
+	dict->last_command += 2;
+	if (g_signal.exit_status != 130)
+		ft_search_side_func(dict)(dict, envp, data, count);
+	ft_fd_open(dict);
 	return (1);
 }

@@ -31,7 +31,7 @@ void	ft_command_dict(char *lcase, char *ucase, t_dict *dict, char **list)
 	else if ((!ft_strcmp(lcase, ">>")
 			|| !ft_strcmp(lcase, "<<")
 			|| !ft_strcmp(lcase, ">") || !ft_strcmp(lcase, "<")))
-		dict->icom = runfileutil_bu(list, dict, dict->icom);
+		dict->icom = runfileutil_bu(list, dict, dict->icom) - 1;
 	else
 		dict->type_command = UNDEFINED;
 }
@@ -39,9 +39,12 @@ void	ft_command_dict(char *lcase, char *ucase, t_dict *dict, char **list)
 int	ft_exit_status(t_dict *dict)
 {
 	dict->i = ft_set_index(dict->data, dict->i);
+
 	// printf("test i %c\n",dict->data[dict->i]);
 	// printf("hello\n");
 	printf("%iexit\n",dict->i);
+
+	printf("exit\n");
 	if (!ft_isdigit(dict->data[dict->i - 1]))
 		return 1;
 	if (dict->data[dict->i] || dict->i != ft_zero_byte_strlen(dict->data))
@@ -62,7 +65,7 @@ void	ft_putcommanderror(t_dict *dict, int errnum)
 	}
 	else
 		ft_putstr_fd("too many arguments\n", 2);
-	g_signal.exit_status = COMMAND_NOT_FOUND;
+	g_signal.exit_status = MAX_EXIT_STATUS;
 }
 
 int	ft_dict_init(t_dict *dict, int end_index, char *str)

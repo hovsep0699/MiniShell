@@ -27,6 +27,8 @@ void	s_quit(int signum)
 void	s_int(int signum)
 {
 	(void)signum;
+	// printf("test: %x           \n\n", *rl_line_buffer);
+	char *copy = ft_strdup(rl_line_buffer);
 	if (g_signal.heredoc && g_signal.pid == 0)
 	{
 		printf(TEXT_GREEN);
@@ -38,11 +40,21 @@ void	s_int(int signum)
 	if (g_signal.pid == -1)
 	{
 		printf(TEXT_GREEN);
-		printf("\b\b\n");
-		// ft_putstr_fd("\b\b\n", 2);
+		if (*rl_line_buffer)
+			printf("\b\b\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+		if (!*copy)
+		{
+			printf("  \b\b");
+			printf("\n");
+			printf(TEXT_GREEN);
+			printf("Minishell$> ");
+			printf(TEXT_WHITE);
+		}
+		// printf("Minishell$> ");
+		// printf("hi\n");
 		g_signal.exit_status = 1;
 	}
 	else
@@ -56,6 +68,7 @@ void	s_int(int signum)
 		rl_redisplay();
 		g_signal.exit_status = 130;
 	}
+	ft_strdel(&copy);
 }
 
 int	ft_process_signal(t_dict *lcmd)

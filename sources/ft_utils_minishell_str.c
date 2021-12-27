@@ -95,16 +95,20 @@ int	ft_default_set(t_dict *command)
 {
 	command->echo_option = 0;
 	ft_strdel(&command->data);
+	ft_strdel(&command->name_file);
+	ft_strdel(&command->fname_file);
 	command->quote_staet_new = 0;
 	command->change_fd_in = -1;
 	command->change_fd_out = -1;
 	command->type_command = UNDEFINED;
 	command->icom = 0;
+	command->fr_command = FNONE;
 	command->util_commant = NONE;
 	command->last_command = 0;
 	command->isparrent = 1;
 	command->name_file = NULL;
 	g_signal.heredoc = 0;
-	command->name_file = NULL;
+	command->fname_file = NULL;
+	g_signal.is_read = 0;
 	return (1);
 }

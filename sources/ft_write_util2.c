@@ -37,8 +37,6 @@ void	ft_dbu_child(char *check)
 		newchar = ft_realloc_strjoin(newchar, "\n");
 		ft_strdel(&line);
 	}
-	write(1, newchar, ft_zero_byte_strlen(newchar) - 1);
-	write(1, "\n", 1);
 	ft_strdel(&check);
 	ft_strdel(&line);
 	ft_strdel(&newchar);

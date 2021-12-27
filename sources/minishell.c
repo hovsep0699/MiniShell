@@ -114,16 +114,15 @@ int	main(int argv, char **args, char **envp)
 		ft_fd_open(&lcmd);
 		ft_process_signal(&lcmd);
 		lcmd.line = readline("Minishell$> \033[0m");
-		// printf(TEXT_WHITE);
 		if (ft_isnull(lcmd.line, 0))
 			continue ;
-		add_history(lcmd.line);
+		// if (ft_zero_byte_strlen(lcmd.line) > 0)
+			add_history(lcmd.line);
 		if (quote_check(lcmd.line, CHAR_QUATES, CHAR_DQUATES) == 0)
 		{
 			ft_strdel(&lcmd.line);
 			continue ;
 		}
-		
 		exec_inout(lcmd.line, envp, &lcmd);
 		ft_pipe_close(lcmd.change_fd_in);
 		ft_pipe_close(lcmd.change_fd_out);

@@ -12,6 +12,29 @@
 
 #include "minishell.h"
 
+// for expand macros
+
+/*
+static int w_int(int status)
+{
+	return (*(int *)&(status));
+}
+
+static int w_status(int status)
+{
+	return (w_int(status) & 0177);
+}
+static bool if_exited(int status)
+{
+	return (w_status(status) == 0);
+}
+
+static int get_exit_status(int status)
+{
+	return ((w_int(status) >> 8) & 0x000000ff);
+}
+*/
+
 char	**get_path(t_dict *dictioanry)
 {
 	char	**split_path;
@@ -55,7 +78,7 @@ void	ft_exec_abs(t_dict *dic, char **envp, char **data, char **data_sp)
 
 void	ft_ext_child(t_dict *dic, char **envp, char **data)
 {
-	// printf("dicdata: %s\n", dic->data);
+	//printf("dicdata: %s\n", dic->data);
 	char	**av;
 	char	*tmp_path;
 	char	**sp_p;
@@ -82,12 +105,14 @@ void	ft_ext_child(t_dict *dic, char **envp, char **data)
 	exit(g_signal.exit_status);
 }
 
-int	ft_external(t_dict *dictioanry, char **envp, char **data, int count)
+int	ft_external(t_dict *dict, char **envp, char **data, int count)
 {
 	int		fd[2];
 	pid_t	ret_fork;
 	int		i;
-	// printf("test bigdata: %s\n", dictioanry->data);
+	int		status;
+
+//printf("\n%i %i %i %i\n",dict->icom - dict->last_command, dict->icom, dict->last_command,dict->fr_command);
 	signal(SIGQUIT, s_quit);
 	ret_fork = fork();
 	g_signal.pid = ret_fork;
@@ -97,10 +122,12 @@ int	ft_external(t_dict *dictioanry, char **envp, char **data, int count)
 		g_signal.exit_status = errno;
 		return (errno);
 	}
-	dictioanry->is_parent = ret_fork;
+	dict->is_parent = ret_fork;
 	if (ret_fork == CHILD_PROC)
-		ft_ext_child(dictioanry, envp, data);
+		ft_ext_child(dict, envp, data);
 	else
-		waitpid(ret_fork, NULL, 0);
+		waitpid(ret_fork, &status, 0);
+	if (WIFEXITED(status))
+		g_signal.exit_status = WEXITSTATUS(status);
 	return (g_signal.exit_status);
 }

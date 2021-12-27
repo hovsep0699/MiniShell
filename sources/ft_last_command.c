@@ -28,6 +28,7 @@ t_dict	ft_dict_constructor2(void)
 	lcmd.line = NULL;
 	lcmd.output_data = NULL;
 	lcmd.name_file = NULL;
+	lcmd.fname_file = NULL;
 	lcmd.change_fd_in = -1;
 	lcmd.change_fd_out = -1;
 	lcmd.echo_option = 0;
@@ -51,10 +52,11 @@ t_dict	ft_dict_constructor(void)
 	lcmd.functions[5] = (t_command_function){CD, ft_cd};
 	lcmd.functions[6] = (t_command_function){PWD, ft_pwd};
 	lcmd.functions[7] = (t_command_function){WWRITE, ft_write_bu};
-	lcmd.functions[8] = (t_command_function){RREAD, ft_read_bu};
-	lcmd.functions[9] = (t_command_function){DDWRITE, ft_dwrite_bu};
-	lcmd.functions[10] = (t_command_function){DDREAD, ft_dread_bu};
-	lcmd.functions[11] = (t_command_function){UNDEFINED, ft_external};
+	lcmd.functions[8] = (t_command_function){DDWRITE, ft_dwrite_bu};
+	lcmd.functions[9] = (t_command_function){UNDEFINED, ft_external};
+	lcmd.front_function[0] = (t_front_function){FFREAD, ft_read_bu};
+	lcmd.front_function[1] = (t_front_function){FDREAD, ft_dread_bu};
+	lcmd.front_function[2] = (t_front_function){FNONE, NULL};
 	lcmd.side_functions[0] = (t_command_side_function){WRITE, ft_write_file};
 	lcmd.side_functions[1] = (t_command_side_function){READ, ft_read_file};
 	lcmd.side_functions[2]
@@ -70,5 +72,6 @@ void	ft_dict_destructor(t_dict *lcmd)
 	ft_strdel(&lcmd->data);
 	ft_strdel(&lcmd->output_data);
 	ft_strdel(&lcmd->name_file);
+	ft_strdel(&lcmd->fname_file);
 	ft_dictionary_destructor(lcmd->variable_dic);
 }

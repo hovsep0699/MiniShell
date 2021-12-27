@@ -21,6 +21,11 @@ int	ft_put_env_export(t_dict *dictionary, char **envp, char **data, int count)
 	tmp = dictionary->variable_dic;
 	while (tmp != NULL)
 	{
+		if(tmp->item == NULL)
+		{
+			tmp = tmp->next;
+			continue;
+		}
 		ft_putstr_fd(tmp->key, 1);
 		ft_putstr_fd("=", 1);
 		if (tmp->item != NULL && tmp->item[0] != '\0')
@@ -42,7 +47,7 @@ int	ft_export(t_dict *dict, char **envp, char **data, int count)
 
 	if (ft_zero_byte_strlen(dict->data) == 0)
 	{
-		ft_put_env_export(dict, envp, data, count);
+		ft_put_enxport_env(dict, envp, data, count);
 		return (SUCCESS);
 	}
 	str = ft_split_vache(dict->data, ' ');
