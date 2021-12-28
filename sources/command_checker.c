@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 22:24:54 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/07 11:50:22 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/28 21:24:10 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,11 @@ int	ft_count_quote(char *s)
 
 int	exec_in_function(char **arg, t_dict *dict, int count, char **envp_my)
 {
-	int	end_of_line;
+	int			end_of_line;
 
 	end_of_line = 0;
 	while (dict->icom < count)
 	{
-		
 		if (end_of_line + 1 >= dict->icom)
 			end_of_line = ft_vecstr_search3(arg, ";", dict->icom);
 		end_of_line = ft_iszero(end_of_line, count);
@@ -111,10 +110,9 @@ int	exec_in_function(char **arg, t_dict *dict, int count, char **envp_my)
 			continue ;
 		dict->data = ft_equal_strjoin(dict->data, dict, arg[dict->icom],
 				(end_of_line == dict->icom || count - 1 == dict->icom));
-			//%s\n",dict->data);
 		dict->icom++;
 	}
-	ft_search_front_func(dict)(dict, envp_my, arg, count);
+	create_norm_fix_func(arg, dict, count, envp_my);
 	return (1);
 }
 

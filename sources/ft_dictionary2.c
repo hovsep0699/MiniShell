@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:44:26 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 13:52:16 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/28 22:04:25 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_dictionary	*ft_dict_mem(int index_item, int index)
 		return (NULL);
 	}
 	if (index_item == 0)
-		return(ptr);
+		return (ptr);
 	ptr->item = (char *)ft_calloc(index_item, sizeof(char));
 	if (ptr == NULL)
 	{
@@ -62,7 +62,7 @@ t_dictionary	*ft_dictionary_create(char *items)
 	if (dict.len_items != dict.index && dict.index != -1)
 		ft_joins_dict(items, dict.index + 1, ft_strlen(items), dict.ptr->item);
 	else
-		dict.ptr->item = NULL; 
+		dict.ptr->item = NULL;
 	return (dict.ptr);
 }
 

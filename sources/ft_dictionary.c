@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:44:07 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 13:40:47 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/28 22:03:40 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_dictionary	*ft_env_copy(char **env)
 	i = 0;
 	while (i < envp_count)
 	{
-		if(ft_strncmp("OLDPWD", env[i], 6) == 0)
+		if (ft_strncmp("OLDPWD", env[i], 6) == 0)
 			tmp = ft_dictionary_create("OLDPWD");
 		else
 			tmp = ft_dictionary_create(env[i]);

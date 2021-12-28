@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:24 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/07 12:25:12 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/28 22:09:34 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 t_cmd_func	ft_search_builtin_func(t_dict *lcmd)
 {
 	int	index;
+
 	index = -1;
 	while (++index < MAX_BUILTIN_FUNCS)
 	{
@@ -47,8 +48,7 @@ t_cmd_func	ft_search_front_func(t_dict *lcmd)
 	{
 		if (lcmd->fr_command == lcmd->front_function[index].name
 			&& lcmd->fr_command != FNONE)
-				return (lcmd->front_function[index].function);
+			return (lcmd->front_function[index].function);
 	}
 	return (ft_search_side_func(lcmd));
 }
-

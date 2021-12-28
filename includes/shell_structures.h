@@ -1,7 +1,19 @@
-#ifndef SHELL_STRUCTURES_H
-#define SHELL_STRUCTURES_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shell_structures.h                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/28 21:00:56 by vgaspary          #+#    #+#             */
+/*   Updated: 2021/12/28 21:06:25 by vgaspary         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "shell_defines.h"
+#ifndef SHELL_STRUCTURES_H
+# define SHELL_STRUCTURES_H
+
+# include "shell_defines.h"
 
 enum e_builtin_commands
 {
@@ -143,7 +155,7 @@ struct	s_dict
 	t_dictionary			*variable_dic;
 	t_command_function		functions[MAX_BUILTIN_FUNCS];
 	t_command_side_function	side_functions[MAX_SIDE_FUNCS];
-	t_front_function 		front_function[MAX_FRONT_FUNCS];
+	t_front_function		front_function[MAX_FRONT_FUNCS];
 	int						i;
 };
 

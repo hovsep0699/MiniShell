@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 21:39:30 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 21:19:02 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/28 21:59:13 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	ft_put_env_export(t_dict *dictionary, char **envp, char **data, int count)
 	tmp = dictionary->variable_dic;
 	while (tmp != NULL)
 	{
-		if(tmp->item == NULL)
+		if (tmp->item == NULL)
 		{
 			tmp = tmp->next;
-			continue;
+			continue ;
 		}
 		ft_putstr_fd(tmp->key, 1);
 		ft_putstr_fd("=", 1);

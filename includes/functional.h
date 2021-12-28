@@ -6,27 +6,26 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 18:05:04 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/30 18:05:05 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/28 21:07:45 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FUNCTIONAL_H
 # define FUNCTIONAL_H
 
-#include "shell_structures.h"
+# include "shell_structures.h"
 
 t_command_side_function		ft_side_funcs_default_constructor(void);
 t_command_side_function		ft_scon(t_side_commands name, t_cmd_func cmd);
 t_command_function			func_condef(void);
 t_command_function			func_con(t_builtin_commands name, t_cmd_func cmd);
-t_cmd_func                  ft_search_front_func(t_dict *lcmd);
+t_cmd_func					ft_search_front_func(t_dict *lcmd);
 t_cmd_func					ft_search_side_func(t_dict *lcmd);
 t_cmd_func					ft_search_builtin_func(t_dict *lcmd);
 
-
 int							\
 system_command(char **command, t_dict *command_list, char **envp_my, int count);
-int                         \
+int							\
 ft_write_file(struct s_dict *dict, char **envp, char **data, int count);
 int							\
 ft_cd(t_dict *dict, char **envp, char **data, int count);

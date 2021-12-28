@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 20:24:42 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 21:45:37 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/28 22:07:42 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	export_check(char *str, int len)
 	exp = def_exp();
 	while (str[exp.i])
 	{
-		//printf("\n%c\n",str[exp.i]);
-		if (!(ft_isalnum(str[exp.i]) || str[exp.i] == '_' || str[exp.i] == '=') && exp.state != 1)
-			 return (1);
+		if (!(ft_isalnum(str[exp.i]) || str[exp.i] == '_' \
+		|| str[exp.i] == '=') && exp.state != 1)
+			return (1);
 		if (str[exp.i] == '=')
 		{
 			exp.state = 1;
@@ -55,6 +55,6 @@ int	ft_ich(char ch)
 {
 	int	exist;
 
-	exist = ft_isalnum(ch) || ch == '_';
+	exist = (ft_isalnum(ch) || ch == '_');
 	return (exist);
 }

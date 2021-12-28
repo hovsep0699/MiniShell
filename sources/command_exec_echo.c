@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 21:16:26 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 15:51:39 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/28 21:57:11 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	ft_print_echo(t_dict *dict, char **envp, char **data, int count)
 {
-	// printf("%s", dict->data);
 	ft_putstr(dict->data);
 	if (dict->echo_option != 1)
 		printf("\n");
@@ -27,10 +26,6 @@ int	ft_exit(t_dict *dict, char **envp_my, char **data, int count)
 	int		exit_status;
 	int		errnum;
 
-	// dup2(STDIN_FILENO, dict->fd[0]);
-	// close(dict->fd[0]);
-	// dup2(STDOUT_FILENO, dict->fd[1]);
-	// close(dict->fd[1]);
 	printf("exit\n");
 	dict->i = 0;
 	errnum = 0;
@@ -48,20 +43,7 @@ int	ft_exit(t_dict *dict, char **envp_my, char **data, int count)
 		else
 			g_signal.exit_status = ft_atoi(dict->data);
 	}
-	if (errnum < 2)
-	{
-		ft_vecstrdel(&data);
-		ft_dict_destructor(dict);
-		while (ft_range(g_signal.exit_status, 0, 255))
-		{
-			if (g_signal.exit_status < 0)
-				g_signal.exit_status += 256;
-			else
-				g_signal.exit_status -= 256;
-		}
-		exit (g_signal.exit_status);
-	}
-	g_signal.exit_status = 1;
+	create_exit_norm_error(errnum, data, dict);
 	return (1);
 }
 
@@ -82,10 +64,10 @@ int	ft_go_home(t_dict *command_shablon)
 		ft_putendl_fd(strerror(errno), 2);
 		return (errno);
 	}
-	change_item(find_data("PWD", command_shablon->variable_dic),
+	change_item_dict(find_data("PWD", command_shablon->variable_dic),
 		find_data_int("OLDPWD=", command_shablon->variable_dic),
 		command_shablon->variable_dic);
-	change_item(find_data("HOME", command_shablon->variable_dic),
+	change_item_dict(find_data("HOME", command_shablon->variable_dic),
 		find_data_int("PWD=", command_shablon->variable_dic),
 		command_shablon->variable_dic);
 	g_signal.exit_status = 0;
@@ -94,32 +76,15 @@ int	ft_go_home(t_dict *command_shablon)
 
 int	ft_cd(t_dict *dict, char **envp, char **data, int count)
 {
-	int		err;
-	int		end;
-	char	new_path[PATH_MAX];
-	DIR		*current_directory;
-	struct dirent *dp;
+	int				err;
+	char			new_path[PATH_MAX];
+	int				ret;
 
 	if (!dict->data)
 		return (ft_go_home(dict));
-	if (dict->data[0] == '-' && ft_ret_end(dict) == 0)
+	ret = create_cd_norm_error(dict);
+	if (ret)
 		return (1);
-	dict->data = ft_strtrim(dict->data, " ");
-	dict->data = ft_realloc_strjoin(dict->data, "/");
-	current_directory = opendir(dict->data);
-	if (!current_directory)
-	{
-		g_signal.exit_status = 1;
-		ft_putendl_fd("sh: cd: No such file or directory", 2);
-		return (1);
-	}
-	dp = readdir(current_directory);
-	if (!dp)
-	{
-		g_signal.exit_status = 1;
-		ft_putendl_fd("sh: cd: No such file or directory", 2);
-		return (1);
-	}
 	err = chdir(dict->data);
 	if (err < 0)
 	{
@@ -128,10 +93,10 @@ int	ft_cd(t_dict *dict, char **envp, char **data, int count)
 		return (errno);
 	}
 	getcwd(new_path, PATH_MAX);
-	change_item(find_data("PWD", dict->variable_dic),
+	change_item_dict(find_data("PWD", dict->variable_dic),
 		find_data_int("OLDPWD=", dict->variable_dic),
 		dict->variable_dic);
-	change_item(new_path, find_data_int("PWD=", dict->variable_dic),
+	change_item_dict(new_path, find_data_int("PWD=", dict->variable_dic),
 		dict->variable_dic);
 	g_signal.exit_status = 0;
 	return (g_signal.exit_status);

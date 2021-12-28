@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shell_defines.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/28 21:00:44 by vgaspary          #+#    #+#             */
+/*   Updated: 2021/12/28 21:10:49 by vgaspary         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SHELL_DEFINES_H
-#define SHELL_DEFINES_H
+# define SHELL_DEFINES_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -26,26 +38,16 @@
 # define CHILD_PROC 0
 # define CHAR_QUATES 39
 # define CHAR_DQUATES 34
-// # define TEXT_RED "\033[0;31m"
-// # define TEXT_BLACK "\033[0;30m"
-// # define TEXT_GREEN "\033[0;32m"
-// # define TEXT_YELLOW "\033[0;33m"
-// # define TEXT_BLUE "\033[0;34m"
-// # define TEXT_PURPLE "\033[0;35m"
-// # define TEXT_CYAN "\033[0;34m"
-// # define TEXT_WHITE "\033[0;37m"
 # define SIGHUP  1
 # define SIGINT  2
 # define SIGQUIT 3
 # define SIGILL  4
 # define SIGTRAP 5
 # define SIGABRT 6
-
 # define MAX_BUILTIN_FUNCS 10
 # define MAX_SIDE_FUNCS 6
 # define MAX_FRONT_FUNCS 3
 # define SHELL_PROMPT "$> "
-
 
 typedef struct s_dictionary				t_dictionary;
 typedef struct s_front_function			t_front_function;

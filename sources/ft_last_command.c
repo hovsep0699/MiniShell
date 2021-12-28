@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:35 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/07 12:28:31 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/28 22:12:24 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,7 @@ t_dict	ft_dict_constructor(void)
 	lcmd = ft_dict_constructor2();
 	lcmd.fd[0] = dup(STDIN_FILENO);
 	lcmd.fd[1] = dup(STDOUT_FILENO);
-	lcmd.functions[0] = (t_command_function){ECHO, ft_print_echo};
-	lcmd.functions[1] = (t_command_function){EXPORT, ft_export};
-	lcmd.functions[2] = (t_command_function){UNSET, ft_unset};
-	lcmd.functions[3] = (t_command_function){EXIT, ft_exit};
-	lcmd.functions[4] = (t_command_function){ENV, ft_put_env_export};
-	lcmd.functions[5] = (t_command_function){CD, ft_cd};
-	lcmd.functions[6] = (t_command_function){PWD, ft_pwd};
-	lcmd.functions[7] = (t_command_function){WWRITE, ft_write_bu};
-	lcmd.functions[8] = (t_command_function){DDWRITE, ft_dwrite_bu};
-	lcmd.functions[9] = (t_command_function){UNDEFINED, ft_external};
+	create_dict_init_norm_error(&lcmd);
 	lcmd.front_function[0] = (t_front_function){FFREAD, ft_read_bu};
 	lcmd.front_function[1] = (t_front_function){FDREAD, ft_dread_bu};
 	lcmd.front_function[2] = (t_front_function){FNONE, NULL};

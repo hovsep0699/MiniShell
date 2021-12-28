@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:56 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/07 12:39:38 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/28 22:14:55 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_exit_status(t_dict *dict)
 {
 	dict->i = ft_set_index(dict->data, dict->i);
 	if (!ft_isdigit(dict->data[dict->i - 1]))
-		return 1;
+		return (1);
 	if (dict->data[dict->i] || dict->i != ft_zero_byte_strlen(dict->data))
 		return (2);
 	while (dict->data[++dict->i])

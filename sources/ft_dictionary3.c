@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:44:40 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 20:24:50 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/28 22:04:43 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ int	find_data_int(char *key, t_dictionary *command)
 	while (key[j] && key[j] != '=')
 		j++;
 	key_len = ft_strlen(key);
-	// printf("\n %d %d\n", j, key_len);
 	while (command != NULL)
 	{
-		// printf("\nkey: %s\n", command->key);
 		dict_len = ft_strlen(command->key);
 		if (j == dict_len && ft_strncmp(key, command->key, j) == 0)
 			return (i);
@@ -48,7 +46,6 @@ void	change_item(char *new_item, int key_index, t_dictionary *dict)
 		while (new_item[j] && new_item[j] != '=')
 			j++;
 		len_new_item = ft_zero_byte_strlen(new_item);
-
 		if (j == len_new_item)
 			return ;
 		else
@@ -62,6 +59,20 @@ void	change_item(char *new_item, int key_index, t_dictionary *dict)
 	ft_strdel(&dict->item);
 	if (new_item)
 		dict->item = ft_strdup(new_item + j);
+	else
+		dict->item = NULL;
+}
+
+void	change_item_dict(char *new_item, int key_index, t_dictionary *dict)
+{
+	while (key_index != 0)
+	{
+		dict = dict->next;
+		key_index--;
+	}
+	ft_strdel(&dict->item);
+	if (new_item)
+		dict->item = ft_strdup(new_item);
 	else
 		dict->item = NULL;
 }

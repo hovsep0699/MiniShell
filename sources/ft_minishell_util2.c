@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:48 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/07 12:46:35 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/28 22:14:07 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	set_default_gloabl(void)
 
 int	runfileutil(char **argum, t_dict *dict, int i)
 {
-	int count;
+	int	count;
 
 	count = ft_vecstrlen(argum);
 	if (dict->name_file != NULL)
@@ -70,7 +70,10 @@ int	ft_isalnum_str(char *str, int *i)
 
 int	ft_execendline(char **arg, t_dict *dict, int count, char **envp_my)
 {
-	ft_search_front_func(dict)(dict, envp_my, arg, count);
+	t_cmd_func	cmd;
+
+	cmd = ft_search_front_func(dict);
+	cmd(dict, envp_my, arg, count);
 	dict->icom = dict->icom + 1;
 	ft_strdel(&dict->data);
 	return (SUCCESS);

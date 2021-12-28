@@ -1,7 +1,19 @@
-#ifndef DICTIONARY_H
-#define DICTIONARY_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dictionary.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/28 21:00:27 by vgaspary          #+#    #+#             */
+/*   Updated: 2021/12/28 21:09:45 by vgaspary         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "shell_structures.h"
+#ifndef DICTIONARY_H
+# define DICTIONARY_H
+
+# include "shell_structures.h"
 
 t_dictionary				*ft_dictionarylast(t_dictionary *lst);
 t_dictionary				*ft_dictionary_create(char *items);
@@ -23,11 +35,12 @@ int							\
 ft_dict_init(t_dict *dict, int end_index, char *str);
 void						ft_command_dict(char *lower_case, \
 char *upper_case, t_dict *dict, char **list);
-int						ft_exit_status(t_dict *dict);
+int							ft_exit_status(t_dict *dict);
 int							runfileutil(char **argum, t_dict *dict, int i);
 int							\
 ft_execendline(char **arg, t_dict *dict, int count, char **envp_my);
-int	ft_put_enxport_env(t_dict *dictionary, char **envp, char **data, int count);
+int							\
+ft_put_enxport_env(t_dict *dictionary, char **envp, char **data, int count);
 int							\
 ft_put_env_export(t_dict *dict, char **env, char **data, int count);
 t_dictionary				*ft_env_copy(char **env);

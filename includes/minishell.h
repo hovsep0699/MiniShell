@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 22:30:20 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/07 13:00:53 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/28 22:12:02 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,14 @@ int							export_check(char *str, int len);
 int							ft_ich(char ch);
 int							runfileutil_bu(char **argum, t_dict *dict, int i);
 char						*ft_here_strjoin(char *s1, t_dict *dict);
-void                        ft_def_flag(t_dict *dict);
-int                         back_space_exist(char *pstr, t_eqstr	*equ);
+void						ft_def_flag(t_dict *dict);
+int							back_space_exist(char *pstr, t_eqstr *equ);
+void						\
+create_norm_fix_func(char **arg, t_dict *dict, int count, char **envp);
+void						\
+create_exit_norm_error(int errnum, char **data, t_dict *dict);
+int							create_cd_norm_error(t_dict *dict);
+void						change_item_dict(char *new_item, int key_index, t_dictionary *dict);
+void						create_dict_init_norm_error(t_dict *lcmd);
+
 #endif
