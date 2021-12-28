@@ -30,7 +30,7 @@ int	exec_inout(char *line, char **envp, t_dict *last_command)
 	ft_pipe_close(last_command->change_fd_in);
 	ft_pipe_close(last_command->change_fd_out);
 	ft_fd_open(last_command);
-	if (last_command->isparrent == 0)
+	if (!last_command->isparrent)
 		exit(0);
 	ft_strdel(&tmp_line);
 	ft_strdel(&pipe_line);
@@ -79,9 +79,9 @@ int	quote_check(char *s, char exp, char exp2)
 			quote_check.pipe_problem++;
 	}
 	if (!(exp_state && exp_state2))
-		printf("quote ERROR\n");
+		printf("sh: quote ERROR\n");
 	else if ((ft_strlen(s) > 0 && s[quote_check.i - 1] == '|') || s[0] == '|')
-		printf("Pipe Error\n");
+		printf("sh: Pipe Error\n");
 	return (exp_state2 && exp_state && !((ft_strlen(s) > 0 && s[quote_check.i - 1] == '|') || s[0] == '|'));
 }
 

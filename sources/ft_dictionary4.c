@@ -16,11 +16,7 @@ int	check_state(char c, int state)
 {
 	if (c == '=')
 		return (1);
-	if ((ft_isspace(c) && state == 1) \
-	 || !(ft_isalnum(c) || c == '_'))
-		 return (1);
-	else
-		return (0);
+	return (0);
 }
 
 t_split	def_exp(void)
@@ -40,6 +36,9 @@ int	export_check(char *str, int len)
 	exp = def_exp();
 	while (str[exp.i])
 	{
+		//printf("\n%c\n",str[exp.i]);
+		if (!(ft_isalnum(str[exp.i]) || str[exp.i] == '_' || str[exp.i] == '=') && exp.state != 1)
+			 return (1);
 		if (str[exp.i] == '=')
 		{
 			exp.state = 1;

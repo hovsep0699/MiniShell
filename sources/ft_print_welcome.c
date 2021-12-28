@@ -30,7 +30,7 @@ int	print_pipe(int pipe_count)
 
 void	export_error(char *str_exeption)
 {
-	ft_putstr_fd("export: not an identifier: ", 2);
+	ft_putstr_fd("sh: export: not an identifier: ", 2);
 	ft_putstr_fd(str_exeption, 2);
 	ft_putchar_fd('\n', 2);
 }

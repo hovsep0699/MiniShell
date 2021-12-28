@@ -30,7 +30,7 @@ int syntax_error(char *str)
 {
 	if(str == NULL)
 	{
-		ft_putstr_fd("syntax error near unexpected token `newline'\n" , 2);
+		ft_putstr_fd("sh: syntax error near unexpected token `newline'\n" , 2);
 		g_signal.exit_status = 2;
 		return (0);
 	}
@@ -47,9 +47,10 @@ int	ft_put_enxport_env(t_dict *dictionary, char **envp, char **data, int count)
 	while (tmp != NULL)
 	{
 		printf("declare -x %s", tmp->key);
-		if (tmp->item != NULL && tmp->item[0] != '\0')
+		if (tmp->item != NULL)
 			printf("=\"%s\"",tmp->item);
 		printf("\n");
+		// printf("\nkeys: %lu\n", ft_zero_byte_strlen(tmp->key));
 		tmp = tmp->next;
 	}
 	g_signal.exit_status = 0;

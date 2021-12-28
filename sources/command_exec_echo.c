@@ -71,7 +71,7 @@ int	ft_go_home(t_dict *command_shablon)
 
 	if (find_data("HOME", command_shablon->variable_dic) == NULL)
 	{
-		ft_putstr_fd("Home not found\n", 2);
+		ft_putstr_fd("sh: Home not found\n", 2);
 		g_signal.exit_status = 1;
 		return (1);
 	}
@@ -107,11 +107,17 @@ int	ft_cd(t_dict *dict, char **envp, char **data, int count)
 	dict->data = ft_strtrim(dict->data, " ");
 	dict->data = ft_realloc_strjoin(dict->data, "/");
 	current_directory = opendir(dict->data);
-	dp = readdir(current_directory);
-	if (dp == NULL)
+	if (!current_directory)
 	{
 		g_signal.exit_status = 1;
-		ft_putendl_fd("No such file or directory", 2);
+		ft_putendl_fd("sh: cd: No such file or directory", 2);
+		return (1);
+	}
+	dp = readdir(current_directory);
+	if (!dp)
+	{
+		g_signal.exit_status = 1;
+		ft_putendl_fd("sh: cd: No such file or directory", 2);
 		return (1);
 	}
 	err = chdir(dict->data);

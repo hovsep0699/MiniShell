@@ -28,7 +28,7 @@ int	ft_ret_end(t_dict *command)
 	if (old_pwd == NULL)
 	{
 		g_signal.exit_status = 1;
-		ft_putstr_fd("OLDPWD not set\n", 2);
+		ft_putstr_fd("sh: OLDPWD not set\n", 2);
 		return (0);
 	}
 	command->data = ft_strdup(old_pwd);

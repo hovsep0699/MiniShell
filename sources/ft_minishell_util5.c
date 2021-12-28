@@ -52,10 +52,10 @@ void	ft_join_util2(char *pstr, t_eqstr	*equ, t_dict *dict, int mod)
 {
 	//printf("\n%s\n",pstr);
 	if (mod == 1 && ft_count_quote_character(pstr[equ->i],
-			&equ->quate_exist, &equ->dquate_exist))
+			&equ->quate_exist, &equ->dquate_exist) && back_space_exist(pstr,equ) == 0)
 		equ->i++;
 	else if (pstr[equ->i] == '\\'
-		&& (equ->dquate_exist != 0 && equ->quate_exist != 0) && pstr[equ->i+1] == '\\')
+		&& (equ->dquate_exist != 0 && equ->quate_exist != 0) && pstr[equ->i + 1] == '\\')
 		ft_join_util(pstr, equ);
 	else if (pstr[equ->i] == '\\'
 		&& (equ->dquate_exist != 0 && equ->quate_exist != 0))
@@ -65,10 +65,7 @@ void	ft_join_util2(char *pstr, t_eqstr	*equ, t_dict *dict, int mod)
 		ft_exitcod(equ);
 	else if (pstr[equ->i] == '$' && equ->quate_exist != 0 \
 	 && ft_ich(pstr[equ->i + 1]) && back_space_exist(pstr,equ) == 0)
-	 {
-		 printf("\nasd\n");
 		ft_exp_util(equ, dict, pstr);
-	 }
 	else if (pstr[equ->i] == '~' && equ->dquate_exist != 0
 		&& equ->quate_exist != 0
 		&& equ->i == 0 && (pstr[equ->i + 1] == '\0' || pstr[equ->i + 1] == '/') && mod == 1)

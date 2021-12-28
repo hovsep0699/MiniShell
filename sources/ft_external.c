@@ -74,7 +74,7 @@ void	ft_ext_child(t_dict *dic, char **envp, char **data)
 		ft_strdel(&tmp_path);
 		dic->j++;
 	}
-	ft_putstr_fd("command not found\n", 2);
+	ft_putstr_fd("sh: command not found\n", 2);
 	g_signal.exit_status = COMMAND_NOT_FOUND;
 	ft_vecstrdel(&sp_p);
 	ft_vecstrdel(&av);

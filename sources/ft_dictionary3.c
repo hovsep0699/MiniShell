@@ -24,10 +24,10 @@ int	find_data_int(char *key, t_dictionary *command)
 	while (key[j] && key[j] != '=')
 		j++;
 	key_len = ft_strlen(key);
-	if (j == key_len)
-		return (-1);
+	// printf("\n %d %d\n", j, key_len);
 	while (command != NULL)
 	{
+		// printf("\nkey: %s\n", command->key);
 		dict_len = ft_strlen(command->key);
 		if (j == dict_len && ft_strncmp(key, command->key, j) == 0)
 			return (i);
@@ -48,8 +48,9 @@ void	change_item(char *new_item, int key_index, t_dictionary *dict)
 		while (new_item[j] && new_item[j] != '=')
 			j++;
 		len_new_item = ft_zero_byte_strlen(new_item);
+
 		if (j == len_new_item)
-			j = 0;
+			return ;
 		else
 			j++;
 	}

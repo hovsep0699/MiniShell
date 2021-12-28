@@ -51,14 +51,14 @@ int	ft_exit_status(t_dict *dict)
 
 void	ft_putcommanderror(t_dict *dict, int errnum)
 {
-	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd("sh: exit: ", 2);
 	if (errnum == 1)
 	{
 		ft_putstr_fd(dict->data, 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
 	}
 	else
-		ft_putstr_fd("too many arguments\n", 2);
+		ft_putstr_fd(": too many arguments\n", 2);
 	g_signal.exit_status = MAX_EXIT_STATUS;
 }
 
@@ -68,7 +68,7 @@ int	ft_dict_init(t_dict *dict, int end_index, char *str)
 
 	if (export_check(str, ft_strlen(str)) || str[0] == '=')
 	{
-		ft_putstr_fd("Not a valid identifier\n", 2);
+		ft_putstr_fd("sh: export: Not a valid identifier\n", 2);
 		return (++end_index);
 	}
 	dict->i = find_data_int(str, dict->variable_dic);

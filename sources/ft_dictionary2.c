@@ -25,7 +25,7 @@ t_dictionary	*ft_dict_mem(int index_item, int index)
 		ft_memdel((void **)&ptr);
 		return (NULL);
 	}
-	if(index_item == 0)
+	if (index_item == 0)
 		return(ptr);
 	ptr->item = (char *)ft_calloc(index_item, sizeof(char));
 	if (ptr == NULL)
@@ -44,7 +44,7 @@ t_dictionary	*ft_dictionary_create(char *items)
 	dict.index_item = 0;
 	dict.len_items = ft_strlen(items);
 	dict.index = ft_find_element(items);
-	if (ft_isdigit(items[0]) == 1)
+	if (ft_isdigit(items[0]))
 	{
 		export_error(items);
 		return (NULL);
