@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:07 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/12/29 21:13:34 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 22:56:05 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,17 @@ char	**ft_ret_data(char *data)
 void	ft_exec_abs(t_dict *dic, char **envp, char **data, char **data_sp)
 {
 	char	**av;
-	char	*tmp_path;
+	t_eqstr	equ;
 
-	tmp_path = ft_strdup(data[dic->last_command]);
-	av = av_ret(tmp_path, data_sp);
-	execve(tmp_path, av, envp);
+	equ = ft_eqdef2(data[dic->last_command]);
+	equ.subjoin = (char *)ft_calloc(sizeof(char), \
+	(ft_zero_byte_strlen(data[dic->last_command]) + 1));
+	while (data[dic->last_command][equ.i])
+		ft_join_util2(data[dic->last_command], &equ, dic, 1);
+	av = av_ret(equ.subjoin, data_sp);
+	execve(equ.subjoin, av, envp);
 	ft_vecstrdel(&av);
-	ft_strdel(&tmp_path);
+	ft_strdel(&equ.subjoin);
 }
 
 void	ft_ext_child(t_dict *dic, char **envp, char **data)

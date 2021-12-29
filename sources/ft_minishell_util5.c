@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 21:36:25 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/12/29 20:34:01 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 23:17:41 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,16 @@ char	*ft_strnull(void)
 
 void	ft_join_util2(char *pstr, t_eqstr	*equ, t_dict *dict, int mod)
 {
-	if (mod == 1 && ft_count_quote_character(pstr[equ->i],
-			&equ->quate_exist, &equ->dquate_exist) \
-			&& back_space_exist(pstr, equ) == 0)
+	if (mod == 1 && back_space_exist(pstr, equ) == 0 && \
+	ft_count_quote_character(pstr[equ->i],
+			&equ->quate_exist, &equ->dquate_exist))
 		equ->i++;
 	else if (pstr[equ->i] == '\\'
 		&& (equ->dquate_exist != 0 && equ->quate_exist != 0) \
 		&& pstr[equ->i + 1] == '\\')
 		ft_join_util(pstr, equ);
 	else if (pstr[equ->i] == '\\'
-		&& (equ->dquate_exist != 0 && equ->quate_exist != 0))
+		&& (equ->dquate_exist != 0 && equ->quate_exist != 0))	
 			equ->i++;
 	else if (pstr[equ->i] == '$'
 		&& pstr[equ->i + 1] == '?' && equ->quate_exist != 0 \

@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 21:03:42 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/12/29 22:08:09 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 23:16:59 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ int	quote_check(char *s, char exp, char exp2)
 	while (s[quote_check.i])
 	{
 		if (s[quote_check.i] == '\\')
+		{
 			quote_check.i += 2;
+			continue ;
+		}
 		exp_state = ft_qch(exp_state, exp_state2, s[quote_check.i], exp);
 		exp_state2 = ft_qch(exp_state2, exp_state, s[quote_check.i], exp2);
 		if (s[quote_check.i++] == '|' && exp_state2 && exp_state)
