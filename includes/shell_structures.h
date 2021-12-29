@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 21:00:56 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/12/28 21:06:25 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 22:15:33 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ typedef struct s_split
 	int	j;
 	int	state;
 	int	len;
+	int	quote;
+	int	dquote;
 }	t_split;
 
 typedef struct s_eqstr
@@ -158,5 +160,18 @@ struct	s_dict
 	t_front_function		front_function[MAX_FRONT_FUNCS];
 	int						i;
 };
+
+typedef struct t_write
+{
+	int	i;
+	int	count;
+}	t_write;
+
+typedef struct s_space_add
+{
+	int		i;
+	char	tmp_character;
+	int		j;
+}	t_space_add;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 20:24:42 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/12/28 22:07:42 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 21:12:57 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	check_state(char c, int state)
 {
+	(void)state;
 	if (c == '=')
 		return (1);
 	return (0);
@@ -33,6 +34,7 @@ int	export_check(char *str, int len)
 {
 	t_split	exp;
 
+	(void)len;
 	exp = def_exp();
 	while (str[exp.i])
 	{

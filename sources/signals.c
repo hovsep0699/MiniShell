@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:47:15 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 20:06:39 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 21:52:41 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ void	s_quit(int signum)
 
 void	s_int(int signum)
 {
+	char	*copy;
+
+	copy = ft_strdup(rl_line_buffer);
 	(void)signum;
-	char *copy = ft_strdup(rl_line_buffer);
 	if (g_signal.heredoc && g_signal.pid == 0)
 	{
 		printf("\b\b^C\b\b");
@@ -34,20 +36,7 @@ void	s_int(int signum)
 		exit(g_signal.exit_status);
 	}
 	if (g_signal.pid == -1)
-	{
-		if (*rl_line_buffer)
-			printf("\b\b\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-		if (!*copy)
-		{
-			printf("  \b\b");
-			printf("\n");
-			printf(SHELL_PROMPT);
-		}
-		g_signal.exit_status = 1;
-	}
+		ft_signals_print(copy);
 	else
 	{
 		printf("\b\n");
@@ -62,6 +51,7 @@ void	s_int(int signum)
 
 int	ft_process_signal(t_dict *lcmd)
 {
+	(void)lcmd;
 	g_signal.pid = -1;
 	signal(SIGINT, s_int);
 	signal(SIGQUIT, SIG_IGN);
@@ -73,6 +63,7 @@ int	ft_print_error(int errnum, t_pipe *pips, char **str)
 	int	id;
 	int	pip_ret;
 
+	(void)errnum;
 	pip_ret = pipe(pips->fd);
 	id = fork();
 	if (id < 0 || pip_ret < 0)

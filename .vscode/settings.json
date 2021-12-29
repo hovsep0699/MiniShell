@@ -41,6 +41,11 @@
     "algorithm": "c",
     "bitset": "c",
     "chrono": "c",
-    "unordered_map": "c"
+    "unordered_map": "c",
+    "functional.h": "c",
+    "shell_signals.h": "c",
+    "dictionary.h": "c",
+    "shell_structures.h": "c",
+    "shell_defines.h": "c"
   }
 }

@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:44:26 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/12/28 22:04:25 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 21:12:24 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ t_dictionary	*ft_dictionarylast(t_dictionary *lst)
 int	find_equal_part(char *str)
 {
 	int	key_len;
-	int	dict_len;
-	int	final_len;
 
 	key_len = 0;
 	while (str[key_len] && ft_isalnum(str[key_len]))

@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:46:14 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 16:46:15 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 21:53:55 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ void	ft_pipe_close(int fd)
 		close(fd);
 }
 
-char	*ft_child(char *pipe_l, t_pipe pips, t_dict *dict, char **str)
+char	*ft_child(t_pipe pips, t_dict *dict, char **str)
 {
+	char	*pipe_l;
+
 	dup2(pips.fd[0], STDIN_FILENO);
 	dict->change_fd_in = pips.fd[0];
 	ft_pipe_close(pips.fd[1]);
@@ -42,8 +44,10 @@ void	ft_first(t_pipe pips, t_dict *dict)
 	ft_pipe_close(pips.fd[1]);
 }
 
-char	*ft_retpipe(char **str, t_pipe pips, char *pipe_line)
+char	*ft_retpipe(char **str, t_pipe pips)
 {
+	char	*pipe_line;
+
 	pipe_line = ft_strdup(str[pips.i]);
 	ft_vecstrdel(&str);
 	return (pipe_line);
@@ -60,7 +64,7 @@ char	*ft_pipe(t_dict *dict, char *data)
 	str = ft_split_vache(data, '|');
 	pips.len = ft_vecstrlen(str);
 	if (pips.len <= 1)
-		return (ft_retpipe(str, pips, pipe_line));
+		return (ft_retpipe(str, pips));
 	pips.i = pips.len;
 	while (pips.i > 1)
 	{
@@ -69,7 +73,7 @@ char	*ft_pipe(t_dict *dict, char *data)
 		if (id < 0)
 			return (NULL);
 		if (id > 0)
-			return (ft_child(pipe_line, pips, dict, str));
+			return (ft_child(pips, dict, str));
 		if (pips.i > 0)
 			ft_first(pips, dict);
 	}

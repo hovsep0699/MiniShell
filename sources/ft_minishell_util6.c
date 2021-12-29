@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 11:21:25 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/07 13:00:43 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 22:24:21 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	runfileutil_bu(char **argum, t_dict *dict, int i)
 {
-	int count;
+	int	count;
+
 	count = ft_vecstrlen(argum);
 	if (ft_strcmp(argum[i], ">>") == 0)
 		dict->type_command = DDWRITE;
@@ -27,8 +28,7 @@ int	runfileutil_bu(char **argum, t_dict *dict, int i)
 	if (count > dict->icom + 1 && dict->fr_command != FDREAD)
 		dict->fname_file
 			= ft_equal_strjoin(dict->fname_file, dict, argum[i + 1], 1);
-	else if (count > dict->icom + 1 && (dict->type_command != DDWRITE || \
-	dict->type_command != WWRITE || dict->fr_command != FFREAD))
+	else if (count > dict->icom + 1 && ret_other(dict))
 		dict->fname_file
 			= ft_equal_strjoin(dict->fname_file, dict, argum[i + 1], 1);
 	i += 2;
@@ -38,9 +38,11 @@ int	runfileutil_bu(char **argum, t_dict *dict, int i)
 int	ft_write_bu(struct s_dict *dict, char **envp, char **data, int count)
 {
 	int		fd;
-	char	*name_file;
 
-	if(syntax_error(dict->fname_file) == 0)
+	(void)envp;
+	(void)data;
+	(void)count;
+	if (syntax_error(dict->fname_file) == 0)
 		return (2);
 	fd = open(dict->fname_file, O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	if (fd == -1)
@@ -56,18 +58,13 @@ int	ft_write_bu(struct s_dict *dict, char **envp, char **data, int count)
 
 int	ft_read_bu(struct	s_dict *dict, char **envp, char **data, int count)
 {
-	int	fd;
+	int			fd;
 
-	if(syntax_error(dict->fname_file) == 0)
+	if (syntax_error(dict->fname_file) == 0)
 		return (2);
 	fd = open(dict->fname_file, O_RDONLY);
 	if (dict->fname_file == NULL)
-	{
-		dict->fr_command = FNONE;
-		g_signal.exit_status = 258;
-		close(fd);
-		return (g_signal.exit_status);
-	}
+		return (ft_fname_null(dict, fd));
 	if (fd == -1)
 	{
 		dict->fr_command = FNONE;
@@ -78,7 +75,7 @@ int	ft_read_bu(struct	s_dict *dict, char **envp, char **data, int count)
 	if ((dup2(fd, STDIN_FILENO)) < 0)
 		strerror(errno);
 	if ((dict->icom) - dict->last_command != 2)
-		ft_search_side_func(dict)(dict, envp, data, count);
+		create_norm_fix_func(data, dict, count, envp);
 	dict->fr_command = FNONE;
 	close(fd);
 	ft_fd_open(dict);
@@ -90,7 +87,10 @@ int	ft_dwrite_bu(struct s_dict *dict, char **envp, char **data, int count)
 {
 	int	fd;
 
-	if(syntax_error(dict->fname_file) == 0)
+	(void)envp;
+	(void)data;
+	(void)count;
+	if (syntax_error(dict->fname_file) == 0)
 		return (2);
 	fd = open(dict->fname_file, O_CREAT | O_WRONLY | O_APPEND, 0664);
 	if (fd == -1)
@@ -110,10 +110,9 @@ int	ft_dread_bu(struct s_dict *dict, char **envp, char **data, int count)
 	int		p[2];
 	int		id;
 
-	dict->fr_command = FNONE;
-	if(syntax_error(dict->fname_file) == 0)
+	check_str = to_void(envp, data, count, dict);
+	if (syntax_error(dict->fname_file) == 0)
 		return (2);
-	check_str = NULL;
 	check_str = ft_strdup(dict->fname_file);
 	ft_strdel(&dict->fname_file);
 	pipe(p);
@@ -128,7 +127,7 @@ int	ft_dread_bu(struct s_dict *dict, char **envp, char **data, int count)
 	g_signal.heredoc = 0;
 	dict->last_command += 2;
 	if (g_signal.exit_status != 130)
-		ft_search_side_func(dict)(dict, envp, data, count);
+		create_norm_fix_func(data, dict, count, envp);
 	ft_fd_open(dict);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:48 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/12/28 22:14:07 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 21:19:09 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ int	runfileutil(char **argum, t_dict *dict, int i)
 	if (count > dict->icom + 1 && dict->util_commant != DREAD)
 		dict->name_file
 			= ft_equal_strjoin(dict->name_file, dict, argum[i + 1], 1);
-	else if (count > dict->icom + 1 && (dict->util_commant != DWRITE || \
-	dict->util_commant != WRITE || dict->util_commant != READ))
+	else if (count > dict->icom + 1 && ret_valu(dict))
 		dict->data
 			= ft_equal_strjoin(dict->data, dict, argum[i + 1], 1);
 	i += 2;

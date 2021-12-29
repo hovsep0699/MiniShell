@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 21:02:21 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/12/28 21:02:22 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 21:14:20 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,19 @@ char	*ft_here_strjoin(char *s1, t_dict *dict)
 	t_eqstr	equ;
 
 	equ = ft_eqdef2(s1);
-	equ.subjoin = (char *)ft_calloc(sizeof(char), (ft_zero_byte_strlen(s1) + 1));
+	equ.subjoin = (char *)ft_calloc(sizeof(char), \
+	(ft_zero_byte_strlen(s1) + 1));
 	while (s1[equ.i])
 		ft_join_util2(s1, &equ, dict, 0);
 	ft_strdel(&s1);
 	return (equ.subjoin);
 }
 
-int syntax_error(char *str)
+int	syntax_error(char *str)
 {
-	if(str == NULL)
+	if (str == NULL)
 	{
-		ft_putstr_fd("sh: syntax error near unexpected token `newline'\n" , 2);
+		ft_putstr_fd("sh: syntax error near unexpected token `newline'\n", 2);
 		g_signal.exit_status = 2;
 		return (0);
 	}
@@ -55,14 +56,16 @@ int	ft_put_enxport_env(t_dict *dictionary, char **envp, char **data, int count)
 	t_dictionary	*tmp;
 
 	i = 0;
+	(void)envp;
+	(void)data;
+	(void)count;
 	tmp = dictionary->variable_dic;
 	while (tmp != NULL)
 	{
 		printf("declare -x %s", tmp->key);
 		if (tmp->item != NULL)
-			printf("=\"%s\"",tmp->item);
+			printf("=\"%s\"", tmp->item);
 		printf("\n");
-		// printf("\nkeys: %lu\n", ft_zero_byte_strlen(tmp->key));
 		tmp = tmp->next;
 	}
 	g_signal.exit_status = 0;

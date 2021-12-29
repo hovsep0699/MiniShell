@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:46:30 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/07 12:37:03 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 22:17:03 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,29 @@
 
 char	*ft_add_space(char *source, int count, int mod, int index)
 {
-	char	*tmp;
-	int		i;
-	char	tmp_character;
-	int		j;
+	char		*tmp;
+	t_space_add	util;
 
-	i = 0;
-	j = index;
-	while (source[j])
+	util.i = 0;
+	util.j = index;
+	(void)mod;
+	tmp = NULL;
+	while (source[util.j])
 	{
-		tmp_character = source[j - 1];
+		util.tmp_character = source[util.j - 1];
 		if (count == 0)
 			return (tmp);
-		if (count == 1 && j == index + 1)
-			source[j] = ' ';
+		if (count == 1 && util.j == index + 1)
+			source[util.j] = ' ';
 		if (count == 2)
-			source[j + 1] = ' ';
+			source[util.j + 1] = ' ';
 		if (count == 3)
 		{
-			source[j] = ' ';
-			source[j + 2] = ' ';
-			j += 1;
+			source[util.j] = ' ';
+			source[util.j + 2] = ' ';
+			util.j += 1;
 		}
-		source[j] = tmp_character;
+		source[util.j] = util.tmp_character;
 	}
 	return (tmp);
 }
@@ -91,14 +91,8 @@ char	*enter_split_sapce(char **not_splite)
 	char	*splite_array;
 	char	*str;
 	t_split	splvar;
-	int quoet_exist;
-	int dquoet_exist;
 
-	splvar.i = 0;
-	splvar.state = 0;
-	splvar.j = 0;
-	quoet_exist = 1;
-	dquoet_exist = 1;
+	splvar = def_split();
 	str = ft_strdup(*(not_splite));
 	if (!str)
 		return (NULL);
@@ -106,11 +100,13 @@ char	*enter_split_sapce(char **not_splite)
 	splite_array = ft_calloc(splvar.len + 1, sizeof(char));
 	while (str[splvar.i])
 	{
-		quoet_exist = quote_check_sp(quoet_exist, dquoet_exist,str[splvar.i], CHAR_QUATES);
-		dquoet_exist = quote_check_sp(dquoet_exist, quoet_exist,str[splvar.i], CHAR_DQUATES);
-	//	printf("\narajin = %i erkrord %i\n",quoet_exist, dquoet_exist);
+		splvar.quote = \
+		quote_check_sp(splvar.quote, splvar.dquote, str[splvar.i], CHAR_QUATES);
+		splvar.dquote = quote_check_sp(splvar.dquote, \
+		splvar.quote, str[splvar.i], CHAR_DQUATES);
 		if ((str[splvar.i] == '|' || str[splvar.i] == '>'
-				|| str[splvar.i] == '<' || str[splvar.i] == ';') && quoet_exist == 1 && dquoet_exist == 1)
+				|| str[splvar.i] == '<' || str[splvar.i] == ';') \
+				&& splvar.quote == 1 && splvar.dquote == 1)
 			change_splitem(splite_array, &splvar, str);
 		else
 			splite_array[splvar.j++] = str[splvar.i++];

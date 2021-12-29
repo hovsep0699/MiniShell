@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 21:08:48 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 19:18:54 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 20:28:41 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,49 @@
 typedef struct s_string	t_string;
 typedef struct s_sph	t_sph;
 
+typedef void			(*t_resize)\
+(t_string *str, size_t size);
+typedef void			(*t_erase)\
+(t_string *str, size_t it);
+typedef void			(*t_erase2)\
+(t_string *str, size_t it, size_t len);
+typedef void			(*t_erase_between)\
+(t_string *str, size_t start, size_t end);
+typedef void			(*t_join)\
+(t_string *str1, t_string *str2);
+typedef void			(*t_join2)\
+(t_string *str1, char *str2);
+typedef void			(*t_substr)\
+(t_string *str, t_string *new, size_t start, size_t len);
+typedef void			(*t_insert2)\
+(t_string *str, size_t index, char *str2);
+typedef void			(*t_insert)\
+(t_string *str, size_t index, t_string *str2);
+typedef int				(*t_find)\
+(t_string *str, char c);
+typedef int				(*t_find2)\
+(t_string *str, char *needle);
+typedef int				(*t_find3)\
+(t_string *str, t_string *needle);
+typedef int				(*t_rfind)\
+(t_string *str, char c);
+typedef int				(*t_rfind2)\
+(t_string *str, char *needle);
+typedef int				(*t_rfind3)\
+(t_string *str, t_string *needle);
+typedef int				(*t_rfind4)\
+(t_string *str, char c, int index);
+typedef void			(*t_reverse)\
+(t_string *str);
+typedef void			(*t_tolower)\
+(t_string *str);
+typedef void			(*t_toupper)\
+(t_string *str);
+typedef bool			(*t_compare)\
+(t_string	*str1, t_string *str2);
+typedef bool			(*t_compare2)\
+(t_string *str1, char *str2);
+
 struct s_sph
 {
 	int		si;
@@ -33,29 +76,29 @@ struct s_sph
 
 struct s_string
 {
-	char	*data;
-	size_t	size;
-	void	(*resize)(t_string *str, size_t size);
-	void	(*erase)(t_string *str, size_t it);
-	void	(*erase2)(t_string *str, size_t it, size_t len);
-	void	(*erase_between)(t_string *str, size_t start, size_t end);
-	void	(*join)(t_string *str1, t_string *str2);
-	void	(*join2)(t_string *str1, char *str2);
-	void	(*substr)(t_string *str, t_string *new, size_t start, size_t len);
-	void	(*insert2)(t_string *str, size_t index, char *str2);
-	void	(*insert)(t_string *str, size_t index, t_string *str2);
-	int		(*find)(t_string *str, char c);
-	int		(*find2)(t_string *str, char *needle);
-	int		(*find3)(t_string *str, t_string *needle);
-	int		(*rfind)(t_string *str, char c);
-	int		(*rfind2)(t_string *str, char *needle);
-	int		(*rfind3)(t_string *str, t_string *needle);
-	int		(*rfind4)(t_string *str, char c, int index);
-	void	(*reverse)(t_string *str);
-	void	(*tolower)(t_string *str);
-	void	(*toupper)(t_string *str);
-	bool	(*compare)(t_string	*str1, t_string	*str2);
-	bool	(*compare2)(t_string	*str1, char *str2);
+	char			*data;
+	size_t			size;
+	t_resize		resize;
+	t_erase			erase;
+	t_erase2		erase2;
+	t_erase_between	erase_between;
+	t_join			join;
+	t_join2			join2;
+	t_substr		substr;
+	t_insert2		insert2;
+	t_insert		insert;
+	t_find			find;
+	t_find2			find2;
+	t_find3			find3;
+	t_rfind			rfind;
+	t_rfind2		rfind2;
+	t_rfind3		rfind3;
+	t_rfind4		rfind4;
+	t_reverse		reverse;
+	t_tolower		tolower;
+	t_toupper		toupper;
+	t_compare		compare;
+	t_compare2		compare2;
 };
 
 void		ft_t_stringolower(t_string *str);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   norm_fix_errors.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/29 19:52:27 by vgaspary          #+#    #+#             */
+/*   Updated: 2021/12/29 19:54:34 by vgaspary         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	create_norm_fix_func(char **arg, t_dict *dict, int count, char **envp)
@@ -10,7 +22,7 @@ void	create_norm_fix_func(char **arg, t_dict *dict, int count, char **envp)
 
 void	create_exit_norm_error(int errnum, char **data, t_dict *dict)
 {
-    if (errnum < 2)
+	if (errnum < 2)
 	{
 		ft_vecstrdel(&data);
 		ft_dict_destructor(dict);
@@ -26,16 +38,16 @@ void	create_exit_norm_error(int errnum, char **data, t_dict *dict)
 	g_signal.exit_status = 1;
 }
 
-int			create_cd_norm_error(t_dict *dict)
+int	create_cd_norm_error(t_dict *dict)
 {
-    DIR				*current_directory;
+	DIR				*current_directory;
 	struct dirent	*dp;
 
 	if (dict->data[0] == '-' && ft_ret_end(dict) == 0)
 		return (1);
 	dict->data = ft_strtrim(dict->data, " ");
 	dict->data = ft_realloc_strjoin(dict->data, "/");
-    current_directory = opendir(dict->data);
+	current_directory = opendir(dict->data);
 	if (!current_directory)
 	{
 		g_signal.exit_status = 1;
@@ -49,7 +61,7 @@ int			create_cd_norm_error(t_dict *dict)
 		ft_putendl_fd("sh: cd: No such file or directory", 2);
 		return (1);
 	}
-    return (0);
+	return (0);
 }
 
 void	create_dict_init_norm_error(t_dict *lcmd)
@@ -64,4 +76,16 @@ void	create_dict_init_norm_error(t_dict *lcmd)
 	lcmd->functions[7] = (t_command_function){WWRITE, ft_write_bu};
 	lcmd->functions[8] = (t_command_function){DDWRITE, ft_dwrite_bu};
 	lcmd->functions[9] = (t_command_function){UNDEFINED, ft_external};
+}
+
+t_split	def_split(void)
+{
+	t_split	spl;
+
+	spl.i = 0;
+	spl.state = 0;
+	spl.j = 0;
+	spl.quote = 1;
+	spl.dquote = 1;
+	return (spl);
 }

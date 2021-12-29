@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:44:07 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/12/28 22:03:40 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 21:12:07 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ t_dictionary	*ft_env_copy(char **env)
 
 int	ft_dictionarysize(t_dictionary *stack)
 {
-	t_dictionary	*ptr;
 	int				q;
 
 	q = 0;
@@ -72,7 +71,7 @@ size_t	ft_joins_dict(char const *s2, size_t i, int count, char *subjoin)
 	int	j;
 
 	j = 0;
-	while (s2[i] && i < count)
+	while (s2[i] && i < (size_t)count)
 	{
 		subjoin[j] = s2[i];
 		i++;

@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 22:30:20 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/12/28 22:12:02 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 22:28:17 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "functional.h"
 # include "dictionary.h"
 # include "shell_signals.h"
+# include "norm_fix_errors.h"
 
 size_t						\
 ft_joins(char const *s2, size_t i, int count, char *subjoin);
@@ -65,12 +66,11 @@ int							runfileutil_bu(char **argum, t_dict *dict, int i);
 char						*ft_here_strjoin(char *s1, t_dict *dict);
 void						ft_def_flag(t_dict *dict);
 int							back_space_exist(char *pstr, t_eqstr *equ);
-void						\
-create_norm_fix_func(char **arg, t_dict *dict, int count, char **envp);
-void						\
-create_exit_norm_error(int errnum, char **data, t_dict *dict);
-int							create_cd_norm_error(t_dict *dict);
-void						change_item_dict(char *new_item, int key_index, t_dictionary *dict);
-void						create_dict_init_norm_error(t_dict *lcmd);
-
+int							ret_valu( t_dict *dict);
+int							ret_other(t_dict *dict);
+int							ft_print_cd(int err);
+void						ft_norm_error(char **line, int in_fd, int out_fd);
+void						ft_put_env_norm(char *item, char *key);
+char						*to_void(char **envp, char **data, \
+int count, t_dict *dict);
 #endif

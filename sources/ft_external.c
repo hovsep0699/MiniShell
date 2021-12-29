@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:45:07 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 16:54:39 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 21:13:34 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ft_ext_child(t_dict *dic, char **envp, char **data)
 		ft_strdel(&tmp_path);
 		dic->j++;
 	}
-	ft_putstr_fd("sh: command not found\n", 2);
+	external_error_print(*data);
 	g_signal.exit_status = COMMAND_NOT_FOUND;
 	ft_vecstrdel(&sp_p);
 	ft_vecstrdel(&av);
@@ -83,17 +83,16 @@ void	ft_ext_child(t_dict *dic, char **envp, char **data)
 
 int	ft_external(t_dict *dict, char **envp, char **data, int count)
 {
-	int		fd[2];
 	pid_t	ret_fork;
-	int		i;
 	int		status;
 
+	(void)count;
 	signal(SIGQUIT, s_quit);
 	ret_fork = fork();
 	g_signal.pid = ret_fork;
 	if (ret_fork < 0)
 	{
-		ft_putendl_fd(strerror(errno), 2);
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		g_signal.exit_status = errno;
 		return (errno);
 	}

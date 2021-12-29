@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 21:39:30 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/12/28 21:59:13 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 22:13:23 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ int	ft_put_env_export(t_dict *dictionary, char **envp, char **data, int count)
 	t_dictionary	*tmp;
 
 	i = 0;
+	(void)envp;
+	(void)data;
+	(void)count;
 	tmp = dictionary->variable_dic;
 	while (tmp != NULL)
 	{
@@ -26,13 +29,7 @@ int	ft_put_env_export(t_dict *dictionary, char **envp, char **data, int count)
 			tmp = tmp->next;
 			continue ;
 		}
-		ft_putstr_fd(tmp->key, 1);
-		ft_putstr_fd("=", 1);
-		if (tmp->item != NULL && tmp->item[0] != '\0')
-			ft_putstr_fd(tmp->item, 1);
-		else
-			ft_putstr_fd("", 1);
-		ft_putchar_fd('\n', 1);
+		ft_put_env_norm(tmp->item, tmp->key);
 		tmp = tmp->next;
 	}
 	g_signal.exit_status = 0;
@@ -106,6 +103,9 @@ int	ft_unset(t_dict *dic, char **envp, char **data, int count)
 {
 	t_unset	unvar;
 
+	(void)envp;
+	(void)data;
+	(void)count;
 	unvar = ft_unset_construct(dic);
 	while (dic->data[unvar.cind])
 	{

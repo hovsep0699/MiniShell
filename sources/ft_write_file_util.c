@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 18:51:30 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/04 19:50:00 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 19:05:34 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,14 @@ int	only_create_file(struct s_dict *dict)
 void	ft_dwrite_child(char *check, int *p, t_dict *dict)
 {
 	char	*line;
-	char 	**chek_str;
-	int 	count;
-	int		i;
+	char	**chek_str;
+	t_write	count_i;
 
-	i = 0;
+	count_i.i = 0;
 	ft_pipe_close(p[0]);
-	chek_str = ft_split(check,'\n');
-	count = ft_vecstrlen(chek_str);
-	while(i < count)
+	chek_str = ft_split(check, '\n');
+	count_i.count = ft_vecstrlen(chek_str);
+	while (count_i.i < count_i.count)
 	{
 		while (true)
 		{
@@ -47,22 +46,15 @@ void	ft_dwrite_child(char *check, int *p, t_dict *dict)
 			if (ft_isnull(line, 1))
 				continue ;
 			line = ft_here_strjoin(line, dict);
-			if (ft_strcmp(chek_str[i], line) == 0)
+			if (ft_strcmp(chek_str[count_i.i], line) == 0)
 				break ;
-			if(i + 1 == count)
-			{
-				write(p[1], line, ft_zero_byte_strlen(line));
-				write(p[1], "\n", 1);
-			}
+			if (count_i.i + 1 == count_i.count)
+				ft_norm_write_close(p[1], line);
 			ft_strdel(&line);
 		}
-		i++;
+		count_i.i++;
 	}
-	ft_vecstrdel(&chek_str);
-	ft_strdel(&check);
-	ft_strdel(&line);
-	ft_pipe_close(p[1]);
-	exit(0);
+	ft_clean_dwrite(check, line, chek_str, p[1]);
 }
 
 void	ft_dwrite_parent(int id, int *p)

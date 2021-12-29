@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 20:22:57 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/10/28 20:23:00 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 20:02:00 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ void	*ft_calloc(size_t count, size_t size);
 
 void	ft_memdel(void **mem);
 
-bool    ft_range(int number, int min, int max);
+bool	ft_range(int number, int min, int max);
 
 #endif

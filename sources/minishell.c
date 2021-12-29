@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 21:03:42 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/06 18:55:43 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 22:08:09 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	quote_check(char *s, char exp, char exp2)
 	quote_check.i = 0;
 	while (s[quote_check.i])
 	{
-		if(s[quote_check.i] == '\\')
+		if (s[quote_check.i] == '\\')
 			quote_check.i += 2;
 		exp_state = ft_qch(exp_state, exp_state2, s[quote_check.i], exp);
 		exp_state2 = ft_qch(exp_state2, exp_state, s[quote_check.i], exp2);
@@ -82,7 +82,8 @@ int	quote_check(char *s, char exp, char exp2)
 		printf("sh: quote ERROR\n");
 	else if ((ft_strlen(s) > 0 && s[quote_check.i - 1] == '|') || s[0] == '|')
 		printf("sh: Pipe Error\n");
-	return (exp_state2 && exp_state && !((ft_strlen(s) > 0 && s[quote_check.i - 1] == '|') || s[0] == '|'));
+	return (exp_state2 && exp_state && !((ft_strlen(s) > 0 \
+	&& s[quote_check.i - 1] == '|') || s[0] == '|'));
 }
 
 void	ft_setenv(char **envp, char *key, char *value)
@@ -103,12 +104,12 @@ void	ft_setenv(char **envp, char *key, char *value)
 	ft_string_destructor(&env_key);
 }
 
-
-
 int	main(int argv, char **args, char **envp)
 {
 	t_dict	lcmd;
 
+	(void)argv;
+	(void)args;
 	lcmd = ft_dict_constructor();
 	lcmd.variable_dic = ft_env_copy(envp);
 	set_default_gloabl();
@@ -126,9 +127,7 @@ int	main(int argv, char **args, char **envp)
 			continue ;
 		}
 		exec_inout(lcmd.line, envp, &lcmd);
-		ft_pipe_close(lcmd.change_fd_in);
-		ft_pipe_close(lcmd.change_fd_out);
-		ft_strdel(&lcmd.line);
+		ft_norm_error(&lcmd.line, lcmd.change_fd_in, lcmd.change_fd_out);
 	}
 	ft_dict_destructor(&lcmd);
 	return (0);

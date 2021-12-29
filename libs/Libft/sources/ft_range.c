@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_range.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/29 20:00:32 by vgaspary          #+#    #+#             */
+/*   Updated: 2021/12/29 20:01:15 by vgaspary         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-bool    ft_range(int number, int min, int max)
+bool	ft_range(int number, int min, int max)
 {
-    return (number >= min && number <= max);
+	return (number >= min && number <= max);
 }

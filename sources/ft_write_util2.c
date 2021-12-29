@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 12:06:56 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/11/07 13:02:47 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/29 21:29:21 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ void	ft_dbu_child(char *check)
 
 void	ft_dbu_parent(int id, int *p)
 {
+	(void)p;
 	waitpid(id, NULL, 0);
 }
