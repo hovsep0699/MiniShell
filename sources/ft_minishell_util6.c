@@ -38,13 +38,15 @@ int	runfileutil_bu(char **argum, t_dict *dict, int i)
 int	ft_write_bu(struct s_dict *dict, char **envp, char **data, int count)
 {
 	int		fd;
+	mode_t mode;
 
+	mode = S_IWUSR | S_IRUSR | S_IROTH | S_IRGRP;
 	(void)envp;
 	(void)data;
 	(void)count;
 	if (syntax_error(dict->fname_file) == 0)
 		return (2);
-	fd = open(dict->fname_file, O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	fd = open(dict->fname_file, O_CREAT | O_WRONLY | O_TRUNC | O_SYNC, mode);
 	if (fd == -1)
 	{
 		errno_print(strerror(errno));
@@ -86,13 +88,15 @@ int	ft_read_bu(struct	s_dict *dict, char **envp, char **data, int count)
 int	ft_dwrite_bu(struct s_dict *dict, char **envp, char **data, int count)
 {
 	int	fd;
+	mode_t mode;
 
+	mode = S_IWUSR | S_IRUSR | S_IROTH | S_IRGRP;
 	(void)envp;
 	(void)data;
 	(void)count;
 	if (syntax_error(dict->fname_file) == 0)
 		return (2);
-	fd = open(dict->fname_file, O_CREAT | O_WRONLY | O_APPEND, 0664);
+	fd = open(dict->fname_file, O_CREAT | O_WRONLY | O_APPEND | O_SYNC, mode);
 	if (fd == -1)
 	{
 		ft_putendl_fd(strerror(errno), 2);

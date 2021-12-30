@@ -19,7 +19,7 @@ int	ft_print_echo(t_dict *dict, char **envp, char **data, int count)
 	(void)count;
 	ft_putstr(dict->data);
 	if (dict->echo_option != 1)
-		printf("\n");
+		ft_putchar('\n');
 	g_signal.exit_status = 0;
 	return (g_signal.exit_status);
 }

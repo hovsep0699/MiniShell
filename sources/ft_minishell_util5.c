@@ -58,9 +58,12 @@ void	ft_join_util2(char *pstr, t_eqstr	*equ, t_dict *dict, int mod)
 		&& (equ->dquate_exist != 0 && equ->quate_exist != 0) \
 		&& pstr[equ->i + 1] == '\\')
 		ft_join_util(pstr, equ);
-	else if (pstr[equ->i] == '\\'\
-		&& (equ->dquate_exist != 0 && equ->quate_exist != 0))
+	else if (pstr[equ->i] == '\\')
 			equ->i++;
+	else if (pstr[equ->i] == '$'
+		&& ft_isdigit(pstr[equ->i + 1]) && equ->quate_exist != 0 \
+		&& back_space_exist(pstr, equ) == 0)
+		equ->i += 2;
 	else if (pstr[equ->i] == '$'
 		&& pstr[equ->i + 1] == '?' && equ->quate_exist != 0 \
 		&& back_space_exist(pstr, equ) == 0)

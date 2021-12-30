@@ -46,6 +46,7 @@
     "shell_signals.h": "c",
     "dictionary.h": "c",
     "shell_structures.h": "c",
-    "shell_defines.h": "c"
+    "shell_defines.h": "c",
+    "locale": "c"
   }
 }

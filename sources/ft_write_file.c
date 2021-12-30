@@ -23,7 +23,7 @@ int	ft_write_file(struct s_dict *dict, char **envp, char **data, int count)
 		return (2);
 	if (g_signal.is_read == 1)
 		return (0);
-	fd = open(dict->name_file, O_CREAT | O_WRONLY | O_TRUNC, mode);
+	fd = open(dict->name_file, O_CREAT | O_WRONLY | O_TRUNC | O_SYNC, mode);
 	if (fd == -1)
 	{
 		errno_print(strerror(errno));
@@ -73,12 +73,11 @@ int	ft_dwrite_file(struct s_dict *dict, char **envp, char **data, int count)
 	int		fd;
 	mode_t	mode;
 
-	printf("\ndata: %s\n", dict->data);
 	mode = S_IWUSR | S_IRUSR | S_IROTH | S_IRGRP;
 	dict->util_commant = NONE;
 	if (syntax_error(dict->name_file) == 0)
 		return (2);
-	fd = open(dict->name_file, O_CREAT | O_WRONLY | O_APPEND, mode);
+	fd = open(dict->name_file, O_CREAT | O_WRONLY | O_APPEND | O_SYNC, mode);
 	if (fd == -1)
 	{
 		ft_putendl_fd(strerror(errno), 2);

@@ -28,7 +28,7 @@ int	exec_inout(char *line, char **envp, t_dict *last_command)
 	count = ft_vecstrlen(command);
 	system_command(command, last_command, envp, count);
 	ft_pipe_close(last_command->change_fd_in);
-	ft_pipe_close(last_command->change_fd_out);
+	ft_pipe_close(last_command->change_fd_out); 
 	ft_fd_open(last_command);
 	if (!last_command->isparrent)
 		exit(0);
@@ -60,8 +60,8 @@ char	*replace_str(char *curr_path)
 
 int	quote_check(char *s, char exp, char exp2)
 {
-	int static		exp_state;
-	int static		exp_state2;
+	int				exp_state;
+	int				exp_state2;
 	t_quote_check	quote_check;
 
 	exp_state = 1;
