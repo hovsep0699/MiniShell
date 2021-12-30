@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 21:00:44 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/12/29 20:54:02 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/30 14:53:14 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 # define MAX_BUILTIN_FUNCS 10
 # define MAX_SIDE_FUNCS 6
 # define MAX_FRONT_FUNCS 3
-# define SHELL_PROMPT "$> "
+# define SHELL_PROMPT "sh$> "
 
 typedef struct s_dictionary				t_dictionary;
 typedef struct s_front_function			t_front_function;

@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 21:36:25 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/12/29 23:17:41 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/30 14:53:36 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void	ft_join_util2(char *pstr, t_eqstr	*equ, t_dict *dict, int mod)
 		&& (equ->dquate_exist != 0 && equ->quate_exist != 0) \
 		&& pstr[equ->i + 1] == '\\')
 		ft_join_util(pstr, equ);
-	else if (pstr[equ->i] == '\\'
-		&& (equ->dquate_exist != 0 && equ->quate_exist != 0))	
+	else if (pstr[equ->i] == '\\'\
+		&& (equ->dquate_exist != 0 && equ->quate_exist != 0))
 			equ->i++;
 	else if (pstr[equ->i] == '$'
 		&& pstr[equ->i + 1] == '?' && equ->quate_exist != 0 \

@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:46:59 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/12/29 21:29:06 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/30 15:18:28 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 int	ft_write_file(struct s_dict *dict, char **envp, char **data, int count)
 {
 	int		fd;
+	mode_t	mode;
 
+	mode = S_IWUSR | S_IRUSR | S_IROTH | S_IRGRP;
 	dict->util_commant = NONE;
 	if (syntax_error(dict->name_file) == 0)
 		return (2);
 	if (g_signal.is_read == 1)
 		return (0);
-	fd = open(dict->name_file, O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	fd = open(dict->name_file, O_CREAT | O_WRONLY | O_TRUNC, mode);
 	if (fd == -1)
 	{
 		errno_print(strerror(errno));
@@ -68,12 +70,15 @@ int	ft_read_file(struct	s_dict *dict, char **envp, char **data, int count)
 
 int	ft_dwrite_file(struct s_dict *dict, char **envp, char **data, int count)
 {
-	int	fd;
+	int		fd;
+	mode_t	mode;
 
+	printf("\ndata: %s\n", dict->data);
+	mode = S_IWUSR | S_IRUSR | S_IROTH | S_IRGRP;
 	dict->util_commant = NONE;
 	if (syntax_error(dict->name_file) == 0)
 		return (2);
-	fd = open(dict->name_file, O_CREAT | O_WRONLY | O_APPEND, 0664);
+	fd = open(dict->name_file, O_CREAT | O_WRONLY | O_APPEND, mode);
 	if (fd == -1)
 	{
 		ft_putendl_fd(strerror(errno), 2);

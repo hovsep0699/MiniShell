@@ -6,7 +6,7 @@
 /*   By: vgaspary <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 22:30:20 by vgaspary          #+#    #+#             */
-/*   Updated: 2021/12/29 22:55:20 by vgaspary         ###   ########.fr       */
+/*   Updated: 2021/12/30 14:47:08 by vgaspary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ void						ft_put_env_norm(char *item, char *key);
 char						*to_void(char **envp, char **data, \
 int count, t_dict *dict);
 char						*ft_strdup_quote(const char *src);
-t_eqstr                     ft_eqdef2(char *s1);
+t_eqstr						ft_eqdef2(char *s1);
+
 #endif
