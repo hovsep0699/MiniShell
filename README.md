@@ -95,6 +95,7 @@ sh$> cat f
 Makefile
 sh$> 
 ```
+#### Exmple of append to file
 ```bash
 sh$> ls | grep Makefile > f
 sh$> ls | grep bin >> f
@@ -103,3 +104,20 @@ Makefile
 bin
 sh$> 
 ```
+#### Exmple of ';'
+```bash
+sh$> echo hello; ls
+hello
+Makefile  README.md  bin  compile  f  includes  libs  objects  sources  subject.pdf
+sh$> 
+```
+## Contributing
+
+Contributions to Minishell are welcome!.
+
+Before submitting a pull request, please ensure that you follow these guidelines:
+
+- Describe the changes you've made in detail.
+- Test your changes thoroughly.
+- Follow the existing coding style and conventions.
+- Include relevant documentation updates if necessary.
