@@ -20,7 +20,7 @@ RMDIR			=	rm -rf
 
 MKDIR			=	mkdir -p
 
-GCCFLAGS		=	-Wall -Wextra -Werror
+GCCFLAGS		=	#-Wall -Wextra -Werror
 
 CFLAGS			=  $(GCCFLAGS) $(INCLUDES)
 

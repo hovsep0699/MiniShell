@@ -1,0 +1,4 @@
+    objects
+    bin
+    a.out
+    *.o
