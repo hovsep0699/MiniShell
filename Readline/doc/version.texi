@@ -1,0 +1,10 @@
+@ignore
+Copyright (C) 1988-2020 Free Software Foundation, Inc. 
+@end ignore
+
+@set EDITION 8.0
+@set VERSION 8.0
+@set UPDATED 4 May 2020
+@set UPDATED-MONTH May 2020
+
+@set LASTCHANGE Mon May  4 14:55:02 EDT 2020

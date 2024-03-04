@@ -1,123 +1,100 @@
-# Minishell
+<h1 align="center">
+	42 Cursus' Minishell
+</h1>
 
-Minishell is a minimalistic shell implementation that mimics the functionality of a basic Unix shell. It provides a command-line interface for executing commands and managing processes.
+<p align="center">
+	<b><i>Development repo for 42cursus' minishell project</i></b><br>
+	For further information about 42cursus and its projects, please refer to <a href="https://www.42courses.com/"><b>42cursus repo</b></a>.
+</p>
 
-## Features
+<h3 align="center">
+	<a href="#%EF%B8%8F-about">About</a>
+	<span> · </span>
+	<a href="#-index">Index</a>
+	<span> · </span>
+	<a href="#%EF%B8%8F-usage">Usage</a>
+	<span> · </span>
+	<a href="#-useful-links">Useful Links</a>
+	<span> · </span>
+	<a href="#-study-summary">Study Summary</a>
+</h3>
 
-- The shell does not interpret unclosed quotes or unspecified special characters like `\` or `;`.
-- It utilizes a single global variable to store relevant information, ensuring simplicity and ease of explanation.
-- Displays a prompt when waiting for a new command.
-- Implements a working history feature.
-- Searches and launches the appropriate executable based on the PATH variable or provided relative/absolute path.
-- Supports the following built-in commands:
-  - `echo` with the `-n` option
-  - `cd` with only a relative or absolute path
-  - `pwd` with no options
-  - `export` with no options
-  - `unset` with no options
-  - `env` with no options or arguments
-  - `exit` with no options
-- Supports quoting functionality:
-  - `'` inhibits interpretation of a sequence of characters.
-  - `"` inhibits interpretation of a sequence of characters except for `$`.
-- Implements redirections:
-  - `<` redirects input.
-  - `>` redirects output.
-  - `<<` reads input from the current source until a line containing only the delimiter is seen (does not update history).
-  - `>>` redirects output with append mode.
-- Implements pipes (`|`) for connecting the output of one command to the input of the next.
-- Expands environment variables (`$` followed by characters) to their respective values.
-- `$?` expands to the exit status of the most recently executed foreground pipeline.
-- Supports the following keyboard shortcuts when running interactively:
-  - `ctrl-C` prints a new prompt on a new line.
-  - `ctrl-D` exits the shell.
-  - `ctrl-\` does nothing.
+---
 
-## Installation
 
-To use Minishell, follow these steps:
+## 🤷🏻 About
 
-Clone the Minishell repository:
+> _Minishell is a simple UNIX-like command-line shell implementation . This project aims to introduce students to the fundamentals of operating systems and processes by developing a basic shell application._
 
-```bash
-git clone https://github.com/Hoso1999/Minishell.git && cd Minishell
-```
-### Compile Project
-```bash
-make && ./bin/minishell
-```
-### Examples
-#### ls
-```bash
-sh$> ls
-Makefile  README.md  bin  compile  includes  libs  objects  sources  subject.pdf
-sh$>
-```
-#### pwd
-```bash
-sh$> pwd
-/home/hohayrap/MiniShell
-sh$>
-```
-#### heredoc
-```bash
-sh$> cat<<w << g
->dsadsafds
->dsadsafdds
->vv
->w
->dsadsadfcds
->dsadsadsadsadsadsadsasadsadsa
->g
-dsadsadfcds
-dsadsadsadsadsadsadsasadsadsa
-sh$>
-```
-#### $?
-```bash
-sh$> grep
-Usage: grep [OPTION]... PATTERNS [FILE]...
-Try 'grep --help' for more information.
-sh$> echo $?
-2
-sh$>
-```
-#### pipes
-```bash
-sh$> ls | grep Makefile 
-Makefile
-sh$> 
-```
-#### redirections
-```bash
-sh$> ls | grep Makefile > f
-sh$> cat f
-Makefile
-sh$> 
-```
-#### Exmple of append to file
-```bash
-sh$> ls | grep Makefile > f
-sh$> ls | grep bin >> f
-sh$> cat f
-Makefile
-bin
-sh$> 
-```
-#### Exmple of ';'
-```bash
-sh$> echo hello; ls
-hello
-Makefile  README.md  bin  compile  f  includes  libs  objects  sources  subject.pdf
-sh$> 
-```
-## Contributing
+For detailed information, refer to the [**subject of this project**](https://github.com/hovhannisyangevorg/Minishell/blob/main/en.subject.pdf).
 
-Contributions to Minishell are welcome!.
+	🚀 TLDR: this project consists of coding a basic shell.
 
-Before submitting a pull request, please ensure that you follow these guidelines:
 
-- Describe the changes you've made in detail.
-- Test your changes thoroughly.
-- Follow the existing coding style and conventions.
-- Include relevant documentation updates if necessary.
+## 📑 Index
+
+`@root`
+
+* [**📁 Include:**](Include/) 		Contains the program's headers.
+* [**📁 Readline:**](Readline/) 	Contains the program's Readline library for Linux and MacOS.
+* [**📁 Libft:**](Libft/) 		Contains the source code of the `libft` library, which is used in the program.
+* [**📁 Src:**](Src/) 			Contains the source code of the program.
+* [**📄 Makefile**](Makefile)   	Contains instructions for compiling the program and testing it.
+* [**📄 Makefile.mk**](MakeFile.mk)   	Contains a header file for the makefile.
+* [**🎭 en.subject.pdf**](MakeFile.mk)  Contains the subject file for the Minishell.
+
+
+Note: program covers only mandatory requirements of the project's subject.
+
+
+## 🛠️ Usage
+
+### Requirements
+
+The program is written in C language for **Linux** distributions and thus needs the **` CC ` compiler** and some standard **C libraries** to run.
+
+### Instructions
+
+**1. Compiling the program**
+
+To compile the program, run:
+
+```shell
+$ cd Minishell
+```
+```shell
+$ make Readline
+```
+```shell
+$ make
+```
+
+**2. Executing the program**
+
+To execute the program, run:
+
+```shell
+$ ./minishell
+```
+
+
+## 🔗 Useful Links
+
+* [The Linux Programming Interface](https://sciencesoftcode.files.wordpress.com/2018/12/the-linux-programming-interface-michael-kerrisk-1.pdf)
+* [AST - Abstract syntax tree data structure](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
+* [Harm-Smits' 42 Docs - minishell](https://harm-smits.github.io/42docs/projects/minishell)
+* [The Open Group Base Specifications - Shell Command Language](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html)
+* [Introduction to Systems Programming: a Hands-on Approach - Chapter 5. Writing Your Own Shell ](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf)
+
+
+## 😎 Study Summary
+
+### Definition
+
+**TLDR:** The shell is a command language interpreter. - [_Source_](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html)
+
+> The UNIX shell program interprets user commands, which are either directly entered by the user, or which can be read from a file called the shell script or shell program. Shell scripts are interpreted, not compiled. The shell reads commands from the script line per line and searches for those commands on the system, while a compiler converts a program into machine readable form, an executable file - which may then be used in a shell script.
+>
+> Apart from passing commands to the kernel, the main task of a shell is providing a user environment, which can be configured individually using shell resource configuration files. - [_Source_](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_01_01.html)
+
+* [**Shell types**](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_01_01.html) (sh, bash, etc)
